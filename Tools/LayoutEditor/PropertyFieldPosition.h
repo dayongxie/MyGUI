@@ -3,19 +3,22 @@
 	@author		Albert Semenov
 	@date		12/2010
 */
-#ifndef __PROPERTY_FIELD_POSITION_H__
-#define __PROPERTY_FIELD_POSITION_H__
+
+#ifndef _267e3805_b900_4be2_a0bd_6f6ea3d0262d_
+#define _267e3805_b900_4be2_a0bd_6f6ea3d0262d_
 
 #include "EditorToolTip.h"
 #include "BaseLayout/BaseLayout.h"
 #include "IPropertyField.h"
+#include "sigslot.h"
 
 namespace tools
 {
 
 	class PropertyFieldPosition :
 		public wraps::BaseLayout,
-		public IPropertyField
+		public IPropertyField,
+		public sigslot::has_slots<>
 	{
 	public:
 		PropertyFieldPosition(MyGUI::Widget* _parent);
@@ -58,6 +61,6 @@ namespace tools
 		std::string mName;
 	};
 
-} // namespace tools
+}
 
-#endif // __PROPERTY_FIELD_POSITION_H__
+#endif

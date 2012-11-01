@@ -3,17 +3,21 @@
 	@author		Albert Semenov
 	@date		08/2010
 */
-#ifndef __MAIN_MENU_CONTROL_H__
-#define __MAIN_MENU_CONTROL_H__
+
+#ifndef _b4bacb08_2590_44f7_8e17_1d423ec88e6d_
+#define _b4bacb08_2590_44f7_8e17_1d423ec88e6d_
 
 #include <MyGUI.h>
 #include "WidgetContainer.h"
 #include "BaseLayout/BaseLayout.h"
+#include "sigslot.h"
 
 namespace tools
 {
+
 	class MainMenuControl :
-		public wraps::BaseLayout
+		public wraps::BaseLayout,
+		public sigslot::has_slots<>
 	{
 	public:
 		MainMenuControl(MyGUI::Widget* _parent = nullptr);
@@ -31,16 +35,19 @@ namespace tools
 		std::string getDescriptionString(MyGUI::Widget* _widget, bool _print_name, bool _print_type, bool _print_skin);
 
 		void notifyChangeWidgets();
-		void notifySettingsChanged(const MyGUI::UString& _sectionName, const MyGUI::UString& _propertyName);
+		void notifySettingsChanged(const std::string& _path);
 
 		void updateRecentFilesMenu();
 		void updateRecentProjectsMenu();
+		void updateMenuScale(size_t _scale);
+
+		void CommandOnChangeScale(const MyGUI::UString& _commandName, bool& _result);
 
 	private:
 		MyGUI::MenuBar* mBar;
 		MyGUI::MenuControl* mPopupMenuWidgets;
 	};
 
-} // namespace tools
+}
 
-#endif // __MAIN_MENU_CONTROL_H__
+#endif

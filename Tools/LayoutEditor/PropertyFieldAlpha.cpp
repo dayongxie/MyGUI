@@ -22,11 +22,9 @@ namespace tools
 
 	bool PropertyFieldAlpha::onCheckValue()
 	{
-		bool success = true;
-
-		success = utility::checkParseInterval<float>(mField, 1, 0., 1.);
+		bool success = utility::checkParseInterval<float>(mField, 1, 0., 1.);
 
 		return success;
 	}
 
-} // namespace tools
+}

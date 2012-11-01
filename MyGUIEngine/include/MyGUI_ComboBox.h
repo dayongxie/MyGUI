@@ -186,6 +186,7 @@ namespace MyGUI
 		virtual void shutdownOverride();
 
 		virtual void onKeyButtonPressed(KeyCode _key, Char _char);
+		virtual void baseUpdateEnable();
 
 		virtual void setPropertyOverride(const std::string& _key, const std::string& _value);
 
@@ -203,7 +204,7 @@ namespace MyGUI
 		void showList();
 		void hideList();
 
-		void actionWidgetHide(Widget* _widget);
+		void actionWidgetHide(Widget* _widget, ControllerItem* _controller);
 
 		ControllerFadeAlpha* createControllerFadeAlpha(float _alpha, float _coef, bool _enable);
 		IntCoord calculateListPosition();

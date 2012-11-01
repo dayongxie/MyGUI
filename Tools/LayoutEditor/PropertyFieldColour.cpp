@@ -12,6 +12,7 @@
 
 namespace tools
 {
+
 	const std::string DEFAULT_STRING = "[DEFAULT]";
 
 	PropertyFieldColour::PropertyFieldColour(MyGUI::Widget* _parent) :
@@ -33,8 +34,9 @@ namespace tools
 		mColourPlace->eventMouseButtonPressed += MyGUI::newDelegate(this, &PropertyFieldColour::notifyMouseButtonPressed);
 
 		mColourPanel = new ColourPanel();
-		mColourPanel->eventEndDialog = MyGUI::newDelegate(this, &PropertyFieldColour::notifyEndDialog);
-		mColourPanel->eventPreviewColour = MyGUI::newDelegate(this, &PropertyFieldColour::notifyPreviewColour);
+		mColourPanel->Initialise();
+		mColourPanel->eventEndDialog.connect(this, &PropertyFieldColour::notifyEndDialog);
+		mColourPanel->eventPreviewColour.connect(this, &PropertyFieldColour::notifyPreviewColour);
 	}
 
 	PropertyFieldColour::~PropertyFieldColour()
@@ -86,9 +88,7 @@ namespace tools
 
 	bool PropertyFieldColour::onCheckValue()
 	{
-		bool success = true;
-
-		success = utility::checkParse<float>(mField, 3);
+		bool success = utility::checkParse<float>(mField, 3);
 
 		updateColourPlace(success);
 
@@ -211,4 +211,4 @@ namespace tools
 		return mMainWidget->getVisible();
 	}
 
-} // namespace tools
+}

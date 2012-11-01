@@ -62,19 +62,24 @@ namespace MyGUI
 		// code point is FontCodeType::NotDefined, but it can be customized in the font definition file.
 		Char getSubstituteCodePoint() const;
 
-#ifdef MYGUI_USE_FREETYPE
+		// создаение ресурса по текущим значениям
+		void initialise();
 
-	private:
-		void addCodePoint(Char _codePoint);
-		void removeCodePoint(Char _codePoint);
+		void setSource(const std::string& _value);
+		void setSize(float _value);
+		void setResolution(uint _value);
+		void setHinting(const std::string& _value);
+		void setAntialias(bool _value);
+		void setTabWidth(float _value);
+		void setOffsetHeight(int _value);
+		void setSubstituteCode(int _value);
+		void setDistance(int _value);
 
 		void addCodePointRange(Char _first, Char _second);
 		void removeCodePointRange(Char _first, Char _second);
 
-		void clearCodePoints();
-
-		void initialise();
-
+#ifdef MYGUI_USE_FREETYPE
+	private:
 		enum Hinting
 		{
 			HintingUseNative,
@@ -83,6 +88,11 @@ namespace MyGUI
 			HintingDisableAll
 		};
 
+		void addCodePoint(Char _codePoint);
+		void removeCodePoint(Char _codePoint);
+
+		void clearCodePoints();
+
 		// The following variables are set directly from values specified by the user.
 		std::string mSource; // Source (filename) of the font.
 		float mSize; // Size of the font, in points (there are 72 points per inch).
@@ -90,6 +100,7 @@ namespace MyGUI
 		Hinting mHinting; // What type of hinting to use when rendering the font.
 		bool mAntialias; // Whether or not to anti-alias the font by copying its alpha channel to its luminance channel.
 		float mSpaceWidth; // The width of a "Space" character, in pixels. If zero, the default width is used.
+		int mGlyphSpacing; // How far apart the glyphs are placed from each other in the font texture, in pixels.
 		float mTabWidth; // The width of the "Tab" special character, in pixels.
 		int mOffsetHeight; // How far up to nudge text rendered in this font, in pixels. May be negative to nudge text down.
 		Char mSubstituteCodePoint; // The code point to use as a substitute for code points that don't exist in the font.
@@ -100,7 +111,8 @@ namespace MyGUI
 		MyGUI::ITexture* mTexture; // The texture that contains all of the rendered glyphs in the font.
 
 		// The following constants used to be mutable, but they no longer need to be. Do not modify their values!
-		static const int mGlyphSpacing; // How far apart the glyphs are placed from each other in the font texture, in pixels.
+		static const int mDefaultGlyphSpacing; // How far apart the glyphs are placed from each other in the font texture, in pixels.
+		static const float mDefaultTabWidth; // Default "Tab" width, used only when tab width is no specified.
 		static const float mSelectedWidth; // The width of the "Selected" and "SelectedBack" special characters, in pixels.
 		static const float mCursorWidth; // The width of the "Cursor" special character, in pixels.
 

@@ -1,3 +1,25 @@
-add_subdirectory(WrapperGenerator)
-add_subdirectory(MyGUI.RenderWindow.Export)
-add_subdirectory(MyGUI.OgrePlatform.Export)
+add_subdirectory(MyGUI_RenderWindow_Export)
+
+add_subdirectory(MyGUI_OgrePlatform_Export)
+
+function(mygui_copy_wrapper_solution SolutionName)
+	file(READ ${MYGUI_SOURCE_DIR}/Wrappers/${SolutionName} SolutionFileContent)
+	# 3 times should be enough :/
+	STRING(REGEX REPLACE "(.*)\"([^:]*csproj)\"" "\\1\"${MYGUI_SOURCE_DIR}/Wrappers/\\2\"" SolutionFileContent "${SolutionFileContent}")
+	STRING(REGEX REPLACE "(.*)\"([^:]*csproj)\"" "\\1\"${MYGUI_SOURCE_DIR}/Wrappers/\\2\"" SolutionFileContent "${SolutionFileContent}")
+	STRING(REGEX REPLACE "(.*)\"([^:]*csproj)\"" "\\1\"${MYGUI_SOURCE_DIR}/Wrappers/\\2\"" SolutionFileContent "${SolutionFileContent}")
+	STRING(REGEX REPLACE "(.*)\"([^:]*vcxproj)\"" "\\1\"${MYGUI_SOURCE_DIR}/Wrappers/\\2\"" SolutionFileContent "${SolutionFileContent}")
+	STRING(REGEX REPLACE "(.*)\"([^:]*vcxproj)\"" "\\1\"${MYGUI_SOURCE_DIR}/Wrappers/\\2\"" SolutionFileContent "${SolutionFileContent}")
+	STRING(REGEX REPLACE "(.*)\"([^:]*vcxproj)\"" "\\1\"${MYGUI_SOURCE_DIR}/Wrappers/\\2\"" SolutionFileContent "${SolutionFileContent}")
+	file(WRITE ${MYGUI_BINARY_DIR}/Wrappers/${SolutionName} ${SolutionFileContent})
+endfunction()
+
+if (WIN32)
+	mygui_copy_wrapper_solution("DoxygenWrapper.sln")
+	mygui_copy_wrapper_solution("MogreApp.sln")
+	mygui_copy_wrapper_solution("MogreFramework.sln")
+	mygui_copy_wrapper_solution("MyGUI_Export.sln")
+	mygui_copy_wrapper_solution("MyGUI_Managed.sln")
+	mygui_copy_wrapper_solution("TestApp_Managed.sln")
+	mygui_copy_wrapper_solution("TestApp_Sharp.sln")
+endif ()

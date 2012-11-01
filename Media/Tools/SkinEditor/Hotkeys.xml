@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="HotKeys">
 	<Command>
 		<Name>Command_QuitApp</Name>
@@ -149,6 +149,18 @@
 		<Name>Command_ScreenShot</Name>
 		<KeyCode>SysRq</KeyCode>
 		<Pressed>true</Pressed>
-		<Modifier></Modifier>
+		<Modifier/>
+	</Command>
+	<Command>
+		<Name>Command_Undo</Name>
+		<KeyCode>Z</KeyCode>
+		<Pressed>true</Pressed>
+		<Modifier>Control</Modifier>
+	</Command>
+	<Command>
+		<Name>Command_Redo</Name>
+		<KeyCode>Y</KeyCode>
+		<Pressed>true</Pressed>
+		<Modifier>Control</Modifier>
 	</Command>
 </MyGUI>

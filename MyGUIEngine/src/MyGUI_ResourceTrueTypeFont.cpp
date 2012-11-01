@@ -22,6 +22,7 @@
 #include "MyGUI_Precompiled.h"
 #include "MyGUI_ResourceTrueTypeFont.h"
 #include "MyGUI_DataManager.h"
+#include "MyGUI_DataStreamHolder.h"
 #include "MyGUI_RenderManager.h"
 #include "MyGUI_Bitwise.h"
 
@@ -95,6 +96,55 @@ namespace MyGUI
 	{
 		return Char();
 	}
+
+	void ResourceTrueTypeFont::initialise()
+	{
+	}
+
+	void ResourceTrueTypeFont::setSource(const std::string& _value)
+	{
+	}
+
+	void ResourceTrueTypeFont::setSize(float _value)
+	{
+	}
+
+	void ResourceTrueTypeFont::setResolution(uint _value)
+	{
+	}
+
+	void ResourceTrueTypeFont::setHinting(const std::string& _value)
+	{
+	}
+
+	void ResourceTrueTypeFont::setAntialias(bool _value)
+	{
+	}
+
+	void ResourceTrueTypeFont::setTabWidth(float _value)
+	{
+	}
+
+	void ResourceTrueTypeFont::setOffsetHeight(int _value)
+	{
+	}
+
+	void ResourceTrueTypeFont::setSubstituteCode(int _value)
+	{
+	}
+
+	void ResourceTrueTypeFont::setDistance(int _value)
+	{
+	}
+
+	void ResourceTrueTypeFont::addCodePointRange(Char _first, Char _second)
+	{
+	}
+
+	void ResourceTrueTypeFont::removeCodePointRange(Char _first, Char _second)
+	{
+	}
+
 #else // MYGUI_USE_FREETYPE
 	namespace
 	{
@@ -222,7 +272,8 @@ namespace MyGUI
 
 	}
 
-	const int ResourceTrueTypeFont::mGlyphSpacing = 1;
+	const int ResourceTrueTypeFont::mDefaultGlyphSpacing = 1;
+	const float ResourceTrueTypeFont::mDefaultTabWidth = 8.0f;
 	const float ResourceTrueTypeFont::mSelectedWidth = 1.0f;
 	const float ResourceTrueTypeFont::mCursorWidth = 2.0f;
 
@@ -232,9 +283,10 @@ namespace MyGUI
 		mHinting(HintingUseNative),
 		mAntialias(false),
 		mSpaceWidth(0.0f),
+		mGlyphSpacing(-1),
 		mTabWidth(0.0f),
 		mOffsetHeight(0),
-		mSubstituteCodePoint(FontCodeType::NotDefined),
+		mSubstituteCodePoint(static_cast<Char>(FontCodeType::NotDefined)),
 		mDefaultHeight(0),
 		mSubstituteGlyphInfo(nullptr),
 		mTexture(nullptr)
@@ -261,30 +313,30 @@ namespace MyGUI
 			{
 				const std::string& key = node->findAttribute("key");
 				const std::string& value = node->findAttribute("value");
-				if (key == "Source") mSource = value;
-				else if (key == "Size") mSize = utility::parseFloat(value);
-				else if (key == "Resolution") mResolution = utility::parseUInt(value);
+				if (key == "Source")
+					setSource(value);
+				else if (key == "Size")
+					setSize(utility::parseFloat(value));
+				else if (key == "Resolution")
+					setResolution(utility::parseUInt(value));
+				else if (key == "Antialias")
+					setAntialias(utility::parseBool(value));
+				else if (key == "TabWidth")
+					setTabWidth(utility::parseFloat(value));
+				else if (key == "OffsetHeight")
+					setOffsetHeight(utility::parseInt(value));
+				else if (key == "SubstituteCode")
+					setSubstituteCode(utility::parseInt(value));
+				else if (key == "Distance")
+					setDistance(utility::parseInt(value));
 				else if (key == "Hinting")
-				{
-					if (value == "use_native")
-						mHinting = HintingUseNative;
-					if (value == "force_auto")
-						mHinting = HintingForceAuto;
-					if (value == "disable_auto")
-						mHinting = HintingDisableAuto;
-					if (value == "disable_all")
-						mHinting = HintingDisableAll;
-				}
-				else if (key == "Antialias") mAntialias = utility::parseBool(value);
+					setHinting(value);
 				else if (key == "SpaceWidth")
 				{
 					mSpaceWidth = utility::parseFloat(value);
 					MYGUI_LOG(Warning, _node->findAttribute("type") << ": Property '" << key << "' in font '" << _node->findAttribute("name") << "' is deprecated; remove it to use automatic calculation.");
 				}
-				else if (key == "TabWidth") mTabWidth = utility::parseFloat(value);
-				else if (key == "OffsetHeight") mOffsetHeight = utility::parseInt(value);
-				else if (key == "SubstituteCode") mSubstituteCodePoint = utility::parseInt(value);
-				else if (key == "CursorWidth" || key == "Distance")
+				else if (key == "CursorWidth")
 				{
 					MYGUI_LOG(Warning, _node->findAttribute("type") << ": Property '" << key << "' in font '" << _node->findAttribute("name") << "' is deprecated; value ignored.");
 				}
@@ -434,6 +486,9 @@ namespace MyGUI
 
 	void ResourceTrueTypeFont::initialise()
 	{
+		if (mGlyphSpacing == -1)
+			mGlyphSpacing = mDefaultGlyphSpacing;
+
 		// If L8A8 (2 bytes per pixel) is supported, use it; otherwise, use R8G8B8A8 (4 bytes per pixel) as L8L8L8A8.
 		bool laMode = MyGUI::RenderManager::getInstance().isFormatSupported(Pixel<true>::getFormat(), TextureUsage::Static | TextureUsage::Write);
 
@@ -620,7 +675,7 @@ namespace MyGUI
 
 			// If the width of the "Tab" glyph hasn't been customized, make it eight spaces wide.
 			if (mTabWidth == 0.0f)
-				mTabWidth = 8.0f * spaceGlyphInfo->advance;
+				mTabWidth = mDefaultTabWidth * spaceGlyphInfo->advance;
 		}
 
 		// Create the special glyphs. They must be created after the standard glyphs so that they take precedence in case of a
@@ -630,20 +685,20 @@ namespace MyGUI
 
 		float height = (float)mDefaultHeight;
 
-		texWidth += createGlyph(nextGlyphIndex++, GlyphInfo(FontCodeType::Tab, 0.0f, 0.0f, mTabWidth, 0.0f, 0.0f), glyphHeightMap);
-		texWidth += createGlyph(nextGlyphIndex++, GlyphInfo(FontCodeType::Selected, mSelectedWidth, height, 0.0f, 0.0f, 0.0f), glyphHeightMap);
-		texWidth += createGlyph(nextGlyphIndex++, GlyphInfo(FontCodeType::SelectedBack, mSelectedWidth, height, 0.0f, 0.0f, 0.0f), glyphHeightMap);
-		texWidth += createGlyph(nextGlyphIndex++, GlyphInfo(FontCodeType::Cursor, mCursorWidth, height, 0.0f, 0.0f, 0.0f), glyphHeightMap);
+		texWidth += createGlyph(nextGlyphIndex++, GlyphInfo(static_cast<Char>(FontCodeType::Tab), 0.0f, 0.0f, mTabWidth, 0.0f, 0.0f), glyphHeightMap);
+		texWidth += createGlyph(nextGlyphIndex++, GlyphInfo(static_cast<Char>(FontCodeType::Selected), mSelectedWidth, height, 0.0f, 0.0f, 0.0f), glyphHeightMap);
+		texWidth += createGlyph(nextGlyphIndex++, GlyphInfo(static_cast<Char>(FontCodeType::SelectedBack), mSelectedWidth, height, 0.0f, 0.0f, 0.0f), glyphHeightMap);
+		texWidth += createGlyph(nextGlyphIndex++, GlyphInfo(static_cast<Char>(FontCodeType::Cursor), mCursorWidth, height, 0.0f, 0.0f, 0.0f), glyphHeightMap);
 
 		// If a substitute code point has been specified, check to make sure that it exists in the character map. If it doesn't,
 		// revert to the default "Not Defined" code point. This is not a real code point but rather an invalid Unicode value that
 		// is guaranteed to cause the "Not Defined" special glyph to be created.
 		if (mSubstituteCodePoint != FontCodeType::NotDefined && mCharMap.find(mSubstituteCodePoint) == mCharMap.end())
-			mSubstituteCodePoint = FontCodeType::NotDefined;
+			mSubstituteCodePoint = static_cast<Char>(FontCodeType::NotDefined);
 
 		// Create the "Not Defined" code point (and its corresponding glyph) if it's in use as the substitute code point.
 		if (mSubstituteCodePoint == FontCodeType::NotDefined)
-			texWidth += createFaceGlyph(0, FontCodeType::NotDefined, fontAscent, ftFace, ftLoadFlags, glyphHeightMap);
+			texWidth += createFaceGlyph(0, static_cast<Char>(FontCodeType::NotDefined), fontAscent, ftFace, ftLoadFlags, glyphHeightMap);
 
 		// Cache a pointer to the substitute glyph info for fast lookup.
 		mSubstituteGlyphInfo = &mGlyphMap.find(mCharMap.find(mSubstituteCodePoint)->second)->second;
@@ -753,7 +808,9 @@ namespace MyGUI
 		size_t fontBufferSize = datastream->size();
 		_fontBuffer = new uint8[fontBufferSize];
 		datastream->read(_fontBuffer, fontBufferSize);
-		delete datastream;
+
+		DataManager::getInstance().freeData(datastream);
+		datastream = nullptr;
 
 		// Determine how many faces the font contains.
 		if (FT_New_Memory_Face(_ftLibrary, _fontBuffer, (FT_Long)fontBufferSize, -1, &result) != 0)
@@ -1013,6 +1070,60 @@ namespace MyGUI
 
 		if (width > 0)
 			_texX += mGlyphSpacing + width;
+	}
+
+	void ResourceTrueTypeFont::setSource(const std::string& _value)
+	{
+		mSource = _value;
+	}
+
+	void ResourceTrueTypeFont::setSize(float _value)
+	{
+		mSize = _value;
+	}
+
+	void ResourceTrueTypeFont::setResolution(uint _value)
+	{
+		mResolution = _value;
+	}
+
+	void ResourceTrueTypeFont::setHinting(const std::string& _value)
+	{
+		if (_value == "use_native")
+			mHinting = HintingUseNative;
+		else if (_value == "force_auto")
+			mHinting = HintingForceAuto;
+		else if (_value == "disable_auto")
+			mHinting = HintingDisableAuto;
+		else if (_value == "disable_all")
+			mHinting = HintingDisableAll;
+		else
+			mHinting = HintingUseNative;
+	}
+
+	void ResourceTrueTypeFont::setAntialias(bool _value)
+	{
+		mAntialias = _value;
+	}
+
+	void ResourceTrueTypeFont::setTabWidth(float _value)
+	{
+		mTabWidth = _value;
+	}
+
+	void ResourceTrueTypeFont::setOffsetHeight(int _value)
+	{
+		mOffsetHeight = _value;
+	}
+
+	void ResourceTrueTypeFont::setSubstituteCode(int _value)
+	{
+		mSubstituteCodePoint = _value;
+	}
+
+	void ResourceTrueTypeFont::setDistance(int _value)
+	{
+		mGlyphSpacing = _value;
 	}
 
 #endif // MYGUI_USE_FREETYPE

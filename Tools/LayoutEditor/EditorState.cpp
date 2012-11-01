@@ -11,38 +11,40 @@
 #include "WidgetSelectorManager.h"
 #include "HotKeyManager.h"
 #include "MessageBoxManager.h"
-#include "Tools/DialogManager.h"
+#include "DialogManager.h"
 #include "StateManager.h"
 #include "Localise.h"
 #include "Application.h"
 #include "RecentFilesManager.h"
 #include "WidgetCreatorManager.h"
+#include "FactoryManager.h"
 
 namespace tools
 {
+
+	FACTORY_ITEM_ATTRIBUTE(EditorState)
+
 	EditorState::EditorState() :
 		mSettingsWindow(nullptr),
 		mCodeGenerator(nullptr),
 		mOpenSaveFileDialog(nullptr),
 		mMessageBoxFadeControl(nullptr),
-		mBackgroundControl(nullptr),
 		mMainPaneControl(nullptr),
 		mFileName("unnamed.layout"),
 		mDefaultFileName("unnamed.layout")
 	{
-		CommandManager::getInstance().registerCommand("Command_FileLoad", MyGUI::newDelegate(this, &EditorState::command_Load));
-		CommandManager::getInstance().registerCommand("Command_FileSave", MyGUI::newDelegate(this, &EditorState::command_Save));
-		CommandManager::getInstance().registerCommand("Command_FileSaveAs", MyGUI::newDelegate(this, &EditorState::command_SaveAs));
-		CommandManager::getInstance().registerCommand("Command_ClearAll", MyGUI::newDelegate(this, &EditorState::command_Clear));
-		CommandManager::getInstance().registerCommand("Command_Test", MyGUI::newDelegate(this, &EditorState::command_Test));
-		CommandManager::getInstance().registerCommand("Command_Quit", MyGUI::newDelegate(this, &EditorState::command_Quit));
-		CommandManager::getInstance().registerCommand("Command_Settings", MyGUI::newDelegate(this, &EditorState::command_Settings));
-		CommandManager::getInstance().registerCommand("Command_CodeGenerator", MyGUI::newDelegate(this, &EditorState::command_CodeGenerator));
-		CommandManager::getInstance().registerCommand("Command_OpenRecentFile", MyGUI::newDelegate(this, &EditorState::command_OpenRecentFile));
-		CommandManager::getInstance().registerCommand("Command_FileDrop", MyGUI::newDelegate(this, &EditorState::command_FileDrop));
-		CommandManager::getInstance().registerCommand("Command_SaveItemAs", MyGUI::newDelegate(this, &EditorState::command_SaveItemAs));
-		CommandManager::getInstance().registerCommand("Command_UpdateItemName", MyGUI::newDelegate(this, &EditorState::command_UpdateItemName));
-		CommandManager::getInstance().registerCommand("Command_UpdateResources", MyGUI::newDelegate(this, &EditorState::command_UpdateResources));
+		CommandManager::getInstance().getEvent("Command_FileLoad")->connect(this, &EditorState::command_Load);
+		CommandManager::getInstance().getEvent("Command_FileSave")->connect(this, &EditorState::command_Save);
+		CommandManager::getInstance().getEvent("Command_FileSaveAs")->connect(this, &EditorState::command_SaveAs);
+		CommandManager::getInstance().getEvent("Command_ClearAll")->connect(this, &EditorState::command_Clear);
+		CommandManager::getInstance().getEvent("Command_Quit")->connect(this, &EditorState::command_Quit);
+		CommandManager::getInstance().getEvent("Command_Settings")->connect(this, &EditorState::command_Settings);
+		CommandManager::getInstance().getEvent("Command_CodeGenerator")->connect(this, &EditorState::command_CodeGenerator);
+		CommandManager::getInstance().getEvent("Command_OpenRecentFile")->connect(this, &EditorState::command_OpenRecentFile);
+		CommandManager::getInstance().getEvent("Command_FileDrop")->connect(this, &EditorState::command_FileDrop);
+		CommandManager::getInstance().getEvent("Command_SaveItemAs")->connect(this, &EditorState::command_SaveItemAs);
+		CommandManager::getInstance().getEvent("Command_UpdateItemName")->connect(this, &EditorState::command_UpdateItemName);
+		CommandManager::getInstance().getEvent("Command_UpdateResources")->connect(this, &EditorState::command_UpdateResources);
 	}
 
 	EditorState::~EditorState()
@@ -54,22 +56,24 @@ namespace tools
 		addUserTag("\\n", "\n");
 		setFileName(mFileName);
 
-		mBackgroundControl = new BackgroundControl();
 		mMainPaneControl = new MainPaneControl();
 
 		mSettingsWindow = new SettingsWindow();
-		mSettingsWindow->eventEndDialog = MyGUI::newDelegate(this, &EditorState::notifySettingsWindowEndDialog);
+		mSettingsWindow->Initialise(SettingsManager::getInstance().getValue("EditorState/SettingsWindowLayout"));
+		mSettingsWindow->eventEndDialog.connect(this, &EditorState::notifySettingsWindowEndDialog);
 
 		mCodeGenerator = new CodeGenerator();
-		mCodeGenerator->eventEndDialog = MyGUI::newDelegate(this, &EditorState::notifyEndDialogCodeGenerator);
+		mCodeGenerator->eventEndDialog.connect(this, &EditorState::notifyEndDialogCodeGenerator);
 
 		mOpenSaveFileDialog = new OpenSaveFileDialog();
+		mOpenSaveFileDialog->Initialise(SettingsManager::getInstance().getValue("EditorState/OpenSaveFileDialogLayout"));
 		mOpenSaveFileDialog->setFileMask("*.layout");
-		mOpenSaveFileDialog->eventEndDialog = MyGUI::newDelegate(this, &EditorState::notifyEndDialogOpenSaveFile);
+		mOpenSaveFileDialog->eventEndDialog.connect(this, &EditorState::notifyEndDialogOpenSaveFile);
 		mOpenSaveFileDialog->setCurrentFolder(RecentFilesManager::getInstance().getRecentFolder());
 		mOpenSaveFileDialog->setRecentFolders(RecentFilesManager::getInstance().getRecentFolders());
 
 		mMessageBoxFadeControl = new MessageBoxFadeControl();
+		mMessageBoxFadeControl->Initialise();
 
 		updateCaption();
 
@@ -100,9 +104,6 @@ namespace tools
 		delete mOpenSaveFileDialog;
 		mOpenSaveFileDialog = nullptr;
 
-		delete mBackgroundControl;
-		mBackgroundControl = nullptr;
-
 		delete mMainPaneControl;
 		mMainPaneControl = nullptr;
 	}
@@ -112,21 +113,9 @@ namespace tools
 		MYGUI_ASSERT(mSettingsWindow == _dialog, "mSettingsWindow == _sender");
 
 		if (_result)
-		{
-			mSettingsWindow->saveSettings();
-		}
+			mSettingsWindow->SendCommand("Command_SaveSettings");
 
 		mSettingsWindow->endModal();
-	}
-
-	void EditorState::command_Test(const MyGUI::UString& _commandName, bool& _result)
-	{
-		if (!checkCommand())
-			return;
-
-		StateManager::getInstance().stateEvent(this, "Test");
-
-		_result = true;
 	}
 
 	void EditorState::command_Settings(const MyGUI::UString& _commandName, bool& _result)
@@ -134,6 +123,7 @@ namespace tools
 		if (!checkCommand())
 			return;
 
+		mSettingsWindow->SendCommand("Command_LoadSettings");
 		mSettingsWindow->doModal();
 
 		_result = true;
@@ -189,7 +179,10 @@ namespace tools
 
 		if (UndoManager::getInstance().isUnsaved())
 		{
-			save();
+			if (mFileName == mDefaultFileName)
+				showSaveAsWindow();
+			else
+				save();
 		}
 
 		_result = true;
@@ -485,9 +478,16 @@ namespace tools
 	{
 		if (_result == MyGUI::MessageBoxStyle::Yes)
 		{
-			if (save())
+			if (mFileName == mDefaultFileName)
 			{
-				StateManager::getInstance().stateEvent(this, "Exit");
+				showSaveAsWindow();
+			}
+			else
+			{
+				if (save())
+				{
+					StateManager::getInstance().stateEvent(this, "Exit");
+				}
 			}
 		}
 		else if (_result == MyGUI::MessageBoxStyle::No)
@@ -595,12 +595,11 @@ namespace tools
 		if (!checkCommand())
 			return;
 
-		typedef std::vector<MyGUI::UString> VectorUString;
-		VectorUString resources = SettingsManager::getInstance().getSector("Settings")->getPropertyValueList("UpdateResources");
+		SettingsManager::VectorString resources = SettingsManager::getInstance().getValueList("Resources/UpdateResource.List");
 		if (resources.empty())
 			return;
 
-		for (VectorUString::iterator resource = resources.begin(); resource != resources.end(); ++resource)
+		for (SettingsManager::VectorString::iterator resource = resources.begin(); resource != resources.end(); ++resource)
 			MyGUI::ResourceManager::getInstance().load(*resource);
 
 		MyGUI::xml::Document* savedDoc = EditorWidgets::getInstance().savexmlDocument();
@@ -612,4 +611,4 @@ namespace tools
 		_result = true;
 	}
 
-} // namespace tools
+}

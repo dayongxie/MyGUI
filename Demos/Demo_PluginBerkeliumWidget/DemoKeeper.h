@@ -6,7 +6,7 @@
 #ifndef __DEMO_KEEPER_H__
 #define __DEMO_KEEPER_H__
 
-#include "BaseManager.h"
+#include "Base/BaseDemoManager.h"
 
 namespace demo
 {

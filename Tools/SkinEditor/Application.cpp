@@ -3,61 +3,76 @@
 	@author		Albert Semenov
 	@date		08/2010
 */
+
 #include "Precompiled.h"
 #include "Application.h"
 #include "Base/Main.h"
-#include "SkinManager.h"
 #include "ActionManager.h"
 #include "CommandManager.h"
 #include "ExportManager.h"
 #include "MyGUI_FilterNoneSkin.h"
 #include "MessageBoxManager.h"
-#include "Tools/DialogManager.h"
+#include "DialogManager.h"
 #include "HotKeyManager.h"
 #include "StateManager.h"
 #include "RecentFilesManager.h"
 #include "SettingsManager.h"
+#include "SettingsManager.h"
 #include "ColourManager.h"
 #include "Localise.h"
-#include "Grid.h"
+#include "GridManager.h"
+#include "DataManager.h"
+#include "DataTypeManager.h"
+#include "DataSelectorManager.h"
+#include "ScopeManager.h"
+#include "FactoryManager.h"
+#include "ComponentFactory.h"
 
 template <> tools::Application* MyGUI::Singleton<tools::Application>::msInstance = nullptr;
-template <> const char* MyGUI::Singleton<tools::Application>::mClassTypeName("Application");
+template <> const char* MyGUI::Singleton<tools::Application>::mClassTypeName = "Application";
 
 namespace tools
 {
 
-	Application::Application() :
-		mEditorState(nullptr),
-		mTestState(nullptr)
+	Application::Application()
 	{
+		ComponentFactory::Initialise();
 	}
 
 	Application::~Application()
 	{
+		ComponentFactory::Shutdown();
 	}
 
 	void Application::setupResources()
 	{
 		base::BaseManager::setupResources();
+		addResourceLocation(getRootMedia() + "/Tools/EditorFramework");
 		addResourceLocation(getRootMedia() + "/Tools/SkinEditor");
 		addResourceLocation(getRootMedia() + "/Common/Tools");
 		addResourceLocation(getRootMedia() + "/Common/MessageBox");
 		addResourceLocation(getRootMedia() + "/Common/Themes");
-		setResourceFilename("Editor.xml");
+		setResourceFilename("");
 	}
 
 	void Application::createScene()
 	{
-		if (getStatisticInfo() != nullptr)
-			getStatisticInfo()->setVisible(false);
-
-		MyGUI::FactoryManager::getInstance().registerFactory<MyGUI::FilterNone>("BasisSkin");
-
 		new SettingsManager();
-		SettingsManager::getInstance().initialise("se_user_settings.xml");
+		SettingsManager::getInstance().loadSettingsFile(MyGUI::DataManager::getInstance().getDataPath("Settings.xml"));
 
-		std::string language = SettingsManager::getInstance().getSector("Settings")->getPropertyValue("InterfaceLanguage");
+		std::string userSettingsFileName = SettingsManager::getInstance().getValue("Editor/UserSettingsFileName");
+		if (!userSettingsFileName.empty())
+			SettingsManager::getInstance().loadUserSettingsFile(userSettingsFileName);
+
+		new HotKeyManager();
+		HotKeyManager::getInstance().initialise();
+
+		std::string subWidgetCategory = MyGUI::SubWidgetManager::getInstance().getCategoryName();
+		MyGUI::FactoryManager::getInstance().registerFactory<MyGUI::FilterNone>(subWidgetCategory);
+
+		LoadGuiSettings();
+
+		std::string language = SettingsManager::getInstance().getValue("Settings/InterfaceLanguage");
 		if (language.empty() || language == "Auto")
 		{
 			if (!mLocale.empty())
@@ -74,9 +89,6 @@ namespace tools
 		new CommandManager();
 		CommandManager::getInstance().initialise();
 
-		new SkinManager();
-		SkinManager::getInstance().initialise();
-
 		new ActionManager();
 		ActionManager::getInstance().initialise();
 
@@ -89,62 +101,60 @@ namespace tools
 		new DialogManager();
 		DialogManager::getInstance().initialise();
 
-		new HotKeyManager();
-		HotKeyManager::getInstance().initialise();
-
 		new StateManager();
 		StateManager::getInstance().initialise();
 
 		new ColourManager();
 		ColourManager::getInstance().initialise();
 
-		new Grid();
-		Grid::getInstance().initialise();
+		new GridManager();
+		GridManager::getInstance().initialise();
 
-		MyGUI::ResourceManager::getInstance().load("Initialise.xml");
+		new ScopeManager();
+		ScopeManager::getInstance().initialise();
 
-		const SettingsSector::VectorUString& additionalPaths = SettingsManager::getInstance().getSector("Settings")->getPropertyValueList("AdditionalPaths");
-		for (SettingsSector::VectorUString::const_iterator iter = additionalPaths.begin(); iter != additionalPaths.end(); ++iter)
-			addResourceLocation(*iter);
+		new tools::DataTypeManager();
+		tools::DataTypeManager::getInstance().initialise();
 
-		const SettingsSector::VectorUString& additionalResources = SettingsManager::getInstance().getSector("Settings")->getPropertyValueList("AdditionalResources");
-		for (SettingsSector::VectorUString::const_iterator iter = additionalResources.begin(); iter != additionalResources.end(); ++iter)
-			MyGUI::ResourceManager::getInstance().load(*iter);
+		std::string dataTypeFileName = SettingsManager::getInstance().getValue("Editor/DataTypeFileName");
+		if (!dataTypeFileName.empty())
+			tools::DataTypeManager::getInstance().load(dataTypeFileName);
 
-		CommandManager::getInstance().registerCommand("Command_StatisticInfo", MyGUI::newDelegate(this, &Application::command_StatisticInfo));
-		CommandManager::getInstance().registerCommand("Command_FocusVisible", MyGUI::newDelegate(this, &Application::command_FocusVisible));
-		CommandManager::getInstance().registerCommand("Command_ScreenShot", MyGUI::newDelegate(this, &Application::command_ScreenShot));
-		CommandManager::getInstance().registerCommand("Command_QuitApp", MyGUI::newDelegate(this, &Application::command_QuitApp));
-		CommandManager::getInstance().registerCommand("Command_UpdateAppCaption", MyGUI::newDelegate(this, &Application::command_UpdateAppCaption));
+		new tools::DataManager();
+		tools::DataManager::getInstance().initialise();
 
-		mEditorState = new EditorState();
-		mTestState = new TestState();
+		new tools::DataSelectorManager();
+		tools::DataSelectorManager::getInstance().initialise();
 
-		StateManager::getInstance().registerState(this, "Application");
-		StateManager::getInstance().registerState(mEditorState, "EditorState");
-		StateManager::getInstance().registerState(mTestState, "TestState");
+		bool maximized = SettingsManager::getInstance().getValue<bool>("Controls/Main/Maximized");
+		setWindowMaximized(maximized);
+		if (!maximized)
+		{
+			MyGUI::IntCoord windowCoord = SettingsManager::getInstance().getValue<MyGUI::IntCoord>("Controls/Main/Coord");
+			setWindowCoord(windowCoord);
+		}
 
-		StateManager::getInstance().registerEventState("Application", "Start", "EditorState");
-		StateManager::getInstance().registerEventState("EditorState", "Test", "TestState");
-		StateManager::getInstance().registerEventState("EditorState", "Exit", "Application");
-		StateManager::getInstance().registerEventState("TestState", "Exit", "EditorState");
+		CommandManager::getInstance().getEvent("Command_ScreenShot")->connect(this, &Application::command_ScreenShot);
+		CommandManager::getInstance().getEvent("Command_QuitApp")->connect(this, &Application::command_QuitApp);
+		CommandManager::getInstance().getEvent("Command_UpdateAppCaption")->connect(this, &Application::command_UpdateAppCaption);
 
-		StateManager::getInstance().pushState(this);
-		StateManager::getInstance().stateEvent(this, "Start");
+		CreateControls();
+		LoadStates();
 	}
 
 	void Application::destroyScene()
 	{
+		saveSettings();
+
 		StateManager::getInstance().rollbackToState(nullptr);
 
-		delete mEditorState;
-		mEditorState = nullptr;
+		DestroyControls();
 
-		delete mTestState;
-		mTestState = nullptr;
+		ScopeManager::getInstance().shutdown();
+		delete ScopeManager::getInstancePtr();
 
-		Grid::getInstance().shutdown();
-		delete Grid::getInstancePtr();
+		GridManager::getInstance().shutdown();
+		delete GridManager::getInstancePtr();
 
 		ColourManager::getInstance().shutdown();
 		delete ColourManager::getInstancePtr();
@@ -167,19 +177,27 @@ namespace tools
 		ActionManager::getInstance().shutdown();
 		delete ActionManager::getInstancePtr();
 
-		SkinManager::getInstance().shutdown();
-		delete SkinManager::getInstancePtr();
-
 		CommandManager::getInstance().shutdown();
 		delete CommandManager::getInstancePtr();
 
 		RecentFilesManager::getInstance().shutdown();
 		delete RecentFilesManager::getInstancePtr();
 
-		SettingsManager::getInstance().shutdown();
+		tools::DataSelectorManager::getInstance().shutdown();
+		delete tools::DataSelectorManager::getInstancePtr();
+
+		tools::DataManager::getInstance().shutdown();
+		delete tools::DataManager::getInstancePtr();
+
+		tools::DataTypeManager::getInstance().shutdown();
+		delete tools::DataTypeManager::getInstancePtr();
+
+		SettingsManager::getInstance().saveSettingsFile("SettingsResult.xml");
+		SettingsManager::getInstance().saveUserSettingsFile();
 		delete SettingsManager::getInstancePtr();
 
-		MyGUI::FactoryManager::getInstance().unregisterFactory<MyGUI::FilterNone>("BasisSkin");
+		std::string subWidgetCategory = MyGUI::SubWidgetManager::getInstance().getCategoryName();
+		MyGUI::FactoryManager::getInstance().unregisterFactory<MyGUI::FilterNone>(subWidgetCategory);
 	}
 
 	void Application::prepare()
@@ -194,7 +212,7 @@ namespace tools
 		else if (mLocale == "en")
 			mLocale = "English";
 
-#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+#if MYGUI_PLATFORM == MYGUI_PLATFORM_WIN32
 
 		// при дропе файл может быть запущен в любой дирректории
 		wchar_t buff[MAX_PATH];
@@ -292,13 +310,78 @@ namespace tools
 
 	bool Application::onWinodwClose(size_t _handle)
 	{
-#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+#if MYGUI_PLATFORM == MYGUI_PLATFORM_WIN32
 		if (::IsIconic((HWND)_handle))
 			ShowWindow((HWND)_handle, SW_SHOWNORMAL);
 #endif
 
 		CommandManager::getInstance().executeCommand("Command_QuitApp");
 		return false;
+	}
+
+	void Application::setWindowMaximized(bool _value)
+	{
+	#if MYGUI_PLATFORM == MYGUI_PLATFORM_WIN32
+		if (_value)
+		{
+			size_t handle = getWindowHandle();
+			::ShowWindow((HWND)handle, SW_SHOWMAXIMIZED);
+		}
+	#endif
+	}
+
+	bool Application::getWindowMaximized()
+	{
+		bool result = false;
+	#if MYGUI_PLATFORM == MYGUI_PLATFORM_WIN32
+		size_t handle = getWindowHandle();
+		result = ::IsZoomed((HWND)handle) != 0;
+	#endif
+		return result;
+	}
+
+	void Application::setWindowCoord(const MyGUI::IntCoord& _value)
+	{
+	#if MYGUI_PLATFORM == MYGUI_PLATFORM_WIN32
+		if (_value.empty())
+			return;
+
+		MyGUI::IntCoord coord = _value;
+		if (coord.left < 0)
+			coord.left = 0;
+		if (coord.top < 0)
+			coord.top = 0;
+		if (coord.width < 640)
+			coord.width = 640;
+		if (coord.height < 480)
+			coord.height = 480;
+		if (coord.width > GetSystemMetrics(SM_CXSCREEN))
+			coord.width = GetSystemMetrics(SM_CXSCREEN);
+		if (coord.height > GetSystemMetrics(SM_CYSCREEN))
+			coord.height = GetSystemMetrics(SM_CYSCREEN);
+		if (coord.right() > GetSystemMetrics(SM_CXSCREEN))
+			coord.left = GetSystemMetrics(SM_CXSCREEN) - coord.width;
+		if (coord.bottom() > GetSystemMetrics(SM_CYSCREEN))
+			coord.top = GetSystemMetrics(SM_CYSCREEN) - coord.height;
+
+		size_t handle = getWindowHandle();
+		::MoveWindow((HWND)handle, coord.left, coord.top, coord.width, coord.height, true);
+	#endif
+	}
+
+	MyGUI::IntCoord Application::getWindowCoord()
+	{
+		MyGUI::IntCoord result;
+	#if MYGUI_PLATFORM == MYGUI_PLATFORM_WIN32
+		size_t handle = getWindowHandle();
+		::RECT rect;
+		::GetWindowRect((HWND)handle, &rect);
+		result.left = rect.left;
+		result.top = rect.top;
+		result.width = rect.right - rect.left;
+		result.height = rect.bottom - rect.top;
+	#endif
+		return result;
 	}
 
 	void Application::injectKeyPress(MyGUI::KeyCode _key, MyGUI::Char _text)
@@ -333,25 +416,6 @@ namespace tools
 		_result = true;
 	}
 
-	void Application::resumeState()
-	{
-		quit();
-	}
-
-	void Application::command_StatisticInfo(const MyGUI::UString& _commandName, bool& _result)
-	{
-		getStatisticInfo()->setVisible(!getStatisticInfo()->getVisible());
-
-		_result = true;
-	}
-
-	void Application::command_FocusVisible(const MyGUI::UString& _commandName, bool& _result)
-	{
-		getFocusInput()->setFocusVisible(!getFocusInput()->getFocusVisible());
-
-		_result = true;
-	}
-
 	void Application::command_ScreenShot(const MyGUI::UString& _commandName, bool& _result)
 	{
 		makeScreenShot();
@@ -371,6 +435,74 @@ namespace tools
 		return mParams;
 	}
 
-} // namespace tools
+	void Application::saveSettings()
+	{
+		SettingsManager::getInstance().setValue("Controls/Main/Maximized", getWindowMaximized());
+		SettingsManager::getInstance().setValue("Controls/Main/Coord", getWindowCoord());
+	}
+
+	void Application::LoadStates()
+	{
+		SettingsManager::VectorString values = SettingsManager::getInstance().getValueList("Editor/States/State.List");
+		for (SettingsManager::VectorString::const_iterator value = values.begin(); value != values.end(); value ++)
+		{
+			StateController* state = components::FactoryManager::GetInstance().CreateItem<StateController>(*value);
+			if (state != nullptr)
+				StateManager::getInstance().registerState(state, *value);
+		}
+
+		pugi::xpath_node_set events = SettingsManager::getInstance().getValueNodeList("Editor/States/Event.List");
+		for (pugi::xpath_node_set::const_iterator event = events.begin(); event != events.end(); event ++)
+		{
+			StateManager::getInstance().registerEventState(
+				(*event).node().child("From").child_value(),
+				(*event).node().child("Name").child_value(),
+				(*event).node().child("To").child_value());
+		}
+
+		std::string firstState = SettingsManager::getInstance().getValue("Editor/States/FirstState/Name");
+		StateManager::getInstance().pushState(firstState);
+
+		std::string firstEvent = SettingsManager::getInstance().getValue("Editor/States/FirstState/Event");
+		StateManager::getInstance().stateEvent(firstState, firstEvent);
+	}
+
+	void Application::LoadGuiSettings()
+	{
+		const SettingsManager::VectorString& resources = SettingsManager::getInstance().getValueList("Resources/Resource.List");
+		for (SettingsManager::VectorString::const_iterator iter = resources.begin(); iter != resources.end(); ++iter)
+			MyGUI::ResourceManager::getInstance().load(*iter);
+
+		const SettingsManager::VectorString& additionalPaths = SettingsManager::getInstance().getValueList("Resources/AdditionalPath.List");
+		for (SettingsManager::VectorString::const_iterator iter = additionalPaths.begin(); iter != additionalPaths.end(); ++iter)
+			addResourceLocation(*iter);
+
+		const SettingsManager::VectorString& additionalResources = SettingsManager::getInstance().getValueList("Resources/AdditionalResource.List");
+		for (SettingsManager::VectorString::const_iterator iter = additionalResources.begin(); iter != additionalResources.end(); ++iter)
+			MyGUI::ResourceManager::getInstance().load(*iter);
+	}
+
+	void Application::CreateControls()
+	{
+		const SettingsManager::VectorString& controls = SettingsManager::getInstance().getValueList("Editor/Control.List");
+		for (SettingsManager::VectorString::const_iterator controlType = controls.begin(); controlType != controls.end(); controlType ++)
+		{
+			Control* control = components::FactoryManager::GetInstance().CreateItem<Control>(*controlType);
+			if (control != nullptr)
+			{
+				control->Initialise();
+				mControls.push_back(control);
+			}
+		}
+	}
+
+	void Application::DestroyControls()
+	{
+		for (VectorControl::iterator control = mControls.begin(); control != mControls.end(); control ++)
+			delete *control;
+		mControls.clear();
+	}
+
+}
 
 MYGUI_APP(tools::Application)

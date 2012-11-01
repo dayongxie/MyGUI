@@ -307,7 +307,8 @@ namespace MyGUI
 			mRenderItem->addDrawItem(this, mCountVertex);
 		}
 
-		if (nullptr != mNode) mNode->outOfDate(mRenderItem);
+		if (nullptr != mNode)
+			mNode->outOfDate(mRenderItem);
 	}
 
 	const std::string& EditText::getFontName() const
@@ -629,7 +630,7 @@ namespace MyGUI
 		if (mVisibleCursor)
 		{
 			IntPoint point = mTextView.getCursorPoint(mCursorPosition) - mViewOffset + mCoord.point();
-			GlyphInfo* cursorGlyph = mFont->getGlyphInfo(FontCodeType::Cursor);
+			GlyphInfo* cursorGlyph = mFont->getGlyphInfo(static_cast<Char>(FontCodeType::Cursor));
 			vertexRect.set((float)point.left, (float)point.top, (float)point.left + cursorGlyph->width, (float)(point.top + mFontHeight));
 
 			drawGlyph(renderTargetInfo, vertex, vertexCount, vertexRect, cursorGlyph->uvRect, mCurrentColourNative | 0x00FFFFFF);
@@ -703,19 +704,19 @@ namespace MyGUI
 		_vertex[0].u = _textureRect.left;
 		_vertex[0].v = _textureRect.top;
 
-		_vertex[1].x = _vertexRect.left;
-		_vertex[1].y = _vertexRect.bottom;
-		_vertex[1].z = _vertexZ;
-		_vertex[1].colour = _colour;
-		_vertex[1].u = _textureRect.left;
-		_vertex[1].v = _textureRect.bottom;
-
-		_vertex[2].x = _vertexRect.right;
-		_vertex[2].y = _vertexRect.top;
+		_vertex[2].x = _vertexRect.left;
+		_vertex[2].y = _vertexRect.bottom;
 		_vertex[2].z = _vertexZ;
 		_vertex[2].colour = _colour;
-		_vertex[2].u = _textureRect.right;
-		_vertex[2].v = _textureRect.top;
+		_vertex[2].u = _textureRect.left;
+		_vertex[2].v = _textureRect.bottom;
+
+		_vertex[1].x = _vertexRect.right;
+		_vertex[1].y = _vertexRect.top;
+		_vertex[1].z = _vertexZ;
+		_vertex[1].colour = _colour;
+		_vertex[1].u = _textureRect.right;
+		_vertex[1].v = _textureRect.top;
 
 		_vertex[3].x = _vertexRect.right;
 		_vertex[3].y = _vertexRect.top;
@@ -724,19 +725,19 @@ namespace MyGUI
 		_vertex[3].u = _textureRect.right;
 		_vertex[3].v = _textureRect.top;
 
-		_vertex[4].x = _vertexRect.left;
-		_vertex[4].y = _vertexRect.bottom;
-		_vertex[4].z = _vertexZ;
-		_vertex[4].colour = _colour;
-		_vertex[4].u = _textureRect.left;
-		_vertex[4].v = _textureRect.bottom;
-
-		_vertex[5].x = _vertexRect.right;
+		_vertex[5].x = _vertexRect.left;
 		_vertex[5].y = _vertexRect.bottom;
 		_vertex[5].z = _vertexZ;
 		_vertex[5].colour = _colour;
-		_vertex[5].u = _textureRect.right;
+		_vertex[5].u = _textureRect.left;
 		_vertex[5].v = _textureRect.bottom;
+
+		_vertex[4].x = _vertexRect.right;
+		_vertex[4].y = _vertexRect.bottom;
+		_vertex[4].z = _vertexZ;
+		_vertex[4].colour = _colour;
+		_vertex[4].u = _textureRect.right;
+		_vertex[4].v = _textureRect.bottom;
 
 		_vertex += VERTEX_IN_QUAD;
 		_vertexCount += VERTEX_IN_QUAD;
@@ -819,7 +820,7 @@ namespace MyGUI
 			((_renderTargetInfo.pixScaleX * (pix_left + _vertexRect.width()) + _renderTargetInfo.hOffset) * 2.0f) - 1.0f,
 			-(((_renderTargetInfo.pixScaleY * (pix_top + _vertexRect.height()) + _renderTargetInfo.vOffset) * 2.0f) - 1.0f));
 
-		drawQuad(_vertex, _vertexCount, vertexRect, _renderTargetInfo.maximumDepth, _textureRect, _colour);
+		drawQuad(_vertex, _vertexCount, vertexRect, mNode->getNodeDepth(), _textureRect, _colour);
 	}
 
 } // namespace MyGUI

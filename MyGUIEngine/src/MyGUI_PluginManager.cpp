@@ -26,16 +26,16 @@
 
 namespace MyGUI
 {
+
 	typedef void (*DLL_START_PLUGIN)(void);
 	typedef void (*DLL_STOP_PLUGIN)(void);
 
-	const std::string XML_TYPE("Plugin");
-
 	template <> PluginManager* Singleton<PluginManager>::msInstance = nullptr;
-	template <> const char* Singleton<PluginManager>::mClassTypeName("PluginManager");
+	template <> const char* Singleton<PluginManager>::mClassTypeName = "PluginManager";
 
 	PluginManager::PluginManager() :
-		mIsInitialise(false)
+		mIsInitialise(false),
+		mXmlPluginTagName("Plugin")
 	{
 	}
 
@@ -44,7 +44,7 @@ namespace MyGUI
 		MYGUI_ASSERT(!mIsInitialise, getClassTypeName() << " initialised twice");
 		MYGUI_LOG(Info, "* Initialise: " << getClassTypeName());
 
-		ResourceManager::getInstance().registerLoadXmlDelegate(XML_TYPE) = newDelegate(this, &PluginManager::_load);
+		ResourceManager::getInstance().registerLoadXmlDelegate(mXmlPluginTagName) = newDelegate(this, &PluginManager::_load);
 
 		MYGUI_LOG(Info, getClassTypeName() << " successfully initialized");
 		mIsInitialise = true;
@@ -56,7 +56,7 @@ namespace MyGUI
 		MYGUI_LOG(Info, "* Shutdown: " << getClassTypeName());
 
 		unloadAllPlugins();
-		ResourceManager::getInstance().unregisterLoadXmlDelegate(XML_TYPE);
+		ResourceManager::getInstance().unregisterLoadXmlDelegate(mXmlPluginTagName);
 
 		MYGUI_LOG(Info, getClassTypeName() << " successfully shutdown");
 		mIsInitialise = false;
@@ -75,7 +75,7 @@ namespace MyGUI
 		}
 
 		// Call startup function
-		DLL_START_PLUGIN pFunc = (DLL_START_PLUGIN)lib->getSymbol("dllStartPlugin");
+		DLL_START_PLUGIN pFunc = reinterpret_cast<DLL_START_PLUGIN>(lib->getSymbol("dllStartPlugin"));
 		if (!pFunc)
 		{
 			MYGUI_LOG(Error, "Cannot find symbol 'dllStartPlugin' in library " << _file);
@@ -99,7 +99,7 @@ namespace MyGUI
 		if (it != mLibs.end())
 		{
 			// Call plugin shutdown
-			DLL_STOP_PLUGIN pFunc = (DLL_STOP_PLUGIN)(*it).second->getSymbol("dllStopPlugin");
+			DLL_STOP_PLUGIN pFunc = reinterpret_cast<DLL_STOP_PLUGIN>((*it).second->getSymbol("dllStopPlugin"));
 
 			MYGUI_ASSERT(nullptr != pFunc, getClassTypeName() << "Cannot find symbol 'dllStopPlugin' in library " << _file);
 

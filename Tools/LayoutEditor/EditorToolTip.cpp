@@ -11,10 +11,11 @@
 #include "WidgetTypes.h"
 
 template <> tools::EditorToolTip* MyGUI::Singleton<tools::EditorToolTip>::msInstance = nullptr;
-template <> const char* MyGUI::Singleton<tools::EditorToolTip>::mClassTypeName("EditorToolTip");
+template <> const char* MyGUI::Singleton<tools::EditorToolTip>::mClassTypeName = "EditorToolTip";
 
 namespace tools
 {
+
 	EditorToolTip::EditorToolTip() :
 		BaseLayout("EditorToolTip.layout"),
 		mText(nullptr),
@@ -175,4 +176,4 @@ namespace tools
 		mMainWidget->setPosition(point);
 	}
 
-} // namespace tools
+}

@@ -1,12 +1,12 @@
-#ifndef __EDITOR_WIDGETS_H__
-#define __EDITOR_WIDGETS_H__
+#ifndef _2430e622_7ed5_481e_91df_1a6805bc9e49_
+#define _2430e622_7ed5_481e_91df_1a6805bc9e49_
 
 #include <sstream>
 #include "WidgetContainer.h"
-#include "SettingsSector.h"
 
 namespace tools
 {
+
 	typedef MyGUI::delegates::CMultiDelegate0 Event_ChangeWidgets;
 	typedef MyGUI::delegates::CMultiDelegate3<MyGUI::Widget*, const MyGUI::IntCoord&, const std::string&> Event_ChangeWidgetCoord;
 
@@ -42,8 +42,6 @@ namespace tools
 		void invalidateWidgets();
 		EnumeratorWidgetContainer getWidgets();
 
-		SettingsSector* getSector(const MyGUI::UString& _sectorName);
-
 		std::string getSkinReplace(const std::string& _skinName);
 
 		const MyGUI::UString& getCurrentFileName() const;
@@ -65,10 +63,6 @@ namespace tools
 
 		void notifyFrameStarted(float _time);
 
-		void loadSector(MyGUI::xml::ElementPtr _sectorNode);
-		void saveSectors(MyGUI::xml::ElementPtr _rootNode);
-
-		void destroyAllSectors();
 		void destroyAllWidgets();
 
 		bool isSkinExist(const std::string& _skinName);
@@ -85,7 +79,6 @@ namespace tools
 		bool mWidgetsChanged;
 		typedef std::vector<std::string> VectorString;
 		VectorString mIgnoreParameters;
-		VectorSettingsSector mSettings;
 		VectorWidgetContainer mWidgets;
 
 		typedef std::map<std::string, std::string> MapString;
@@ -95,6 +88,6 @@ namespace tools
 		MyGUI::UString mCurrentItemName;
 	};
 
-} // namespace tools
+}
 
-#endif // __EDITOR_WIDGETS_H__
+#endif

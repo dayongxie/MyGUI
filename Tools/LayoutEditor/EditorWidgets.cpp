@@ -8,10 +8,11 @@
 #include "SettingsManager.h"
 
 template <> tools::EditorWidgets* MyGUI::Singleton<tools::EditorWidgets>::msInstance = nullptr;
-template <> const char* MyGUI::Singleton<tools::EditorWidgets>::mClassTypeName("EditorWidgets");
+template <> const char* MyGUI::Singleton<tools::EditorWidgets>::mClassTypeName = "EditorWidgets";
 
 namespace tools
 {
+
 	const std::string LogSection = "LayoutEditor";
 
 	EditorWidgets::EditorWidgets() :
@@ -21,7 +22,6 @@ namespace tools
 
 	EditorWidgets::~EditorWidgets()
 	{
-		destroyAllSectors();
 	}
 
 	void EditorWidgets::initialise()
@@ -41,7 +41,6 @@ namespace tools
 		MyGUI::Gui::getInstance().eventFrameStart -= MyGUI::newDelegate(this, &EditorWidgets::notifyFrameStarted);
 
 		destroyAllWidgets();
-		destroyAllSectors();
 	}
 
 	void EditorWidgets::destroyAllWidgets()
@@ -380,8 +379,6 @@ namespace tools
 		{
 			remove(mWidgets[mWidgets.size()-1]);
 		}
-
-		destroyAllSectors();
 	}
 
 	WidgetContainer* EditorWidgets::find(MyGUI::Widget* _widget)
@@ -438,8 +435,8 @@ namespace tools
 		if (_widget->findAttribute("position_real", position))
 		{
 			container->setRelativeMode(true);
-			SettingsSector* sector = SettingsManager::getInstance().getSector("Workspace");
-			MyGUI::IntSize size = _testMode ? MyGUI::RenderManager::getInstance().getViewSize() : sector->getPropertyValue<MyGUI::IntSize>("TextureSize");
+			MyGUI::IntSize textureSize = SettingsManager::getInstance().getValue<MyGUI::IntSize>("Settings/WorkspaceTextureSize");
+			MyGUI::IntSize size = _testMode ? MyGUI::RenderManager::getInstance().getViewSize() : textureSize;
 			coord = MyGUI::CoordConverter::convertFromRelative(MyGUI::FloatCoord::parse(position), _parent == nullptr ? size : _parent->getClientCoord().size());
 		}
 
@@ -613,7 +610,7 @@ namespace tools
 		if (!_container->getStyle().empty())
 			node->addAttribute("style", _container->getStyle());
 
-		if ("" != _container->getLayerName())
+		if (!_container->getLayerName().empty())
 			node->addAttribute("layer", _container->getLayerName());
 
 		if (!_container->getName().empty())
@@ -673,42 +670,6 @@ namespace tools
 	void EditorWidgets::invalidateWidgets()
 	{
 		mWidgetsChanged = true;
-	}
-
-	void EditorWidgets::loadSector(MyGUI::xml::ElementPtr _sectorNode)
-	{
-		SettingsSector* sector = new SettingsSector();
-		sector->deserialization(_sectorNode, MyGUI::Version());
-
-		mSettings.push_back(sector);
-	}
-
-	void EditorWidgets::saveSectors(MyGUI::xml::ElementPtr _rootNode)
-	{
-		for (VectorSettingsSector::iterator item = mSettings.begin(); item != mSettings.end(); ++item)
-			(*item)->serialization(_rootNode, MyGUI::Version());
-	}
-
-	void EditorWidgets::destroyAllSectors()
-	{
-		for (VectorSettingsSector::iterator item = mSettings.begin(); item != mSettings.end(); ++item)
-			delete (*item);
-		mSettings.clear();
-	}
-
-	SettingsSector* EditorWidgets::getSector(const MyGUI::UString& _sectorName)
-	{
-		for (VectorSettingsSector::iterator item = mSettings.begin(); item != mSettings.end(); ++item)
-		{
-			if ((*item)->getName() == _sectorName)
-				return (*item);
-		}
-
-		SettingsSector* sector = new SettingsSector();
-		sector->setName(_sectorName);
-
-		mSettings.push_back(sector);
-		return sector;
 	}
 
 	EnumeratorWidgetContainer EditorWidgets::getWidgets()
@@ -785,8 +746,6 @@ namespace tools
 		{
 			if (element->getName() == "Widget")
 				parseWidget(element, nullptr, _testMode);
-			else
-				loadSector(element.current());
 		}
 	}
 
@@ -800,8 +759,6 @@ namespace tools
 			if (nullptr == (*iter)->getWidget()->getParent())
 				serialiseWidget(*iter, _root, _compatibility);
 		}
-
-		saveSectors(_root);
 	}
 
 	void EditorWidgets::onSetWidgetCoord(MyGUI::Widget* _widget, const MyGUI::IntCoord& _value, const std::string& _owner)
@@ -809,4 +766,4 @@ namespace tools
 		eventChangeWidgetCoord(_widget, _value, _owner);
 	}
 
-} // namespace tools
+}

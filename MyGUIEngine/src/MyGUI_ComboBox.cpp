@@ -300,7 +300,7 @@ namespace MyGUI
 		InputManager::getInstance().setKeyFocusWidget(mList);
 	}
 
-	void ComboBox::actionWidgetHide(Widget* _widget)
+	void ComboBox::actionWidgetHide(Widget* _widget, ControllerItem* _controller)
 	{
 		_widget->setVisible(false);
 		_widget->setEnabled(true);
@@ -600,6 +600,13 @@ namespace MyGUI
 		Base::_resetContainer(_update);
 		if (mList != nullptr)
 			mList->_resetContainer(_update);
+	}
+
+	void ComboBox::baseUpdateEnable()
+	{
+		Base::baseUpdateEnable();
+		if (mButton != nullptr)
+			mButton->setEnabled(getEnabled());
 	}
 
 } // namespace MyGUI

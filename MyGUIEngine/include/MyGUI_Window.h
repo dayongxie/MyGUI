@@ -40,7 +40,7 @@ namespace MyGUI
 		Window widget description should be here.
 	*/
 	class MYGUI_EXPORT Window :
-		public TextBox, // FIXME пока для кэпшена вместо виджета текст
+		public TextBox, // FIXME пока для кэпшена вместо виджета текст (Bug #190)
 		public MemberObsolete<Window>
 	{
 		MYGUI_RTTI_DERIVED( Window )
@@ -140,11 +140,12 @@ namespace MyGUI
 		void notifyMouseReleased(MyGUI::Widget* _sender, int _left, int _top, MouseButton _id);
 		void notifyPressedButtonEvent(MyGUI::Widget* _sender);
 		void notifyMouseDrag(MyGUI::Widget* _sender, int _left, int _top, MouseButton _id);
+		void notifyMouseWheel(MyGUI::Widget* _sender, int _rel);
 
 		// просто обновляет альфу взависимости от флагов
 		void updateAlpha();
 
-		void animateStop(Widget* _widget);
+		void animateStop(Widget* _widget, ControllerItem* _controller);
 
 		virtual void setPropertyOverride(const std::string& _key, const std::string& _value);
 

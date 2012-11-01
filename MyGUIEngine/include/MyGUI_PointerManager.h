@@ -101,6 +101,7 @@ namespace MyGUI
 
 		std::string mDefaultName;
 		IntPoint mPoint;
+		IntPoint mOldPoint;
 		bool mVisible;
 		std::string mLayerName;
 		std::string mSkinName;
@@ -111,6 +112,9 @@ namespace MyGUI
 		std::string mCurrentMousePointer;
 
 		bool mIsInitialise;
+		std::string mXmlPointerTagName;
+		std::string mXmlPropertyTagName;
+		std::string mXmlDefaultPointerValue;
 	};
 
 } // namespace MyGUI

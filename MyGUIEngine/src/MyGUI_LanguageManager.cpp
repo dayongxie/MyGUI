@@ -25,17 +25,17 @@
 #include "MyGUI_XmlDocument.h"
 #include "MyGUI_DataManager.h"
 #include "MyGUI_FactoryManager.h"
+#include "MyGUI_DataStreamHolder.h"
 
 namespace MyGUI
 {
 
-	const std::string XML_TYPE("Language");
-
 	template <> LanguageManager* Singleton<LanguageManager>::msInstance = nullptr;
-	template <> const char* Singleton<LanguageManager>::mClassTypeName("LanguageManager");
+	template <> const char* Singleton<LanguageManager>::mClassTypeName = "LanguageManager";
 
 	LanguageManager::LanguageManager() :
-		mIsInitialise(false)
+		mIsInitialise(false),
+		mXmlLanguageTagName("Language")
 	{
 	}
 
@@ -44,7 +44,7 @@ namespace MyGUI
 		MYGUI_ASSERT(!mIsInitialise, getClassTypeName() << " initialised twice");
 		MYGUI_LOG(Info, "* Initialise: " << getClassTypeName());
 
-		ResourceManager::getInstance().registerLoadXmlDelegate(XML_TYPE) = newDelegate(this, &LanguageManager::_load);
+		ResourceManager::getInstance().registerLoadXmlDelegate(mXmlLanguageTagName) = newDelegate(this, &LanguageManager::_load);
 
 		MYGUI_LOG(Info, getClassTypeName() << " successfully initialized");
 		mIsInitialise = true;
@@ -55,7 +55,7 @@ namespace MyGUI
 		MYGUI_ASSERT(mIsInitialise, getClassTypeName() << " is not initialised");
 		MYGUI_LOG(Info, "* Shutdown: " << getClassTypeName());
 
-		ResourceManager::getInstance().unregisterLoadXmlDelegate(XML_TYPE);
+		ResourceManager::getInstance().unregisterLoadXmlDelegate(mXmlLanguageTagName);
 
 		MYGUI_LOG(Info, getClassTypeName() << " successfully shutdown");
 		mIsInitialise = false;
@@ -68,7 +68,7 @@ namespace MyGUI
 
 		// берем детей и крутимся, основной цикл
 		xml::ElementEnumerator root = _node->getElementEnumerator();
-		while (root.next(XML_TYPE))
+		while (root.next(mXmlLanguageTagName))
 		{
 			// парсим атрибуты
 			root->findAttribute("default", default_lang);

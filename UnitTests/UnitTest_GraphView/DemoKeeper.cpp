@@ -14,13 +14,12 @@
 #include "GraphNodeFadeController.h"
 #include "GraphNodeGroup2Controller.h"
 #include "GraphNodeSkeletonState.h"
-#include "Tools/DialogManager.h"
+#include "DialogManager.h"
 
 namespace demo
 {
 
 	DemoKeeper::DemoKeeper() :
-		base::BaseManager(),
 		mGraphView(nullptr),
 		mGraph(nullptr),
 		mFileDialog(nullptr),
@@ -76,7 +75,8 @@ namespace demo
 
 	void DemoKeeper::createScene()
 	{
-		MyGUI::ResourceManager::getInstance().load("FrameworkSkin.xml");
+		MyGUI::ResourceManager::getInstance().load("FrameworkFonts.xml");
+		MyGUI::ResourceManager::getInstance().load("SplineSkin.xml");
 		MyGUI::ResourceManager::getInstance().load("GraphNodeSkin.xml");
 
 		new tools::DialogManager();
@@ -270,27 +270,30 @@ namespace demo
 
 	void DemoKeeper::notifyEndDialog(tools::Dialog* _dialog, bool _result)
 	{
-		if (!_result) return;
-
-		if (mFileDialogSave)
+		if (_result)
 		{
-			std::string filename = mFileDialog->getFileName();
-			size_t index = filename.find_first_of('.');
-			if (index == std::string::npos)
-				filename += ".xml";
-			filename = mFileDialog->getCurrentFolder() + "/" + filename;
+			if (mFileDialogSave)
+			{
+				std::string filename = mFileDialog->getFileName();
+				size_t index = filename.find_first_of('.');
+				if (index == std::string::npos)
+					filename += ".xml";
+				filename = mFileDialog->getCurrentFolder() + "/" + filename;
 
-			saveToFile(filename);
+				saveToFile(filename);
+			}
+			else
+			{
+				ClearGraph();
+
+				std::string filename = mFileDialog->getFileName();
+				filename = mFileDialog->getCurrentFolder() + "/" + filename;
+
+				loadFromFile(filename);
+			}
 		}
-		else
-		{
-			ClearGraph();
 
-			std::string filename = mFileDialog->getFileName();
-			filename = mFileDialog->getCurrentFolder() + "/" + filename;
-
-			loadFromFile(filename);
-		}
+		_dialog->endModal();
 	}
 
 	void DemoKeeper::ClearGraph()

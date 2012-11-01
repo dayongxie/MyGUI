@@ -8,8 +8,6 @@
 #define __BASE_MANAGER_H__
 
 #include <MyGUI.h>
-#include "Base/StatisticInfo.h"
-#include "Base/InputFocusInfo.h"
 
 #include "InputManager.h"
 #include "PointerManager.h"
@@ -48,15 +46,16 @@ namespace base
 		void quit();
 
 		void setWindowCaption(const std::wstring& _text);
-		void createDefaultScene() { }
 		void makeScreenShot() { }
 
 		const std::string& getRootMedia();
 		void setResourceFilename(const std::string& _flename);
 		void addResourceLocation(const std::string& _name, bool _recursive = false);
 
-		diagnostic::StatisticInfo* getStatisticInfo();
-		diagnostic::InputFocusInfo* getFocusInput();
+		size_t getWindowHandle();
+
+		typedef std::map<std::string, std::string> MapString;
+		MapString getStatistic() { return MapString(); }
 
 		/*internal:*/
 		void _windowResized();
@@ -73,12 +72,11 @@ namespace base
 		virtual void injectKeyPress(MyGUI::KeyCode _key, MyGUI::Char _text);
 		virtual void injectKeyRelease(MyGUI::KeyCode _key);
 
-	private:
-		void createGui();
-		void destroyGui();
+		virtual void createGui();
+		virtual void destroyGui();
 
+	private:
 		void windowAdjustSettings(HWND hWnd, int width, int height, bool fullScreen);
-		void updateFPS();
 
 		void resizeRender(int _width, int _height);
 		bool createRender(int _width, int _height, bool _windowed);
@@ -86,22 +84,20 @@ namespace base
 		void destroyRender();
 
 	private:
-		MyGUI::Gui*                   mGUI;
-		MyGUI::DirectX11Platform*     mPlatform;
-		diagnostic::StatisticInfo*    mInfo;
-		diagnostic::InputFocusInfo*   mFocusInfo;
+		MyGUI::Gui* mGUI;
+		MyGUI::DirectX11Platform* mPlatform;
 
-		HWND                          hWnd;
-		ID3D11Device*                 mDevice;
-		ID3D11DeviceContext*          mDeviceContext;
-		IDXGISwapChain*               mSwapChain;
-		ID3D11RenderTargetView*       mRenderTarget;
-		HINSTANCE                     hInstance;
+		HWND hWnd;
+		ID3D11Device* mDevice;
+		ID3D11DeviceContext* mDeviceContext;
+		IDXGISwapChain* mSwapChain;
+		ID3D11RenderTargetView* mRenderTarget;
+		HINSTANCE hInstance;
 
-		bool                          mExit;
+		bool mExit;
 
-		std::string                   mRootMedia;
-		std::string                   mResourceFileName;
+		std::string mRootMedia;
+		std::string mResourceFileName;
 	};
 
 } // namespace base

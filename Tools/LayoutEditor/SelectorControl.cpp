@@ -3,6 +3,7 @@
 	@author		Albert Semenov
 	@date		08/2010
 */
+
 #include "Precompiled.h"
 #include "SelectorControl.h"
 #include "SettingsManager.h"
@@ -30,12 +31,12 @@ namespace tools
 		if (window != nullptr)
 			window->eventWindowChangeCoord += MyGUI::newDelegate(this, &SelectorControl::notifyWindowChangeCoord);
 
-		SettingsManager::getInstance().eventSettingsChanged += MyGUI::newDelegate(this, &SelectorControl::notifySettingsChanged);
+		SettingsManager::getInstance().eventSettingsChanged.connect(this, &SelectorControl::notifySettingsChanged);
 	}
 
 	SelectorControl::~SelectorControl()
 	{
-		SettingsManager::getInstance().eventSettingsChanged -= MyGUI::newDelegate(this, &SelectorControl::notifySettingsChanged);
+		SettingsManager::getInstance().eventSettingsChanged.disconnect(this);
 
 		MyGUI::Window* window = mMainWidget->castType<MyGUI::Window>(false);
 		if (window != nullptr)
@@ -156,11 +157,11 @@ namespace tools
 		mMainWidget->setAlpha(_value.alpha);
 	}
 
-	void SelectorControl::notifySettingsChanged(const MyGUI::UString& _sectorName, const MyGUI::UString& _propertyName)
+	void SelectorControl::notifySettingsChanged(const std::string& _path)
 	{
-		if (!mPropertyColour.empty() && _sectorName == "Settings" && _propertyName == mPropertyColour)
+		if (!mPropertyColour.empty() && _path == ("Workspace/Colours/" + mPropertyColour))
 		{
-			MyGUI::Colour colour = SettingsManager::getInstance().getSector("Settings")->getPropertyValue<MyGUI::Colour>(mPropertyColour);
+			MyGUI::Colour colour = SettingsManager::getInstance().getValue<MyGUI::Colour>("Workspace/Colours/" + mPropertyColour);
 			setColour(colour);
 		}
 	}
@@ -168,7 +169,7 @@ namespace tools
 	void SelectorControl::setPropertyColour(const std::string& _propertyName)
 	{
 		mPropertyColour = _propertyName;
-		MyGUI::Colour colour = SettingsManager::getInstance().getSector("Settings")->getPropertyValue<MyGUI::Colour>(mPropertyColour);
+		MyGUI::Colour colour = SettingsManager::getInstance().getValue<MyGUI::Colour>("Workspace/Colours/" + mPropertyColour);
 		setColour(colour);
 	}
 
@@ -177,4 +178,4 @@ namespace tools
 		return mMainWidget;
 	}
 
-} // namespace tools
+}

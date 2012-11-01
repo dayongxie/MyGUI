@@ -110,14 +110,15 @@ endif(WIN32 OR APPLE)
 option(MYGUI_STATIC "Static build" FALSE)
 option(MYGUI_USE_FREETYPE "Use freetype for font rendering" TRUE)
 option(MYGUI_DONT_USE_OBSOLETE "Remove obsole functions from build" FALSE)
-option(MYGUI_RTTI_DISABLE_TYPE_INFO "Don't use C++ rtti, use strings instead" FALSE)
 
-set(MYGUI_RENDERSYSTEM 2 CACHE STRING
+set(MYGUI_RENDERSYSTEM 3 CACHE STRING
 "Specify the Render System. Possible values:
-  1 - Direct3D 9
-  2 - Ogre
-  3 - OpenGL
-  4 - Direct3D 11"
+  1 - Dummy
+  2 - Export (latter)
+  3 - Ogre
+  4 - OpenGL
+  5 - Direct3D 9
+  6 - Direct3D 11"
 )
 
 option(MYGUI_BUILD_DEMOS "Build MyGUI demos" TRUE)
@@ -136,6 +137,7 @@ cmake_dependent_option(MYGUI_INSTALL_PDB "Install debug pdb files" FALSE "MSVC" 
 option(MYGUI_FULL_RPATH "Build executables with the full required RPATH to run from their install location." FALSE)
 option(MYGUI_STANDALONE_BUILD "Generate build files that do not reference CMake (should be used only from Scripts/prepareRelease.py)" FALSE)
 MARK_AS_ADVANCED(MYGUI_STANDALONE_BUILD)
+option(MYGUI_GENERATE_LIST_FILES_FROM_VSPROJECT "Generate .list files from visual studio project files" FALSE)
 
 if (WIN32)
 	set(MYGUI_SAMPLES_INPUT 2 CACHE STRING
@@ -170,36 +172,32 @@ endif ()
 if (MYGUI_DONT_USE_OBSOLETE)
 	add_definitions(-DMYGUI_DONT_USE_OBSOLETE)
 endif ()
-
-if (MYGUI_RTTI_DISABLE_TYPE_INFO)
-	add_definitions(-DMYGUI_RTTI_DISABLE_TYPE_INFO)
-endif ()
 # End of Global defines
 
 # Set compiler specific build flags
 if (CMAKE_COMPILER_IS_GNUCXX)
-	add_definitions(-msse)
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -msse")
 	if (NOT MYGUI_HIGH_LEVEL_WARNINGS)
-		add_definitions(-w)
+		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -w")
 	else ()
-		if (MYGUI_RENDERSYSTEM EQUAL 2)
+		if (MYGUI_RENDERSYSTEM EQUAL 3)
 			# to avoid warnings from OGRE
-			add_definitions(-isystem ${OGRE_INCLUDE_DIR})
+			set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -isystem ${OGRE_INCLUDE_DIR}")
 		endif ()
 		if (MYGUI_SAMPLES_INPUT EQUAL 1 OR MYGUI_SAMPLES_INPUT EQUAL 3)
 			# to avoid warnings from OIS
-			add_definitions(-isystem ${OIS_INCLUDE_DIR})
+			set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -isystem ${OIS_INCLUDE_DIR}")
 		endif ()
 		if (NOT APPLE)
-			add_definitions(-fdiagnostics-show-option)
+			set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fdiagnostics-show-option")
 		endif ()
 		# very interesting option, but way too many warnings
 		#add_definitions(-Weffc++)
-		add_definitions(-Wno-deprecated -Wall -Wctor-dtor-privacy -Winit-self -Woverloaded-virtual -Wcast-qual -Wwrite-strings -Wextra -Wno-unused-parameter)
-		add_definitions(-pedantic)
+		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated -Wall -Wctor-dtor-privacy -Winit-self -Woverloaded-virtual -Wcast-qual -Wwrite-strings -Wextra -Wno-unused-parameter")
+		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pedantic")
 
 		# MyGUI_UString.h ignored from warnings because of this
-		add_definitions(-Wshadow)
+		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wshadow")
 	endif ()
 endif ()
 

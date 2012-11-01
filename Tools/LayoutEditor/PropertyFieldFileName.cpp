@@ -22,11 +22,9 @@ namespace tools
 
 	bool PropertyFieldFileName::onCheckValue()
 	{
-		bool success = true;
-
-		success = utility::checkParseFileName(mField);
+		bool success = utility::checkParseFileName(mField);
 
 		return success;
 	}
 
-} // namespace tools
+}

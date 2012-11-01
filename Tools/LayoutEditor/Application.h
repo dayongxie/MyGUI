@@ -1,17 +1,16 @@
-#ifndef __APPLICATION_H__
-#define __APPLICATION_H__
+#ifndef _d79dc96f_0f50_4950_b515_9a5deafd511b_
+#define _d79dc96f_0f50_4950_b515_9a5deafd511b_
 
-#include "BaseManager.h"
-#include "StateController.h"
-#include "EditorState.h"
-#include "TestState.h"
+#include "Base/BaseDemoManager.h"
+#include "sigslot.h"
 
 namespace tools
 {
+
 	class Application :
-		public base::BaseManager,
+		public base::BaseDemoManager,
 		public MyGUI::Singleton<Application>,
-		public StateController
+		public sigslot::has_slots<>
 	{
 	public:
 		Application();
@@ -31,8 +30,6 @@ namespace tools
 		typedef std::vector<std::wstring> VectorWString;
 		const VectorWString& getParams();
 
-		virtual void resumeState();
-
 	private:
 		void command_StatisticInfo(const MyGUI::UString& _commandName, bool& _result);
 		void command_FocusVisible(const MyGUI::UString& _commandName, bool& _result);
@@ -40,14 +37,22 @@ namespace tools
 		void command_QuitApp(const MyGUI::UString& _commandName, bool& _result);
 		void command_UpdateAppCaption(const MyGUI::UString& _commandName, bool& _result);
 
+		void setWindowMaximized(bool _value);
+		bool getWindowMaximized();
+
+		void setWindowCoord(const MyGUI::IntCoord& _value);
+		MyGUI::IntCoord getWindowCoord();
+
+		void saveSettings();
+
+		void LoadStates();
+		void LoadGuiSettings();
+
 	private:
 		VectorWString mParams;
 		std::string mLocale;
-
-		EditorState* mEditorState;
-		TestState* mTestState;
 	};
 
-} // namespace tools
+}
 
-#endif // __APPLICATION_H__
+#endif

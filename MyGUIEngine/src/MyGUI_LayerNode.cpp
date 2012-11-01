@@ -33,7 +33,8 @@ namespace MyGUI
 	LayerNode::LayerNode(ILayer* _layer, ILayerNode* _parent) :
 		mParent(_parent),
 		mLayer(_layer),
-		mOutOfDate(false)
+		mOutOfDate(false),
+		mDepth(0.0f)
 	{
 	}
 
@@ -98,6 +99,8 @@ namespace MyGUI
 
 	void LayerNode::renderToTarget(IRenderTarget* _target, bool _update)
 	{
+		mDepth = _target->getInfo().maximumDepth;
+
 		// проверяем на сжатие пустот
 		bool need_compression = false;
 		for (VectorRenderItem::iterator iter = mFirstRenderItems.begin(); iter != mFirstRenderItems.end(); ++iter)
@@ -187,7 +190,7 @@ namespace MyGUI
 							iter = next;
 							continue;
 						}
-						else if ((*next)->getTexture() == _texture)
+						else if (!(*next)->getManualRender() && (*next)->getTexture() == _texture)
 						{
 							iter = next;
 						}
@@ -203,7 +206,7 @@ namespace MyGUI
 				return (*iter);
 			}
 			// последний буфер с нужной текстурой
-			else if ((*iter)->getTexture() == _texture)
+			else if (!(*iter)->getManualRender() && (*iter)->getTexture() == _texture)
 			{
 				mOutOfDate = false;
 
@@ -288,6 +291,18 @@ namespace MyGUI
 		return EnumeratorILayerNode(mChildItems);
 	}
 
+	size_t LayerNode::getLayerNodeCount() const
+	{
+		return mChildItems.size();
+	}
+
+	ILayerNode* LayerNode::getLayerNodeAt(size_t _index) const
+	{
+		MYGUI_ASSERT_RANGE(_index, mChildItems.size(), "LayerNode::getLayerNodeAt");
+
+		return mChildItems[_index];
+	}
+
 	void LayerNode::updateCompression()
 	{
 		// буферы освобождаются по одному всегда
@@ -298,7 +313,7 @@ namespace MyGUI
 			VectorRenderItem::iterator iter2 = iter1 + 1;
 			while (iter2 != mFirstRenderItems.end())
 			{
-				if ((*iter1)->getNeedVertexCount() == 0 && !(*iter1)->getManualRender())
+				if ((*iter1)->getNeedVertexCount() == 0 && !(*iter1)->getManualRender() && !(*iter2)->getManualRender())
 				{
 					RenderItem* tmp = (*iter1);
 					(*iter1) = (*iter2);
@@ -343,6 +358,11 @@ namespace MyGUI
 		}
 
 		return mOutOfDate;
+	}
+
+	float LayerNode::getNodeDepth()
+	{
+		return mDepth;
 	}
 
 } // namespace MyGUI

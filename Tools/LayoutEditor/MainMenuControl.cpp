@@ -3,6 +3,7 @@
 	@author		Albert Semenov
 	@date		08/2010
 */
+
 #include "Precompiled.h"
 #include "MainMenuControl.h"
 #include "SettingsManager.h"
@@ -15,6 +16,7 @@
 
 namespace tools
 {
+
 	MainMenuControl::MainMenuControl(MyGUI::Widget* _parent) :
 		wraps::BaseLayout("MainMenuControl.layout", _parent),
 		mBar(nullptr),
@@ -24,14 +26,18 @@ namespace tools
 
 		createMainMenu();
 
-		SettingsManager::getInstance().eventSettingsChanged += MyGUI::newDelegate(this, &MainMenuControl::notifySettingsChanged);
+		SettingsManager::getInstance().eventSettingsChanged.connect(this, &MainMenuControl::notifySettingsChanged);
 		EditorWidgets::getInstance().eventChangeWidgets += MyGUI::newDelegate(this, &MainMenuControl::notifyChangeWidgets);
+
+		CommandManager::getInstance().getEvent("Command_OnChangeScale")->connect(this, &MainMenuControl::CommandOnChangeScale);
+
+		updateMenuScale(100);
 	}
 
 	MainMenuControl::~MainMenuControl()
 	{
 		EditorWidgets::getInstance().eventChangeWidgets -= MyGUI::newDelegate(this, &MainMenuControl::notifyChangeWidgets);
-		SettingsManager::getInstance().eventSettingsChanged -= MyGUI::newDelegate(this, &MainMenuControl::notifySettingsChanged);
+		SettingsManager::getInstance().eventSettingsChanged.disconnect(this);
 	}
 
 	void MainMenuControl::createMainMenu()
@@ -64,9 +70,9 @@ namespace tools
 
 	void MainMenuControl::widgetsUpdate()
 	{
-		bool print_name = SettingsManager::getInstance().getSector("Settings")->getPropertyValue<bool>("ShowName");
-		bool print_type = SettingsManager::getInstance().getSector("Settings")->getPropertyValue<bool>("ShowType");
-		bool print_skin = SettingsManager::getInstance().getSector("Settings")->getPropertyValue<bool>("ShowSkin");
+		bool print_name = SettingsManager::getInstance().getValue<bool>("Settings/ShowName");
+		bool print_type = SettingsManager::getInstance().getValue<bool>("Settings/ShowType");
+		bool print_skin = SettingsManager::getInstance().getValue<bool>("Settings/ShowSkin");
 
 		mPopupMenuWidgets->removeAllItems();
 
@@ -121,23 +127,16 @@ namespace tools
 		widgetsUpdate();
 	}
 
-	void MainMenuControl::notifySettingsChanged(const MyGUI::UString& _sectionName, const MyGUI::UString& _propertyName)
+	void MainMenuControl::notifySettingsChanged(const std::string& _path)
 	{
-		if (_sectionName == "Settings")
-		{
+		if (_path == "Settings/ShowName" ||
+			_path == "Settings/ShowType" ||
+			_path == "Settings/ShowSkin")
 			widgetsUpdate();
-		}
-		else if (_sectionName == "Files")
-		{
-			if (_propertyName == "RecentFiles")
-			{
-				updateRecentFilesMenu();
-			}
-			else if (_propertyName == "RecentProjects")
-			{
-				updateRecentProjectsMenu();
-			}
-		}
+		else if (_path == "Files/RecentFile.List")
+			updateRecentFilesMenu();
+		else if (_path == "Files/RecentProject.List")
+			updateRecentProjectsMenu();
 	}
 
 	void MainMenuControl::updateRecentFilesMenu()
@@ -187,4 +186,29 @@ namespace tools
 		mBar->setVisible(_value);
 	}
 
-} // namespace tools
+	void MainMenuControl::CommandOnChangeScale(const MyGUI::UString& _commandName, bool& _result)
+	{
+		updateMenuScale(MyGUI::utility::parseValue<size_t>(CommandManager::getInstance().getCommandData()));
+
+		_result = true;
+	}
+
+	void MainMenuControl::updateMenuScale(size_t _scale)
+	{
+		MyGUI::MenuItem* scaleMenu = mBar->findItemById("Scale", true);
+		if (scaleMenu != nullptr)
+		{
+			MyGUI::MenuControl* popup = scaleMenu->getItemChild();
+			if (popup != nullptr)
+			{
+				std::string id = MyGUI::utility::toString("Command_ChangeScale.", (int)_scale);
+				for (size_t index = 0; index < popup->getItemCount(); index ++)
+				{
+					MyGUI::MenuItem* item = popup->getItemAt(index);
+					item->setItemChecked(item->getItemId() == id);
+				}
+			}
+		}
+	}
+
+}

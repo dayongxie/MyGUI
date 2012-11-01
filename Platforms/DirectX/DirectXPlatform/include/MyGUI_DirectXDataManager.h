@@ -34,6 +34,9 @@ namespace MyGUI
 		/** @see DataManager::getData(const std::string& _name) */
 		virtual IDataStream* getData(const std::string& _name);
 
+		/** @see DataManager::freeData */
+		virtual void freeData(IDataStream* _data);
+
 		/** @see DataManager::isDataExist(const std::string& _name) */
 		virtual bool isDataExist(const std::string& _name);
 

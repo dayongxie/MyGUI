@@ -7,7 +7,7 @@
 #include "UndoManager.h"
 #include "Localise.h"
 #include "MyGUI_RTTLayer.h"
-#include "Grid.h"
+#include "GridManager.h"
 
 namespace tools
 {
@@ -20,12 +20,11 @@ namespace tools
 		mPositionSelectorCreatorControl(nullptr),
 		mFreeChildMode(false)
 	{
-		SettingsSector* sector = SettingsManager::getInstance().getSector("Workspace");
-		MyGUI::IntSize size = sector->getPropertyValue<MyGUI::IntSize>("TextureSize");
+		MyGUI::IntSize size = SettingsManager::getInstance().getValue<MyGUI::IntSize>("Settings/WorkspaceTextureSize");
 
 		setRttLayerSize(size);
 
-		setTextureName(sector->getPropertyValue("TextureName"));
+		setTextureName(SettingsManager::getInstance().getValue("Workspace/TextureName"));
 		setTextureRegion(MyGUI::IntCoord(0, 0, size.width, size.height));
 
 		addSelectorControl(mAreaSelectorControl);
@@ -40,28 +39,28 @@ namespace tools
 
 		EditorWidgets::getInstance().eventChangeWidgetCoord += MyGUI::newDelegate(this, &WorkspaceControl::notifyPropertyChangeCoord);
 
-		CommandManager::getInstance().registerCommand("Command_MoveLeft", MyGUI::newDelegate(this, &WorkspaceControl::Command_MoveLeft));
-		CommandManager::getInstance().registerCommand("Command_MoveRight", MyGUI::newDelegate(this, &WorkspaceControl::Command_MoveRight));
-		CommandManager::getInstance().registerCommand("Command_MoveTop", MyGUI::newDelegate(this, &WorkspaceControl::Command_MoveTop));
-		CommandManager::getInstance().registerCommand("Command_MoveBottom", MyGUI::newDelegate(this, &WorkspaceControl::Command_MoveBottom));
-		CommandManager::getInstance().registerCommand("Command_SizeLeft", MyGUI::newDelegate(this, &WorkspaceControl::Command_SizeLeft));
-		CommandManager::getInstance().registerCommand("Command_SizeRight", MyGUI::newDelegate(this, &WorkspaceControl::Command_SizeRight));
-		CommandManager::getInstance().registerCommand("Command_SizeTop", MyGUI::newDelegate(this, &WorkspaceControl::Command_SizeTop));
-		CommandManager::getInstance().registerCommand("Command_SizeBottom", MyGUI::newDelegate(this, &WorkspaceControl::Command_SizeBottom));
+		CommandManager::getInstance().getEvent("Command_MoveLeft")->connect(this, &WorkspaceControl::Command_MoveLeft);
+		CommandManager::getInstance().getEvent("Command_MoveRight")->connect(this, &WorkspaceControl::Command_MoveRight);
+		CommandManager::getInstance().getEvent("Command_MoveTop")->connect(this, &WorkspaceControl::Command_MoveTop);
+		CommandManager::getInstance().getEvent("Command_MoveBottom")->connect(this, &WorkspaceControl::Command_MoveBottom);
+		CommandManager::getInstance().getEvent("Command_SizeLeft")->connect(this, &WorkspaceControl::Command_SizeLeft);
+		CommandManager::getInstance().getEvent("Command_SizeRight")->connect(this, &WorkspaceControl::Command_SizeRight);
+		CommandManager::getInstance().getEvent("Command_SizeTop")->connect(this, &WorkspaceControl::Command_SizeTop);
+		CommandManager::getInstance().getEvent("Command_SizeBottom")->connect(this, &WorkspaceControl::Command_SizeBottom);
 
-		CommandManager::getInstance().registerCommand("Command_GridMoveLeft", MyGUI::newDelegate(this, &WorkspaceControl::Command_GridMoveLeft));
-		CommandManager::getInstance().registerCommand("Command_GridMoveRight", MyGUI::newDelegate(this, &WorkspaceControl::Command_GridMoveRight));
-		CommandManager::getInstance().registerCommand("Command_GridMoveTop", MyGUI::newDelegate(this, &WorkspaceControl::Command_GridMoveTop));
-		CommandManager::getInstance().registerCommand("Command_GridMoveBottom", MyGUI::newDelegate(this, &WorkspaceControl::Command_GridMoveBottom));
-		CommandManager::getInstance().registerCommand("Command_GridSizeLeft", MyGUI::newDelegate(this, &WorkspaceControl::Command_GridSizeLeft));
-		CommandManager::getInstance().registerCommand("Command_GridSizeRight", MyGUI::newDelegate(this, &WorkspaceControl::Command_GridSizeRight));
-		CommandManager::getInstance().registerCommand("Command_GridSizeTop", MyGUI::newDelegate(this, &WorkspaceControl::Command_GridSizeTop));
-		CommandManager::getInstance().registerCommand("Command_GridSizeBottom", MyGUI::newDelegate(this, &WorkspaceControl::Command_GridSizeBottom));
+		CommandManager::getInstance().getEvent("Command_GridMoveLeft")->connect(this, &WorkspaceControl::Command_GridMoveLeft);
+		CommandManager::getInstance().getEvent("Command_GridMoveRight")->connect(this, &WorkspaceControl::Command_GridMoveRight);
+		CommandManager::getInstance().getEvent("Command_GridMoveTop")->connect(this, &WorkspaceControl::Command_GridMoveTop);
+		CommandManager::getInstance().getEvent("Command_GridMoveBottom")->connect(this, &WorkspaceControl::Command_GridMoveBottom);
+		CommandManager::getInstance().getEvent("Command_GridSizeLeft")->connect(this, &WorkspaceControl::Command_GridSizeLeft);
+		CommandManager::getInstance().getEvent("Command_GridSizeRight")->connect(this, &WorkspaceControl::Command_GridSizeRight);
+		CommandManager::getInstance().getEvent("Command_GridSizeTop")->connect(this, &WorkspaceControl::Command_GridSizeTop);
+		CommandManager::getInstance().getEvent("Command_GridSizeBottom")->connect(this, &WorkspaceControl::Command_GridSizeBottom);
 
-		CommandManager::getInstance().registerCommand("Command_Delete", MyGUI::newDelegate(this, &WorkspaceControl::Command_Delete));
-		CommandManager::getInstance().registerCommand("Command_NextItem", MyGUI::newDelegate(this, &WorkspaceControl::Command_NextItem));
+		CommandManager::getInstance().getEvent("Command_Delete")->connect(this, &WorkspaceControl::Command_Delete);
+		CommandManager::getInstance().getEvent("Command_NextItem")->connect(this, &WorkspaceControl::Command_NextItem);
 
-		CommandManager::getInstance().registerCommand("Command_FreeChildMode", MyGUI::newDelegate(this, &WorkspaceControl::Command_FreeChildMode));
+		CommandManager::getInstance().getEvent("Command_FreeChildMode")->connect(this, &WorkspaceControl::Command_FreeChildMode);
 
 		WidgetCreatorManager::getInstance().eventChangeCreatorMode += MyGUI::newDelegate(this, &WorkspaceControl::notifyChangeCreatorMode);
 		WidgetCreatorManager::getInstance().eventChangeSelector += MyGUI::newDelegate(this, &WorkspaceControl::notifyChangeSelectorCreator);
@@ -107,33 +106,33 @@ namespace tools
 			if (actionScale.left != 0 && actionScale.width != 0)
 			{
 				int right = coord.right();
-				coord.left = Grid::getInstance().toGrid(coord.left);
+				coord.left = GridManager::getInstance().toGrid(coord.left);
 				coord.width = right - coord.left;
 			}
 			else if (actionScale.width != 0)
 			{
-				int right = Grid::getInstance().toGrid(coord.right());
+				int right = GridManager::getInstance().toGrid(coord.right());
 				coord.width = right - coord.left;
 			}
 			else if (actionScale.left != 0)
 			{
-				coord.left = Grid::getInstance().toGrid(coord.left);
+				coord.left = GridManager::getInstance().toGrid(coord.left);
 			}
 
 			if (actionScale.top != 0 && actionScale.height != 0)
 			{
 				int bottom = coord.bottom();
-				coord.top = Grid::getInstance().toGrid(coord.top);
+				coord.top = GridManager::getInstance().toGrid(coord.top);
 				coord.height = bottom - coord.top;
 			}
 			else if (actionScale.height != 0)
 			{
-				int bottom = Grid::getInstance().toGrid(coord.bottom());
+				int bottom = GridManager::getInstance().toGrid(coord.bottom());
 				coord.height = bottom - coord.top;
 			}
 			else if (actionScale.top != 0)
 			{
-				coord.top = Grid::getInstance().toGrid(coord.top);
+				coord.top = GridManager::getInstance().toGrid(coord.top);
 			}
 
 			if (coord != mCoordValue)
@@ -263,7 +262,7 @@ namespace tools
 		if (!mMoveableWidget)
 			return;
 
-		mCoordValue.left = Grid::getInstance().toGrid(mCoordValue.left, Grid::Previous);
+		mCoordValue.left = GridManager::getInstance().toGrid(mCoordValue.left, GridManager::Previous);
 		updateFromCoordValue();
 
 		UndoManager::getInstance().addValue(PR_KEY_POSITION);
@@ -279,7 +278,7 @@ namespace tools
 		if (!mMoveableWidget)
 			return;
 
-		mCoordValue.left = Grid::getInstance().toGrid(mCoordValue.left, Grid::Next);
+		mCoordValue.left = GridManager::getInstance().toGrid(mCoordValue.left, GridManager::Next);
 		updateFromCoordValue();
 
 		UndoManager::getInstance().addValue(PR_KEY_POSITION);
@@ -295,7 +294,7 @@ namespace tools
 		if (!mMoveableWidget)
 			return;
 
-		mCoordValue.top = Grid::getInstance().toGrid(mCoordValue.top, Grid::Previous);
+		mCoordValue.top = GridManager::getInstance().toGrid(mCoordValue.top, GridManager::Previous);
 		updateFromCoordValue();
 
 		UndoManager::getInstance().addValue(PR_KEY_POSITION);
@@ -311,7 +310,7 @@ namespace tools
 		if (!mMoveableWidget)
 			return;
 
-		mCoordValue.top = Grid::getInstance().toGrid(mCoordValue.top, Grid::Next);
+		mCoordValue.top = GridManager::getInstance().toGrid(mCoordValue.top, GridManager::Next);
 		updateFromCoordValue();
 
 		UndoManager::getInstance().addValue(PR_KEY_POSITION);
@@ -327,7 +326,7 @@ namespace tools
 		if (!mMoveableWidget)
 			return;
 
-		mCoordValue.width = Grid::getInstance().toGrid(mCoordValue.right(), Grid::Previous) - mCoordValue.left;
+		mCoordValue.width = GridManager::getInstance().toGrid(mCoordValue.right(), GridManager::Previous) - mCoordValue.left;
 		updateFromCoordValue();
 
 		UndoManager::getInstance().addValue(PR_KEY_POSITION);
@@ -343,7 +342,7 @@ namespace tools
 		if (!mMoveableWidget)
 			return;
 
-		mCoordValue.width = Grid::getInstance().toGrid(mCoordValue.right(), Grid::Next) - mCoordValue.left;
+		mCoordValue.width = GridManager::getInstance().toGrid(mCoordValue.right(), GridManager::Next) - mCoordValue.left;
 		updateFromCoordValue();
 
 		UndoManager::getInstance().addValue(PR_KEY_POSITION);
@@ -359,7 +358,7 @@ namespace tools
 		if (!mMoveableWidget)
 			return;
 
-		mCoordValue.height = Grid::getInstance().toGrid(mCoordValue.bottom(), Grid::Previous) - mCoordValue.top;
+		mCoordValue.height = GridManager::getInstance().toGrid(mCoordValue.bottom(), GridManager::Previous) - mCoordValue.top;
 		updateFromCoordValue();
 
 		UndoManager::getInstance().addValue(PR_KEY_POSITION);
@@ -375,7 +374,7 @@ namespace tools
 		if (!mMoveableWidget)
 			return;
 
-		mCoordValue.height = Grid::getInstance().toGrid(mCoordValue.bottom(), Grid::Next) - mCoordValue.top;
+		mCoordValue.height = GridManager::getInstance().toGrid(mCoordValue.bottom(), GridManager::Next) - mCoordValue.top;
 		updateFromCoordValue();
 
 		UndoManager::getInstance().addValue(PR_KEY_POSITION);
@@ -583,6 +582,7 @@ namespace tools
 	void WorkspaceControl::onChangeScale()
 	{
 		updateCaption();
+		updateMenu();
 	}
 
 	void WorkspaceControl::updateCaption()
@@ -594,6 +594,12 @@ namespace tools
 
 			CommandManager::getInstance().executeCommand("Command_UpdateAppCaption");
 		}
+	}
+
+	void WorkspaceControl::updateMenu()
+	{
+		int scale = (int)(getScale() * (double)100);
+		CommandManager::getInstance().executeCommand(MyGUI::utility::toString("Command_OnChangeScale.", scale));
 	}
 
 	void WorkspaceControl::notifyFrameStart(float _time)
@@ -659,4 +665,4 @@ namespace tools
 		}
 	}
 
-} // namespace tools
+}

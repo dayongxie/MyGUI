@@ -3,20 +3,22 @@
 	@author		Albert Semenov
 	@date		08/2010
 */
+
 #include "Precompiled.h"
 #include "RecentFilesManager.h"
 #include "SettingsManager.h"
 #include "FileSystemInfo/FileSystemInfo.h"
 
 template <> tools::RecentFilesManager* MyGUI::Singleton<tools::RecentFilesManager>::msInstance = nullptr;
-template <> const char* MyGUI::Singleton<tools::RecentFilesManager>::mClassTypeName("RecentFilesManager");
+template <> const char* MyGUI::Singleton<tools::RecentFilesManager>::mClassTypeName = "RecentFilesManager";
 
 namespace tools
 {
+
 	RecentFilesManager::RecentFilesManager() :
-		mMaxRecentFolders(8),
-		mMaxRecentFiles(8),
-		mMaxRecentProjects(8)
+		mMaxRecentFolders(0),
+		mMaxRecentFiles(0),
+		mMaxRecentProjects(0)
 	{
 	}
 
@@ -26,17 +28,19 @@ namespace tools
 
 	void RecentFilesManager::initialise()
 	{
-		if (SettingsManager::getInstance().getSector("Settings")->getExistProperty("MaxRecentFolders"))
-			mMaxRecentFolders = SettingsManager::getInstance().getSector("Settings")->getPropertyValue<size_t>("MaxRecentFolders");
-		if (SettingsManager::getInstance().getSector("Settings")->getExistProperty("MaxRecentFiles"))
-			mMaxRecentFiles = SettingsManager::getInstance().getSector("Settings")->getPropertyValue<size_t>("MaxRecentFiles");
-		if (SettingsManager::getInstance().getSector("Settings")->getExistProperty("MaxRecentProjects"))
-			mMaxRecentProjects = SettingsManager::getInstance().getSector("Settings")->getPropertyValue<size_t>("MaxRecentProjects");
+		if (!SettingsManager::getInstance().tryGetValue<size_t>("Files/MaxRecentFolders", mMaxRecentFolders))
+			mMaxRecentFolders = 8;
 
-		mRecentFolder = SettingsManager::getInstance().getSector("Files")->getPropertyValue("RecentFolder");
-		mRecentFolders = SettingsManager::getInstance().getSector("Files")->getPropertyValueList("RecentFolders");
-		mRecentFiles = SettingsManager::getInstance().getSector("Files")->getPropertyValueList("RecentFiles");
-		mRecentProjects = SettingsManager::getInstance().getSector("Files")->getPropertyValueList("RecentProjects");
+		if (!SettingsManager::getInstance().tryGetValue<size_t>("Files/MaxRecentFiles", mMaxRecentFiles))
+			mMaxRecentFiles = 8;
+
+		if (!SettingsManager::getInstance().tryGetValue<size_t>("Files/MaxRecentProjects", mMaxRecentProjects))
+			mMaxRecentProjects = 8;
+
+		mRecentFolder = SettingsManager::getInstance().getValue("Files/RecentFolder");
+		mRecentFolders = SettingsManager::getInstance().getValueList<MyGUI::UString>("Files/RecentFolder.List");
+		mRecentFiles = SettingsManager::getInstance().getValueList<MyGUI::UString>("Files/RecentFile.List");
+		mRecentProjects = SettingsManager::getInstance().getValueList<MyGUI::UString>("Files/RecentProject.List");
 
 		checkArray(mRecentFolders, mMaxRecentFolders);
 		checkArray(mRecentFiles, mMaxRecentFiles);
@@ -45,10 +49,10 @@ namespace tools
 
 	void RecentFilesManager::shutdown()
 	{
-		SettingsManager::getInstance().getSector("Files")->setPropertyValue("RecentFolder", mRecentFolder);
-		SettingsManager::getInstance().getSector("Files")->setPropertyValueList("RecentFolders", mRecentFolders);
-		SettingsManager::getInstance().getSector("Files")->setPropertyValueList("RecentFiles", mRecentFiles);
-		SettingsManager::getInstance().getSector("Files")->setPropertyValueList("RecentProjects", mRecentProjects);
+		SettingsManager::getInstance().setValue("Files/RecentFolder", mRecentFolder);
+		SettingsManager::getInstance().setValueList<MyGUI::UString>("Files/RecentFolder.List", mRecentFolders);
+		SettingsManager::getInstance().setValueList<MyGUI::UString>("Files/RecentFile.List", mRecentFiles);
+		SettingsManager::getInstance().setValueList<MyGUI::UString>("Files/RecentProject.List", mRecentProjects);
 	}
 
 	void RecentFilesManager::addRecentFolder(const MyGUI::UString& _folder)
@@ -94,7 +98,7 @@ namespace tools
 
 		checkArray(mRecentFiles, mMaxRecentFiles);
 
-		SettingsManager::getInstance().getSector("Files")->setPropertyValueList("RecentFiles", mRecentFiles);
+		SettingsManager::getInstance().setValueList<MyGUI::UString>("Files/RecentFile.List", mRecentFiles);
 	}
 
 	const RecentFilesManager::VectorUString& RecentFilesManager::getRecentFiles() const
@@ -108,7 +112,7 @@ namespace tools
 
 		checkArray(mRecentProjects, mMaxRecentProjects);
 
-		SettingsManager::getInstance().getSector("Files")->setPropertyValueList("RecentProjects", mRecentProjects);
+		SettingsManager::getInstance().setValueList<MyGUI::UString>("Files/RecentProject.List", mRecentProjects);
 	}
 
 	const RecentFilesManager::VectorUString& RecentFilesManager::getRecentProjects() const
@@ -116,4 +120,4 @@ namespace tools
 		return mRecentProjects;
 	}
 
-} // namespace tools
+}

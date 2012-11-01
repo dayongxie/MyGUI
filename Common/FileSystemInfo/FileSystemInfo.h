@@ -42,16 +42,37 @@ namespace common
 		return path[0] == '/' || path[0] == '\\';
 	}
 
+	inline bool endWith(const std::wstring& _source, const std::wstring& _value)
+	{
+		size_t count = _value.size();
+		if (_source.size() < count)
+			return false;
+		size_t offset = _source.size() - count;
+		for (size_t index = 0; index < count; ++ index)
+		{
+			if (_source[index + offset] != _value[index])
+				return false;
+		}
+		return true;
+	}
+
 	inline std::wstring concatenatePath(const std::wstring& _base, const std::wstring& _name)
 	{
 		if (_base.empty() || isAbsolutePath(_name.c_str()))
+		{
 			return _name;
+		}
 		else
+		{
+			if (endWith(_base, L"\\") || endWith(_base, L"/"))
+				return _base + _name;
+
 #if MYGUI_PLATFORM == MYGUI_PLATFORM_WIN32
 			return _base + L'\\' + _name;
 #else
 			return _base + L'/' + _name;
 #endif
+		}
 	}
 
 	inline bool isReservedDir (const wchar_t* _fn)
@@ -115,7 +136,7 @@ namespace common
 				struct stat fInfo;
 				char path[NAME_MAX];
 				//snprintf(path, NAME_MAX, "%s/%s", MyGUI::UString(_folder).asUTF8_c_str(), dp->d_name);
-				if(stat(path, &fInfo) == -1)perror("stat");
+				if (stat(path, &fInfo) == -1)perror("stat");
 				_result.push_back(FileInfo(MyGUI::UString(dp->d_name).asWStr(), (S_ISDIR(fInfo.st_mode))));
 			}
 		}
@@ -140,7 +161,7 @@ namespace common
 	inline void scanFolder(VectorWString& _result, const std::wstring& _folder, bool _recursive, const std::wstring& _mask, bool _fullpath)
 	{
 		std::wstring folder = _folder;
-		if (!folder.empty()) folder += L"/";
+		if (!folder.empty() && *folder.rbegin() != '/' && *folder.rbegin() != '\\') folder += L"/";
 
 		VectorFileInfo result;
 		getSystemFileList(result, folder, _mask);

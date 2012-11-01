@@ -15,12 +15,15 @@ namespace MyGUI
 {
 
 	DirectX11Texture::DirectX11Texture(const std::string& _name, DirectX11RenderManager* _manager) :
+		mTexture(nullptr),
+		mWriteData(nullptr),
+		mResourceView(nullptr),
+		mWidth(0),
+		mHeight(0),
 		mName(_name),
 		mNumElemBytes(0),
 		mLock(false),
 		mManager(_manager),
-		mTexture(nullptr),
-		mResourceView(nullptr),
 		mRenderTarget(nullptr)
 	{
 	}
@@ -95,6 +98,7 @@ namespace MyGUI
 		loadInfo.pSrcInfo       = &fileInfo;
 
 		HRESULT hr = D3DX11CreateTextureFromFileA( mManager->mpD3DDevice, fullname.c_str(), &loadInfo, NULL, (ID3D11Resource**)&mTexture, NULL );
+		MYGUI_PLATFORM_ASSERT(hr == S_OK, "CreateTextureFromFile failed!");
 
 		D3D11_TEXTURE2D_DESC desc;
 		mTexture->GetDesc(&desc);

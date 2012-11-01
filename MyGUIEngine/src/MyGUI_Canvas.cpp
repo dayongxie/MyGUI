@@ -37,7 +37,7 @@ namespace MyGUI
 		mFrameAdvise( false ),
 		mInvalidateData(false)
 	{
-		mGenTexName = utility::toString( this, "_Canvas" );
+		mGenTexName = utility::toString((size_t)this, "_Canvas");
 	}
 
 	void Canvas::createTexture( TextureResizeMode _resizeMode, TextureUsage _usage, PixelFormat _format )
@@ -86,13 +86,19 @@ namespace MyGUI
 
 	void Canvas::createTexture( int _width, int _height, TextureResizeMode _resizeMode, TextureUsage _usage, PixelFormat _format )
 	{
+		mTexResizeMode = _resizeMode;
+
 		int width = std::max(1, _width);
 		int height = std::max(1, _height);
 
-		if ( mReqTexSize.empty() )
-			mReqTexSize = IntSize( width, height );
-
-		mTexResizeMode = _resizeMode;
+		if (_resizeMode == TRM_PT_CONST_SIZE)
+		{
+			mReqTexSize = IntSize(width, height);
+		}
+		else
+		{
+			mReqTexSize = IntSize(std::max(1, getWidth()), std::max(1, getHeight()));
+		}
 
 		bool create = checkCreate( width, height );
 

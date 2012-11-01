@@ -3,15 +3,17 @@
 	@author		Albert Semenov
 	@date		09/2010
 */
+
 #include "Precompiled.h"
 #include "BackwardCompatibilityManager.h"
 #include "SettingsManager.h"
 
 template <> tools::BackwardCompatibilityManager* MyGUI::Singleton<tools::BackwardCompatibilityManager>::msInstance = nullptr;
-template <> const char* MyGUI::Singleton<tools::BackwardCompatibilityManager>::mClassTypeName("BackwardCompatibilityManager");
+template <> const char* MyGUI::Singleton<tools::BackwardCompatibilityManager>::mClassTypeName = "BackwardCompatibilityManager";
 
 namespace tools
 {
+
 	BackwardCompatibilityManager::BackwardCompatibilityManager()
 	{
 		mVersions.push_back("3.2.0");
@@ -127,18 +129,16 @@ namespace tools
 
 	void BackwardCompatibilityManager::initialise()
 	{
-		if (SettingsManager::getInstance().getSector("Settings")->getExistProperty("LayoutVersion"))
-			mCurrentVersion = SettingsManager::getInstance().getSector("Settings")->getPropertyValue("LayoutVersion");
-		else
+		if (!SettingsManager::getInstance().tryGetValue("Settings/LayoutVersion", mCurrentVersion))
 			mCurrentVersion = getDefaultVersion();
 
-		SettingsManager::getInstance().eventSettingsChanged += MyGUI::newDelegate(this, &BackwardCompatibilityManager::notifySettingsChanged);
+		SettingsManager::getInstance().eventSettingsChanged.connect(this, &BackwardCompatibilityManager::notifySettingsChanged);
 	}
 
 	void BackwardCompatibilityManager::shutdown()
 	{
-		SettingsManager::getInstance().eventSettingsChanged -= MyGUI::newDelegate(this, &BackwardCompatibilityManager::notifySettingsChanged);
-		SettingsManager::getInstance().getSector("Settings")->setPropertyValue("LayoutVersion", mCurrentVersion);
+		SettingsManager::getInstance().eventSettingsChanged.disconnect(this);
+		SettingsManager::getInstance().setValue("Settings/LayoutVersion", mCurrentVersion);
 	}
 
 	void BackwardCompatibilityManager::serialiseProperty(MyGUI::xml::Element* _node, const std::string& _widgetType, const MyGUI::PairString& _property, bool _compatibility)
@@ -180,13 +180,10 @@ namespace tools
 		return mVersions;
 	}
 
-	void BackwardCompatibilityManager::notifySettingsChanged(const MyGUI::UString& _sectionName, const MyGUI::UString& _propertyName)
+	void BackwardCompatibilityManager::notifySettingsChanged(const std::string& _path)
 	{
-		if (_sectionName == "Settings")
-		{
-			if (_propertyName == "LayoutVersion")
-				mCurrentVersion = SettingsManager::getInstance().getSector("Settings")->getPropertyValue("LayoutVersion");
-		}
+		if (_path == "Settings/LayoutVersion")
+			mCurrentVersion = SettingsManager::getInstance().getValue("Settings/LayoutVersion");
 	}
 
 	const std::string& BackwardCompatibilityManager::getDefaultVersion() const
@@ -204,4 +201,4 @@ namespace tools
 		mCurrentVersion = _value;
 	}
 
-} // namespace tools
+}

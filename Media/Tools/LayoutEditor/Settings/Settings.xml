@@ -1,32 +1,82 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<MyGUI type="Settings">
-    <WidgetsWindow>
-        <Property key="widgetsButtonWidth" value="141"/>
-        <Property key="widgetsButtonHeight" value="24"/>
-    </WidgetsWindow>
-	<Settings>
-		<Property key="Grid" value="5"/>
-		<Property key="ShowName" value="1"/>
-		<Property key="ShowType" value="1"/>
-		<Property key="ShowSkin" value="1"/>
-		<Property key="MaxRecentFolders" value="10"/>
-		<Property key="MaxRecentFiles" value="10"/>
-		<Property key="MaxRecentProjects" value="10"/>
-		<Property key="ColourBackground" value="0 0 0 0"/>
-		<Property key="ColourSelector" value="0 1 0 1"/>
-		<Property key="ColourSelectorInactive" value="0 0 0 0.5"/>
-		<Property key="LoadLastProject" value="false"/>
-	</Settings>
-	<TextureScale>
-		<Property key="ScaleValue.0" value="50"/>
-		<Property key="ScaleValue.1" value="100"/>
-		<Property key="ScaleValue.2" value="200"/>
-		<Property key="ScaleValue.3" value="400"/>
-		<Property key="ScaleValue.4" value="800"/>
-		<Property key="ScaleValue.5" value="1600"/>
-	</TextureScale>
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Settings>
+	<Files>
+		<MaxRecentFolders>10</MaxRecentFolders>
+		<MaxRecentFiles>10</MaxRecentFiles>
+		<MaxRecentProjects>10</MaxRecentProjects>
+	</Files>
 	<Workspace>
-		<Property key="TextureName" value="TextureLayer_LayoutEditor_Widgets"/>
-		<Property key="TextureSize" value="1024 1024"/>
+		<Colours>
+			<ColourBackground>0 0 0 0</ColourBackground>
+			<ColourSelector>0 1 0 1</ColourSelector>
+			<ColourSelectorInactive>0 0 0 0.5</ColourSelectorInactive>
+		</Colours>
+		<TextureScale>
+			<ScaleValue.List>
+				<Value>50</Value>
+				<Value>100</Value>
+				<Value>200</Value>
+				<Value>400</Value>
+				<Value>800</Value>
+				<Value>1600</Value>
+			</ScaleValue.List>
+		</TextureScale>
+		<TextureName>TextureLayer_LayoutEditor_Widgets</TextureName>
 	</Workspace>
-</MyGUI>
+	<Settings>
+		<GridStep>5</GridStep>
+		<ShowName>1</ShowName>
+		<ShowType>1</ShowType>
+		<ShowSkin>1</ShowSkin>
+		<LoadLastProject>false</LoadLastProject>
+		<WorkspaceTextureSize>1024 1024</WorkspaceTextureSize>
+	</Settings>
+	<Controls>
+		<WidgetsWindow>
+			<WidgetsButtonWidth>120</WidgetsButtonWidth>
+			<WidgetsButtonHeight>20</WidgetsButtonHeight>
+			<WidgetsButtonOffset>1</WidgetsButtonOffset>
+			<ButtonSkinName>Button_Dark</ButtonSkinName>
+		</WidgetsWindow>
+	</Controls>
+	<Editor>
+		<UserSettingsFileName>le_user_settings.xml</UserSettingsFileName>
+		<States>
+			<State.List>
+				<Value>ApplicationState</Value>
+				<Value>EditorState</Value>
+				<Value>TestState</Value>
+			</State.List>
+			<Event.List>
+				<Value>
+					<Name>Start</Name>
+					<From>ApplicationState</From>
+					<To>EditorState</To>
+				</Value>
+				<Value>
+					<Name>Exit</Name>
+					<From>EditorState</From>
+					<To>ApplicationState</To>
+				</Value>
+				<Value>
+					<Name>Test</Name>
+					<From>EditorState</From>
+					<To>TestState</To>
+				</Value>
+				<Value>
+					<Name>Exit</Name>
+					<From>TestState</From>
+					<To>EditorState</To>
+				</Value>
+			</Event.List>
+			<FirstState>
+				<Name>ApplicationState</Name>
+				<Event>Start</Event>
+			</FirstState>
+		</States>
+	</Editor>
+	<EditorState>
+		<OpenSaveFileDialogLayout>OpenSaveFileDialog2.layout</OpenSaveFileDialogLayout>
+		<SettingsWindowLayout>SettingsWindow.layout</SettingsWindowLayout>
+	</EditorState>
+</Settings>

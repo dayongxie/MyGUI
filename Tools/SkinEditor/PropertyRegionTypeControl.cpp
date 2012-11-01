@@ -3,30 +3,20 @@
 	@author		Albert Semenov
 	@date		08/2010
 */
+
 #include "Precompiled.h"
 #include "PropertyRegionTypeControl.h"
+#include "FactoryManager.h"
 
 namespace tools
 {
 
-	PropertyRegionTypeControl::PropertyRegionTypeControl(MyGUI::Widget* _parent) :
-		wraps::BaseLayout("PropertyComboBoxControl.layout", _parent),
+	FACTORY_ITEM_ATTRIBUTE(PropertyRegionTypeControl)
+
+	PropertyRegionTypeControl::PropertyRegionTypeControl() :
+		mName(nullptr),
 		mComboBox(nullptr)
 	{
-		assignWidget(mComboBox, "ComboBox");
-
-		mComboBox->addItem("EditText");
-		mComboBox->addItem("SimpleText");
-
-		mComboBox->addItem("SubSkin");
-
-		mComboBox->addItem("TileRect");
-		mComboBox->addItem("TileRect Hor");
-		mComboBox->addItem("TileRect Ver");
-
-		mComboBox->beginToItemFirst();
-
-		mComboBox->eventComboChangePosition += MyGUI::newDelegate(this, &PropertyRegionTypeControl::notifyComboChangePosition);
 	}
 
 	PropertyRegionTypeControl::~PropertyRegionTypeControl()
@@ -34,12 +24,36 @@ namespace tools
 		mComboBox->eventComboChangePosition -= MyGUI::newDelegate(this, &PropertyRegionTypeControl::notifyComboChangePosition);
 	}
 
+	void PropertyRegionTypeControl::OnInitialise(Control* _parent, MyGUI::Widget* _place, const std::string& _layoutName)
+	{
+		PropertyControl::OnInitialise(_parent, _place, "PropertyComboBoxControl.layout");
+
+		assignWidget(mName, "Name", false);
+		assignWidget(mComboBox, "ComboBox");
+
+		mComboBox->addItem("SubSkin");
+		mComboBox->addItem("TileRect");
+		mComboBox->addItem("TileRect Horz");
+		mComboBox->addItem("TileRect Vert");
+
+		mComboBox->beginToItemFirst();
+
+		mComboBox->eventComboChangePosition += MyGUI::newDelegate(this, &PropertyRegionTypeControl::notifyComboChangePosition);
+	}
+
+	void PropertyRegionTypeControl::updateCaption()
+	{
+		PropertyPtr proper = getProperty();
+		if (proper != nullptr)
+			mName->setCaption(proper->getType()->getName());
+	}
+
 	void PropertyRegionTypeControl::updateProperty()
 	{
-		Property* proper = getProperty();
+		PropertyPtr proper = getProperty();
 		if (proper != nullptr)
 		{
-			mComboBox->setEnabled(!proper->getReadOnly());
+			mComboBox->setEnabled(!proper->getType()->getReadOnly());
 			size_t index = getComboIndex(proper->getValue());
 			mComboBox->setIndexSelected(index);
 		}
@@ -52,13 +66,11 @@ namespace tools
 
 	void PropertyRegionTypeControl::notifyComboChangePosition(MyGUI::ComboBox* _sender, size_t _index)
 	{
-		Property* proper = getProperty();
+		PropertyPtr proper = getProperty();
 		if (proper != nullptr)
 		{
-			if (_index != MyGUI::ITEM_NONE)
-				proper->setValue(mComboBox->getItemNameAt(_index), getTypeName());
-			else
-				proper->setValue("", getTypeName());
+			std::string value = _index != MyGUI::ITEM_NONE ? mComboBox->getItemNameAt(_index) : "";
+			executeAction(value);
 		}
 	}
 
@@ -79,4 +91,4 @@ namespace tools
 		return result;
 	}
 
-} // namespace tools
+}

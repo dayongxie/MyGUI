@@ -4,10 +4,11 @@
 #include "MessageBoxManager.h"
 
 template <> tools::GroupMessage* MyGUI::Singleton<tools::GroupMessage>::msInstance = nullptr;
-template <> const char* MyGUI::Singleton<tools::GroupMessage>::mClassTypeName("GroupMessage");
+template <> const char* MyGUI::Singleton<tools::GroupMessage>::mClassTypeName = "GroupMessage";
 
 namespace tools
 {
+
 	GroupMessage::GroupMessage()
 	{
 	}
@@ -98,4 +99,4 @@ namespace tools
 		showMessages();
 	}
 
-} // namespace tools
+}

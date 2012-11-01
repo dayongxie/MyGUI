@@ -365,4 +365,34 @@ namespace MyGUI
 		return mTextureID;
 	}
 
+	int OpenGLTexture::getWidth()
+	{
+		return mWidth;
+	}
+
+	int OpenGLTexture::getHeight()
+	{
+		return mHeight;
+	}
+
+	bool OpenGLTexture::isLocked()
+	{
+		return mLock;
+	}
+
+	PixelFormat OpenGLTexture::getFormat()
+	{
+		return mOriginalFormat;
+	}
+
+	TextureUsage OpenGLTexture::getUsage()
+	{
+		return mOriginalUsage;
+	}
+
+	size_t OpenGLTexture::getNumElemBytes()
+	{
+		return mNumElemBytes;
+	}
+
 } // namespace MyGUI

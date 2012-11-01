@@ -3,15 +3,17 @@
 	@author		Albert Semenov
 	@date		08/2010
 */
+
 #include "Precompiled.h"
 #include "WidgetSelectorManager.h"
 #include "EditorWidgets.h"
 
 template <> tools::WidgetSelectorManager* MyGUI::Singleton<tools::WidgetSelectorManager>::msInstance = nullptr;
-template <> const char* MyGUI::Singleton<tools::WidgetSelectorManager>::mClassTypeName("WidgetSelectorManager");
+template <> const char* MyGUI::Singleton<tools::WidgetSelectorManager>::mClassTypeName = "WidgetSelectorManager";
 
 namespace tools
 {
+
 	WidgetSelectorManager::WidgetSelectorManager() :
 		mCurrentWidget(nullptr),
 		mSelectDepth(0),
@@ -193,4 +195,4 @@ namespace tools
 		return result;
 	}
 
-} // namespace tools
+}

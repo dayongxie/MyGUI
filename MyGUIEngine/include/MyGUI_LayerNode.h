@@ -60,6 +60,10 @@ namespace MyGUI
 		// список детей
 		virtual EnumeratorILayerNode getEnumerator() const;
 
+		virtual size_t getLayerNodeCount() const;
+
+		virtual ILayerNode* getLayerNodeAt(size_t _index) const;
+
 		// добавляем айтем к ноду
 		virtual void attachLayerItem(ILayerItem* _item);
 		// удаляем айтем из нода
@@ -77,6 +81,8 @@ namespace MyGUI
 		virtual void renderToTarget(IRenderTarget* _target, bool _update);
 
 		virtual void resizeView(const IntSize& _viewSize);
+
+		virtual float getNodeDepth();
 
 		bool isOutOfDate() const;
 
@@ -98,6 +104,7 @@ namespace MyGUI
 		ILayerNode* mParent;
 		ILayer* mLayer;
 		bool mOutOfDate;
+		float mDepth;
 	};
 
 } // namespace MyGUI

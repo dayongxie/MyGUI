@@ -66,8 +66,6 @@ namespace base
 	BaseManager::BaseManager() :
 		mGUI(nullptr),
 		mPlatform(nullptr),
-		mInfo(nullptr),
-		mFocusInfo(nullptr),
 		hWnd(0),
 		mDeviceContext(nullptr),
 		mDevice(nullptr),
@@ -171,7 +169,6 @@ namespace base
 				break;
 
 			captureInput();
-			updateFPS();
 			drawOneFrame();
 
 			if (GetActiveWindow() != hWnd)
@@ -216,11 +213,11 @@ namespace base
 		{
 			if (node->getName() == "Path")
 			{
-				bool root = false;
 				if (node->findAttribute("root") != "")
 				{
-					root = MyGUI::utility::parseBool(node->findAttribute("root"));
-					if (root) mRootMedia = node->getContent();
+					bool root = MyGUI::utility::parseBool(node->findAttribute("root"));
+					if (root)
+						mRootMedia = node->getContent();
 				}
 				addResourceLocation(node->getContent(), false);
 			}
@@ -238,27 +235,12 @@ namespace base
 
 		mGUI = new MyGUI::Gui();
 		mGUI->initialise(mResourceFileName);
-
-		mInfo = new diagnostic::StatisticInfo();
-		mFocusInfo = new diagnostic::InputFocusInfo();
 	}
 
 	void BaseManager::destroyGui()
 	{
 		if (mGUI)
 		{
-			if (mInfo)
-			{
-				delete mInfo;
-				mInfo = nullptr;
-			}
-
-			if (mFocusInfo)
-			{
-				delete mFocusInfo;
-				mFocusInfo = nullptr;
-			}
-
 			mGUI->shutdown();
 			delete mGUI;
 			mGUI = nullptr;
@@ -270,6 +252,11 @@ namespace base
 			delete mPlatform;
 			mPlatform = nullptr;
 		}
+	}
+
+	size_t BaseManager::getWindowHandle()
+	{
+		return (size_t)hWnd;
 	}
 
 	void BaseManager::setWindowCaption(const std::wstring& _text)
@@ -323,27 +310,6 @@ namespace base
 		SetWindowPos(hWnd, hwndAfter, x, y, w, h, SWP_FRAMECHANGED | SWP_SHOWWINDOW);
 	}
 
-	void BaseManager::updateFPS()
-	{
-		if (mInfo)
-		{
-			// calc FPS
-			static MyGUI::Timer timer;
-			const unsigned long interval = 1000;
-			static int count_frames = 0;
-			int accumulate = timer.getMilliseconds();
-			if (accumulate > interval)
-			{
-				mInfo->change("FPS", (int)((unsigned long)count_frames * 1000 / accumulate));
-				mInfo->update();
-
-				count_frames = 0;
-				timer.reset();
-			}
-			count_frames ++;
-		}
-	}
-
 	void BaseManager::injectMouseMove(int _absx, int _absy, int _absz)
 	{
 		if (!mGUI)
@@ -377,11 +343,6 @@ namespace base
 		{
 			mExit = true;
 			return;
-		}
-		else if (_key == MyGUI::KeyCode::F12)
-		{
-			bool visible = mFocusInfo->getFocusVisible();
-			mFocusInfo->setFocusVisible(!visible);
 		}
 
 		MyGUI::InputManager::getInstance().injectKeyPress(_key, _text);
@@ -543,16 +504,6 @@ namespace base
 	void BaseManager::setResourceFilename(const std::string& _flename)
 	{
 		mResourceFileName = _flename;
-	}
-
-	diagnostic::StatisticInfo* BaseManager::getStatisticInfo()
-	{
-		return mInfo;
-	}
-
-	diagnostic::InputFocusInfo* BaseManager::getFocusInput()
-	{
-		return mFocusInfo;
 	}
 
 } // namespace base

@@ -3,10 +3,12 @@
 	@author		Albert Semenov
 	@date		08/2010
 */
-#ifndef __SELECTOR_CONTROL_H__
-#define __SELECTOR_CONTROL_H__
+
+#ifndef _618193ae_b8d7_415e_af0e_2c39becbae9c_
+#define _618193ae_b8d7_415e_af0e_2c39becbae9c_
 
 #include "BaseLayout/BaseLayout.h"
+#include "sigslot.h"
 
 namespace tools
 {
@@ -16,7 +18,8 @@ namespace tools
 	typedef MyGUI::delegates::CMultiDelegate0 EventHandle_ChangePosition;
 
 	class SelectorControl :
-		public wraps::BaseLayout
+		public wraps::BaseLayout,
+		public sigslot::has_slots<>
 	{
 	public:
 		SelectorControl(const std::string& _layout, MyGUI::Widget* _parent);
@@ -50,7 +53,7 @@ namespace tools
 		void setColour(MyGUI::Colour _value);
 		void updateCoord();
 
-		void notifySettingsChanged(const MyGUI::UString& _sectorName, const MyGUI::UString& _propertyName);
+		void notifySettingsChanged(const std::string& _path);
 
 	private:
 		MyGUI::IntCoord mCoordValue;
@@ -61,6 +64,6 @@ namespace tools
 		std::string mPropertyColour;
 	};
 
-} // namespace tools
+}
 
-#endif // __SELECTOR_CONTROL_H__
+#endif

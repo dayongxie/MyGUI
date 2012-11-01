@@ -9,21 +9,25 @@
 #include "EditorWidgets.h"
 #include "UndoManager.h"
 #include "Localise.h"
+#include "SettingsManager.h"
 
 namespace tools
 {
+
 	// FIXME hardcoded template
 	const std::string TemplateName = "BaseLayoutCPP.xml";
 
 	CodeGenerator::CodeGenerator() :
-		Dialog(),
 		mOpenSaveFileDialog(nullptr)
 	{
 		initialiseByAttributes(this);
 
+		setDialogRoot(mMainWidget);
+
 		mOpenSaveFileDialog = new OpenSaveFileDialog();
+		mOpenSaveFileDialog->Initialise(SettingsManager::getInstance().getValue("EditorState/OpenSaveFileDialogLayout"));
 		mOpenSaveFileDialog->setDialogInfo(replaceTags("CaptionOpenFolder"), replaceTags("ButtonOpenFolder"), true);
-		mOpenSaveFileDialog->eventEndDialog = MyGUI::newDelegate(this, &CodeGenerator::notifyEndDialogOpenSaveFile);
+		mOpenSaveFileDialog->eventEndDialog.connect(this, &CodeGenerator::notifyEndDialogOpenSaveFile);
 
 		mGenerateButton->eventMouseButtonClick += MyGUI::newDelegate(this, &CodeGenerator::notifyGeneratePressed);
 		mCancel->eventMouseButtonClick += MyGUI::newDelegate(this, &CodeGenerator::notifyCancel);
@@ -191,22 +195,18 @@ namespace tools
 
 	void CodeGenerator::loadTemplate()
 	{
-		SettingsSector* sector = EditorWidgets::getInstance().getSector("CodeGeneratorSettings");
-
-		mPanelNameEdit->setCaption(sector->getPropertyValue("PanelName"));
-		mPanelNamespaceEdit->setCaption(sector->getPropertyValue("PanelNamespace"));
-		mIncludeDirectoryEdit->setCaption(sector->getPropertyValue("IncludeDirectory"));
-		mSourceDirectoryEdit->setCaption(sector->getPropertyValue("SourceDirectory"));
+		mPanelNameEdit->setCaption(SettingsManager::getInstance().getValue("Settings/CodeGenerator/PanelName"));
+		mPanelNamespaceEdit->setCaption(SettingsManager::getInstance().getValue("Settings/CodeGenerator/PanelNamespace"));
+		mIncludeDirectoryEdit->setCaption(SettingsManager::getInstance().getValue("Settings/CodeGenerator/IncludeDirectory"));
+		mSourceDirectoryEdit->setCaption(SettingsManager::getInstance().getValue("Settings/CodeGenerator/SourceDirectory"));
 	}
 
 	void CodeGenerator::saveTemplate()
 	{
-		SettingsSector* sector = EditorWidgets::getInstance().getSector("CodeGeneratorSettings");
-
-		sector->setPropertyValue("PanelName", mPanelNameEdit->getOnlyText());
-		sector->setPropertyValue("PanelNamespace", mPanelNamespaceEdit->getOnlyText());
-		sector->setPropertyValue("IncludeDirectory", mIncludeDirectoryEdit->getOnlyText());
-		sector->setPropertyValue("SourceDirectory", mSourceDirectoryEdit->getOnlyText());
+		SettingsManager::getInstance().setValue("Settings/CodeGenerator/PanelName", mPanelNameEdit->getOnlyText());
+		SettingsManager::getInstance().setValue("Settings/CodeGenerator/PanelNamespace", mPanelNamespaceEdit->getOnlyText());
+		SettingsManager::getInstance().setValue("Settings/CodeGenerator/IncludeDirectory", mIncludeDirectoryEdit->getOnlyText());
+		SettingsManager::getInstance().setValue("Settings/CodeGenerator/SourceDirectory", mSourceDirectoryEdit->getOnlyText());
 
 		UndoManager::getInstance().setUnsaved(true);
 	}
@@ -242,4 +242,4 @@ namespace tools
 		mOpenSaveFileDialog->endModal();
 	}
 
-} // namespace tools
+}

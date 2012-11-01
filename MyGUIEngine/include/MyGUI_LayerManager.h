@@ -72,6 +72,10 @@ namespace MyGUI
 		/** Get layer by name */
 		ILayer* getByName(const std::string& _name, bool _throw = true) const;
 
+		size_t getLayerCount() const;
+
+		ILayer* getLayer(size_t _index);
+
 		/** Get top visible and enabled widget at specified position */
 		Widget* getWidgetFromPoint(int _left, int _top);
 
@@ -79,6 +83,8 @@ namespace MyGUI
 		void renderToTarget(IRenderTarget* _target, bool _update);
 
 		void resizeView(const IntSize& _viewSize);
+
+		const std::string& getCategoryName() const;
 
 	private:
 		void _load(xml::ElementPtr _node, const std::string& _file, Version _version);
@@ -93,6 +99,7 @@ namespace MyGUI
 		VectorLayer mLayerNodes;
 
 		bool mIsInitialise;
+		std::string mCategoryName;
 	};
 
 } // namespace MyGUI

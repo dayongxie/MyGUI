@@ -38,14 +38,13 @@ set (HEADER_FILES "")
 set (SOURCE_FILES "")
 
 if(MYGUI_RENDERSYSTEM EQUAL 1)
-	mygui_add_base_manager_source(DirectX)
-	add_definitions("-DMYGUI_DIRECTX_PLATFORM")
+	mygui_add_base_manager_source(Dummy)
+	add_definitions("-DMYGUI_DUMMY_PLATFORM")
 	include_directories(
-		${MYGUI_SOURCE_DIR}/Platforms/DirectX/DirectXPlatform/include
-		${DirectX_INCLUDE_DIR}
+		${MYGUI_SOURCE_DIR}/Platforms/Dummy/DummyPlatform/include
 	)
-	link_directories(${DIRECTX_LIB_DIR})
-elseif(MYGUI_RENDERSYSTEM EQUAL 2)
+	link_directories(${DUMMY_LIB_DIR})
+elseif(MYGUI_RENDERSYSTEM EQUAL 3)
 	mygui_add_base_manager_source(Ogre)
 	add_definitions("-DMYGUI_OGRE_PLATFORM")
 	include_directories(
@@ -53,7 +52,7 @@ elseif(MYGUI_RENDERSYSTEM EQUAL 2)
 		${OGRE_INCLUDE_DIR}
 	)
 	link_directories(${OGRE_LIB_DIR})
-elseif(MYGUI_RENDERSYSTEM EQUAL 3)
+elseif(MYGUI_RENDERSYSTEM EQUAL 4)
 	mygui_add_base_manager_source(OpenGL)
 	add_definitions("-DMYGUI_OPENGL_PLATFORM")
 	include_directories(
@@ -61,7 +60,15 @@ elseif(MYGUI_RENDERSYSTEM EQUAL 3)
 		${OPENGL_INCLUDE_DIR}
 	)
 	link_directories(${OPENGL_LIB_DIR})
-elseif(MYGUI_RENDERSYSTEM EQUAL 4)
+elseif(MYGUI_RENDERSYSTEM EQUAL 5)
+	mygui_add_base_manager_source(DirectX)
+	add_definitions("-DMYGUI_DIRECTX_PLATFORM")
+	include_directories(
+		${MYGUI_SOURCE_DIR}/Platforms/DirectX/DirectXPlatform/include
+		${DirectX_INCLUDE_DIR}
+	)
+	link_directories(${DIRECTX_LIB_DIR})
+elseif(MYGUI_RENDERSYSTEM EQUAL 6)
 	mygui_add_base_manager_source(DirectX11)
 	add_definitions("-DMYGUI_DIRECTX11_PLATFORM")
 	include_directories(
@@ -84,15 +91,18 @@ endif()
 add_library(${PROJECTNAME} ${HEADER_FILES} ${SOURCE_FILES})
 
 if(MYGUI_RENDERSYSTEM EQUAL 1)
-	add_dependencies(${PROJECTNAME} MyGUI.DirectXPlatform)
-	target_link_libraries(${PROJECTNAME} MyGUI.DirectXPlatform)
-elseif(MYGUI_RENDERSYSTEM EQUAL 2)
+	add_dependencies(${PROJECTNAME} MyGUI.DummyPlatform)
+	target_link_libraries(${PROJECTNAME} MyGUI.DummyPlatform)
+elseif(MYGUI_RENDERSYSTEM EQUAL 3)
 	add_dependencies(${PROJECTNAME} MyGUI.OgrePlatform)
 	target_link_libraries(${PROJECTNAME} MyGUI.OgrePlatform)
-elseif(MYGUI_RENDERSYSTEM EQUAL 3)
+elseif(MYGUI_RENDERSYSTEM EQUAL 4)
 	add_dependencies(${PROJECTNAME} MyGUI.OpenGLPlatform)
 	target_link_libraries(${PROJECTNAME} MyGUI.OpenGLPlatform)
-elseif(MYGUI_RENDERSYSTEM EQUAL 4)
+elseif(MYGUI_RENDERSYSTEM EQUAL 5)
+	add_dependencies(${PROJECTNAME} MyGUI.DirectXPlatform)
+	target_link_libraries(${PROJECTNAME} MyGUI.DirectXPlatform)
+elseif(MYGUI_RENDERSYSTEM EQUAL 6)
 	add_dependencies(${PROJECTNAME} MyGUI.DirectX11Platform)
 	target_link_libraries(${PROJECTNAME} MyGUI.DirectX11Platform)
 endif()

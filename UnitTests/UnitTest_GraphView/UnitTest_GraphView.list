@@ -2,48 +2,48 @@ set (HEADER_FILES
   AnimationGraph.h
   AnimationGraphFactory.h
   AnimationNodeFactory.h
-  ConnectionReceiver.h
-  EventController.h
-  FadeController.h
-  Group2Controller.h
-  IAnimationGraph.h
-  IAnimationNode.h
-  IAnimationNodeConstruct.h
-  LoopController.h
-  PositionController.h
-  SkeletonState.h
-  WeightController.h
+  BaseAnimationNode.h
   BaseGraphConnection.h
   BaseGraphNode.h
   BaseGraphView.h
   ConnectionInfo.h
+  ConnectionReceiver.h
   ContextMenu.h
-  IGraphController.h
-  BaseAnimationNode.h
   DemoKeeper.h
-  GraphNodeFactory.h
-  GraphView.h
-  IGraphNodeConstruct.h
+  Dialog.h
+  DialogManager.h
+  EventController.h
+  FadeController.h
   GraphNodeEventController.h
+  GraphNodeFactory.h
   GraphNodeFadeController.h
   GraphNodeGroup2Controller.h
   GraphNodeLoopController.h
   GraphNodePositionController.h
   GraphNodeSkeletonState.h
   GraphNodeWeightController.h
-  ../../Common/Tools/Dialog.h
-  ../../Common/Tools/DialogManager.h
-  ../../Common/Tools/OpenSaveFileDialog.h
+  GraphView.h
+  Group2Controller.h
+  IAnimationGraph.h
+  IAnimationNode.h
+  IAnimationNodeConstruct.h
+  IGraphController.h
+  IGraphNodeConstruct.h
+  LoopController.h
+  OpenSaveFileDialog.h
+  PositionController.h
+  SkeletonState.h
+  WeightController.h
 )
 set (SOURCE_FILES
+  ../../Common/Base/BaseResource.rc
   AnimationGraphFactory.cpp
   AnimationNodeFactory.cpp
   DemoKeeper.cpp
+  Dialog.cpp
+  DialogManager.cpp
   GraphNodeFactory.cpp
-  ../../Common/Base/BaseResource.rc
-  ../../Common/Tools/Dialog.cpp
-  ../../Common/Tools/DialogManager.cpp
-  ../../Common/Tools/OpenSaveFileDialog.cpp
+  OpenSaveFileDialog.cpp
 )
 SOURCE_GROUP("Animation\\Header Files" FILES
   AnimationGraph.h
@@ -65,8 +65,6 @@ SOURCE_GROUP("Animation\\Source" FILES
   AnimationGraphFactory.cpp
   AnimationNodeFactory.cpp
 )
-SOURCE_GROUP("Animation" FILES
-)
 SOURCE_GROUP("Common\\Header Files" FILES
   BaseGraphConnection.h
   BaseGraphNode.h
@@ -75,7 +73,12 @@ SOURCE_GROUP("Common\\Header Files" FILES
   ContextMenu.h
   IGraphController.h
 )
-SOURCE_GROUP("Common" FILES
+SOURCE_GROUP("Demo\\Header Files" FILES
+  BaseAnimationNode.h
+  DemoKeeper.h
+  GraphNodeFactory.h
+  GraphView.h
+  IGraphNodeConstruct.h
 )
 SOURCE_GROUP("Demo\\Header Files\\Nodes" FILES
   GraphNodeEventController.h
@@ -86,30 +89,19 @@ SOURCE_GROUP("Demo\\Header Files\\Nodes" FILES
   GraphNodeSkeletonState.h
   GraphNodeWeightController.h
 )
-SOURCE_GROUP("Demo\\Header Files" FILES
-  BaseAnimationNode.h
-  DemoKeeper.h
-  GraphNodeFactory.h
-  GraphView.h
-  IGraphNodeConstruct.h
+SOURCE_GROUP("Demo\\Resource" FILES
+  ../../Common/Base/BaseResource.rc
+  CMakeLists.txt
 )
 SOURCE_GROUP("Demo\\Source" FILES
   DemoKeeper.cpp
   GraphNodeFactory.cpp
 )
-SOURCE_GROUP("Demo\\Resource" FILES
-  ../../Common/Base/BaseResource.rc
-  CMakeLists.txt
-)
-SOURCE_GROUP("Demo" FILES
-)
 SOURCE_GROUP("OpenSaveFileDialog" FILES
-  ../../Common/Tools/Dialog.h
-  ../../Common/Tools/Dialog.cpp
-  ../../Common/Tools/DialogManager.h
-  ../../Common/Tools/DialogManager.cpp
-  ../../Common/Tools/OpenSaveFileDialog.h
-  ../../Common/Tools/OpenSaveFileDialog.cpp
-)
-SOURCE_GROUP("" FILES
+  Dialog.cpp
+  Dialog.h
+  DialogManager.cpp
+  DialogManager.h
+  OpenSaveFileDialog.cpp
+  OpenSaveFileDialog.h
 )

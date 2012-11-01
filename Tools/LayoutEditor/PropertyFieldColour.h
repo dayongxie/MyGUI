@@ -3,19 +3,23 @@
 	@author		Albert Semenov
 	@date		12/2010
 */
-#ifndef __PROPERTY_FIELD_COLOUR_H__
-#define __PROPERTY_FIELD_COLOUR_H__
+
+#ifndef _c05c3f75_ceee_4525_89ac_a8462ec97634_
+#define _c05c3f75_ceee_4525_89ac_a8462ec97634_
 
 #include "EditorToolTip.h"
 #include "BaseLayout/BaseLayout.h"
 #include "IPropertyField.h"
 #include "ColourPanel.h"
+#include "sigslot.h"
 
 namespace tools
 {
+
 	class PropertyFieldColour :
 		public wraps::BaseLayout,
-		public IPropertyField
+		public IPropertyField,
+		public sigslot::has_slots<>
 	{
 	public:
 		PropertyFieldColour(MyGUI::Widget* _parent);
@@ -62,6 +66,6 @@ namespace tools
 		bool mGoodData;
 	};
 
-} // namespace tools
+}
 
-#endif // __PROPERTY_FIELD_COLOUR_H__
+#endif

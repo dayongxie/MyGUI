@@ -6,7 +6,7 @@
 #ifndef __DEMO_KEEPER_H__
 #define __DEMO_KEEPER_H__
 
-#include "BaseManager.h"
+#include "Base/BaseDemoManager.h"
 #include "EditorWindow.h"
 #include "MainPanel.h"
 #include "InformationWindow.h"
@@ -16,7 +16,7 @@ namespace demo
 {
 
 	class DemoKeeper :
-		public base::BaseManager
+		public base::BaseDemoManager
 	{
 	public:
 		DemoKeeper();
@@ -32,11 +32,18 @@ namespace demo
 		void removeRenderBoxes();
 		void createRenderBox(MyGUI::Canvas* _canvas);
 
+		void createDefaultScene();
+		void notifyFrameStart(float _time);
+
 	private:
 		EditorWindow* mEditorWindow;
 		MainPanel* mMainPanel;
 		InformationWindow* mInformationWindow;
 		ColourWindow* mColourWindow;
+
+#ifdef MYGUI_OGRE_PLATFORM
+		Ogre::SceneNode* mNode;
+#endif // MYGUI_OGRE_PLATFORM
 	};
 
 } // namespace demo

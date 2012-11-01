@@ -5,11 +5,36 @@
 #include "StackPanel.h"
 #include "ScrollViewPanel.h"
 #include "HyperTextBox.h"
+#include "DataInfoManager.h"
+#include "DataManager.h"
+#include "ActionManager.h"
+#include "sigslot.h"
 
 namespace demo
 {
+	class A
+	{
+	public:
+		sigslot::signal1<A*> event;
+	};
 
-	DemoKeeper::DemoKeeper()
+	class B :
+		public sigslot::has_slots<>
+	{
+	public:
+		void advise(A* _a)
+		{
+			if (!_a->event.exist(this, &B::onEvent))
+				_a->event.connect(this, &B::onEvent);
+		}
+
+		void onEvent(A* _sender)
+		{
+		}
+	};
+
+	DemoKeeper::DemoKeeper() :
+		mDataListUI(nullptr)
 	{
 	}
 
@@ -17,19 +42,41 @@ namespace demo
 	{
 		base::BaseManager::setupResources();
 		addResourceLocation(getRootMedia() + "/UnitTests/TestApp");
+		addResourceLocation(getRootMedia() + "/UnitTests/TestApp/DataInfo");
 		addResourceLocation(getRootMedia() + "/Common/Tools");
 	}
 
 	void DemoKeeper::createScene()
 	{
-		MyGUI::ResourceManager::getInstance().load("FrameworkFonts.xml");
+		new tools::DataInfoManager();
+		new tools::DataManager();
+		new tools::ActionManager();
+		
+		tools::DataInfoManager::getInstance().initialise();
+		tools::DataManager::getInstance().initialise();
+		tools::ActionManager::getInstance().initialise();
+
+		tools::DataInfoManager::getInstance().load("ImageDataInfo.xml");
+
+		mDataListUI = new DataListUI();
+
+		A a;
+		B b;
+
+		b.advise(&a);
+		b.advise(&a);
+
+		//MyGUI::LayoutManager::getInstance().load("");
+
+		/*MyGUI::ResourceManager::getInstance().load("FrameworkFonts.xml");
 		MyGUI::ResourceManager::getInstance().load("Fonts.xml");
 		MyGUI::ResourceManager::getInstance().load("HyperTextSkins.xml");
 
-		MyGUI::FactoryManager::getInstance().registerFactory<MyGUI::WrapPanel>("Widget");
-		MyGUI::FactoryManager::getInstance().registerFactory<MyGUI::StackPanel>("Widget");
-		MyGUI::FactoryManager::getInstance().registerFactory<MyGUI::ScrollViewPanel>("Widget");
-		MyGUI::FactoryManager::getInstance().registerFactory<MyGUI::HyperTextBox>("Widget");
+		std::string category = MyGUI::WidgetManager::getInstance().getCategory();
+		MyGUI::FactoryManager::getInstance().registerFactory<MyGUI::WrapPanel>(category);
+		MyGUI::FactoryManager::getInstance().registerFactory<MyGUI::StackPanel>(category);
+		MyGUI::FactoryManager::getInstance().registerFactory<MyGUI::ScrollViewPanel>(category);
+		MyGUI::FactoryManager::getInstance().registerFactory<MyGUI::HyperTextBox>(category);
 
 		MyGUI::Window* window = MyGUI::Gui::getInstance().createWidget<MyGUI::Window>("WindowCSX", MyGUI::IntCoord(10, 10, 500, 500), MyGUI::Align::Default, "Main");
 		MyGUI::IntCoord coord = window->getClientCoord();
@@ -57,15 +104,41 @@ namespace demo
 			"<p float='left'><img width='48' height='48'>HandPointerImage</img>text1 texttext2 text3 text4 texttext5 texttexttexttext6 text7 text8 texttext9 text10 texttext11 text12</p>\n"\
 			"<p float='right' align='right'><img width='48' height='48'>HandPointerImage</img>text1 texttext2 text3 text4 texttext5 texttexttexttext6 text7 text8 texttext9 text10 texttext11 text12</p>");
 
-		hyperText->updateContent();
+		hyperText->updateContent();*/
+
+		MyGUI::IndexImage index;
+		index.name = "MyIndex1";
+		index.rate = 0;
+		index.frames.push_back(MyGUI::IntPoint(0, 0));
+
+		MyGUI::GroupImage group;
+		group.name = "MyGroup1";
+		group.texture = "MyTexture1.png";
+		group.size = MyGUI::texture_utility::getTextureSize(group.texture, false);
+		group.indexes.push_back(index);
+
+		std::string category = MyGUI::ResourceManager::getInstance().getCategoryName();
+		MyGUI::ResourceImageSet* imageSet = MyGUI::FactoryManager::getInstance().createObject<MyGUI::ResourceImageSet>(category);
+		imageSet->setResourceName("ResourceImageSet_Manual1");
+		imageSet->AddGroupImage(group);
+
+		MyGUI::ResourceManager::getInstance().addResource(imageSet);
 	}
 
 	void DemoKeeper::destroyScene()
 	{
-		MyGUI::FactoryManager::getInstance().unregisterFactory<MyGUI::HyperTextBox>("Widget");
-		MyGUI::FactoryManager::getInstance().unregisterFactory<MyGUI::ScrollViewPanel>("Widget");
-		MyGUI::FactoryManager::getInstance().unregisterFactory<MyGUI::StackPanel>("Widget");
-		MyGUI::FactoryManager::getInstance().unregisterFactory<MyGUI::WrapPanel>("Widget");
+		tools::DataInfoManager::getInstance().shutdown();
+		tools::DataManager::getInstance().shutdown();
+		tools::ActionManager::getInstance().shutdown();
+
+		delete tools::DataManager::getInstancePtr();
+		delete tools::DataInfoManager::getInstancePtr();
+		delete tools::ActionManager::getInstancePtr();
+		/*std::string category = MyGUI::WidgetManager::getInstance().getCategory();
+		MyGUI::FactoryManager::getInstance().unregisterFactory<MyGUI::HyperTextBox>(category);
+		MyGUI::FactoryManager::getInstance().unregisterFactory<MyGUI::ScrollViewPanel>(category);
+		MyGUI::FactoryManager::getInstance().unregisterFactory<MyGUI::StackPanel>(category);
+		MyGUI::FactoryManager::getInstance().unregisterFactory<MyGUI::WrapPanel>(category);*/
 	}
 
 	void DemoKeeper::OnClickUrl(MyGUI::HyperTextBox* _sender, const std::string& _url)

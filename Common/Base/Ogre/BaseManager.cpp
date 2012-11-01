@@ -10,6 +10,10 @@
 
 #if MYGUI_PLATFORM == MYGUI_PLATFORM_WIN32
 #	include <windows.h>
+#elif MYGUI_PLATFORM == MYGUI_PLATFORM_LINUX
+#	include <X11/Xlib.h>
+#	include <X11/Xutil.h>
+#	include <X11/Xatom.h>
 #endif
 
 namespace base
@@ -39,8 +43,6 @@ namespace base
 	BaseManager::BaseManager() :
 		mGUI(nullptr),
 		mPlatform(nullptr),
-		mInfo(nullptr),
-		mFocusInfo(nullptr),
 		mRoot(nullptr),
 		mCamera(nullptr),
 		mSceneManager(nullptr),
@@ -48,8 +50,7 @@ namespace base
 		mExit(false),
 		mPluginCfgName("plugins.cfg"),
 		mResourceXMLName("resources.xml"),
-		mResourceFileName("MyGUI_Core.xml"),
-		mNode(nullptr)
+		mResourceFileName("MyGUI_Core.xml")
 	{
 		#if MYGUI_PLATFORM == MYGUI_PLATFORM_APPLE
 			mResourcePath = macBundlePath() + "/Contents/Resources/";
@@ -84,10 +85,10 @@ namespace base
 		mWindow = mRoot->initialise(true);
 
 
-	#if MYGUI_PLATFORM == MYGUI_PLATFORM_WIN32
 		// вытаскиваем дискриптор окна
-		size_t hWnd = 0;
-		mWindow->getCustomAttribute("WINDOW", &hWnd);
+		size_t handle = getWindowHandle();
+
+	#if MYGUI_PLATFORM == MYGUI_PLATFORM_WIN32
 		// берем имя нашего экзешника
 		char buf[MAX_PATH];
 		::GetModuleFileNameA(0, (LPCH)&buf, MAX_PATH);
@@ -97,8 +98,8 @@ namespace base
 		HICON hIcon = ::LoadIcon(instance, MAKEINTRESOURCE(1001));
 		if (hIcon)
 		{
-			::SendMessageA((HWND)hWnd, WM_SETICON, 1, (LPARAM)hIcon);
-			::SendMessageA((HWND)hWnd, WM_SETICON, 0, (LPARAM)hIcon);
+			::SendMessageA((HWND)handle, WM_SETICON, 1, (LPARAM)hIcon);
+			::SendMessageA((HWND)handle, WM_SETICON, 0, (LPARAM)hIcon);
 		}
 	#endif
 
@@ -129,9 +130,6 @@ namespace base
 
 		mRoot->addFrameListener(this);
 		Ogre::WindowEventUtilities::addWindowEventListener(mWindow, this);
-
-		size_t handle = 0;
-		mWindow->getCustomAttribute("WINDOW", &handle);
 
 		createGui();
 
@@ -216,27 +214,12 @@ namespace base
 		mPlatform->initialise(mWindow, mSceneManager);
 		mGUI = new MyGUI::Gui();
 		mGUI->initialise(mResourceFileName);
-
-		mInfo = new diagnostic::StatisticInfo();
-		mFocusInfo = new diagnostic::InputFocusInfo();
 	}
 
 	void BaseManager::destroyGui()
 	{
 		if (mGUI)
 		{
-			if (mInfo)
-			{
-				delete mInfo;
-				mInfo = nullptr;
-			}
-
-			if (mFocusInfo)
-			{
-				delete mFocusInfo;
-				mFocusInfo = nullptr;
-			}
-
 			mGUI->shutdown();
 			delete mGUI;
 			mGUI = nullptr;
@@ -266,11 +249,11 @@ namespace base
 		{
 			if (node->getName() == "Path")
 			{
-				bool rootAttr = false;
 				if (node->findAttribute("root") != "")
 				{
-					rootAttr = MyGUI::utility::parseBool(node->findAttribute("root"));
-					if (rootAttr) mRootMedia = node->getContent();
+					bool rootAttr = MyGUI::utility::parseBool(node->findAttribute("root"));
+					if (rootAttr)
+						mRootMedia = node->getContent();
 				}
 				addResourceLocation(node->getContent());
 			}
@@ -288,35 +271,6 @@ namespace base
 			return true;
 
 		captureInput();
-
-		if (mInfo)
-		{
-			static float time = 0;
-			time += evt.timeSinceLastFrame;
-			if (time > 1)
-			{
-				time -= 1;
-				try
-				{
-					const Ogre::RenderTarget::FrameStats& stats = mWindow->getStatistics();
-					mInfo->change("FPS", (int)stats.lastFPS);
-					mInfo->change("triangle", stats.triangleCount);
-					mInfo->change("batch", stats.batchCount);
-					mInfo->change("batch gui", MyGUI::OgreRenderManager::getInstance().getBatchCount());
-					mInfo->update();
-				}
-				catch (...)
-				{
-					MYGUI_LOG(Warning, "Error get statistics");
-				}
-			}
-		}
-
-		// для дефолтной сцены
-		if (mNode)
-		{
-			mNode->yaw(Ogre::Radian(Ogre::Degree(evt.timeSinceLastFrame * 10)));
-		}
 
 		return true;
 	}
@@ -346,12 +300,30 @@ namespace base
 		destroyInput();
 	}
 
+	size_t BaseManager::getWindowHandle()
+	{
+		size_t handle = 0;
+		mWindow->getCustomAttribute("WINDOW", &handle);
+		return handle;
+	}
+
 	void BaseManager::setWindowCaption(const std::wstring& _text)
 	{
 	#if MYGUI_PLATFORM == MYGUI_PLATFORM_WIN32
-		size_t handle = 0;
-		mWindow->getCustomAttribute("WINDOW", &handle);
-		::SetWindowTextW((HWND)handle, _text.c_str());
+		::SetWindowTextW((HWND)getWindowHandle(), _text.c_str());
+	#elif MYGUI_PLATFORM == MYGUI_PLATFORM_LINUX
+		Display* xDisplay = nullptr;
+		unsigned long windowHandle = 0;
+		mWindow->getCustomAttribute("XDISPLAY", &xDisplay);
+		mWindow->getCustomAttribute("WINDOW", &windowHandle);
+		Window win = (Window)windowHandle;
+
+		XTextProperty windowName;
+		windowName.value    = (unsigned char *)(MyGUI::UString(_text).asUTF8_c_str());
+		windowName.encoding = XA_STRING;
+		windowName.format   = 8;
+		windowName.nitems   = strlen((char *)(windowName.value));
+		XSetWMName(xDisplay, win, &windowName);
 	#endif
 	}
 
@@ -372,35 +344,6 @@ namespace base
 	void BaseManager::addResourceLocation(const std::string& _name, bool _recursive)
 	{
 		addResourceLocation(_name, Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, "FileSystem", false);
-	}
-
-	void BaseManager::createDefaultScene()
-	{
-		try
-		{
-			Ogre::Entity* entity = mSceneManager->createEntity("Mikki.mesh", "Mikki.mesh");
-			mNode = mSceneManager->getRootSceneNode()->createChildSceneNode();
-			mNode->attachObject(entity);
-		}
-		catch (Ogre::FileNotFoundException&)
-		{
-			return;
-		}
-
-		try
-		{
-			Ogre::MeshManager::getSingleton().createPlane(
-				"FloorPlane", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-				Ogre::Plane(Ogre::Vector3::UNIT_Y, 0), 1000, 1000, 1, 1, true, 1, 1, 1, Ogre::Vector3::UNIT_Z);
-
-			Ogre::Entity* entity = getSceneManager()->createEntity("FloorPlane", "FloorPlane");
-			entity->setMaterialName("Ground");
-			mNode->attachObject(entity);
-		}
-		catch (Ogre::FileNotFoundException&)
-		{
-			return;
-		}
 	}
 
 	void BaseManager::injectMouseMove(int _absx, int _absy, int _absz)
@@ -442,11 +385,6 @@ namespace base
 			makeScreenShot();
 			return;
 		}
-		else if (_key == MyGUI::KeyCode::F12)
-		{
-			bool visible = mFocusInfo->getFocusVisible();
-			mFocusInfo->setFocusVisible(!visible);
-		}
 
 		// change polygon mode
 		// TODO: polygon mode require changes in platform
@@ -484,6 +422,7 @@ namespace base
 			mPlatform->getRenderManagerPtr()->setRenderWindow(mWindow);
 		}
 #endif
+
 		MyGUI::InputManager::getInstance().injectKeyPress(_key, _text);
 	}
 
@@ -508,16 +447,6 @@ namespace base
 	void BaseManager::setResourceFilename(const std::string& _flename)
 	{
 		mResourceFileName = _flename;
-	}
-
-	diagnostic::StatisticInfo* BaseManager::getStatisticInfo()
-	{
-		return mInfo;
-	}
-
-	diagnostic::InputFocusInfo* BaseManager::getFocusInput()
-	{
-		return mFocusInfo;
 	}
 
 	Ogre::SceneManager* BaseManager::getSceneManager()
@@ -549,6 +478,26 @@ namespace base
 		}
 		while (stream.is_open());
 		mWindow->writeContentsToFile(file);
+	}
+
+	BaseManager::MapString BaseManager::getStatistic()
+	{
+		MapString result;
+
+		try
+		{
+			const Ogre::RenderTarget::FrameStats& stats = mWindow->getStatistics();
+			result["FPS"] = MyGUI::utility::toString(stats.lastFPS);
+			result["triangle"] = MyGUI::utility::toString(stats.triangleCount);
+			result["batch"] = MyGUI::utility::toString(stats.batchCount);
+			result["batch gui"] = MyGUI::utility::toString(MyGUI::OgreRenderManager::getInstance().getBatchCount());
+		}
+		catch (...)
+		{
+			MYGUI_LOG(Warning, "Error get statistics");
+		}
+
+		return result;
 	}
 
 } // namespace base

@@ -101,25 +101,14 @@ function(mygui_app PROJECTNAME SOLUTIONFOLDER)
 	# define the sources
 	include(${PROJECTNAME}.list)
 	
-	if (${SOLUTIONFOLDER} STREQUAL "Tools")
-		include(PrecompiledHeader)
-		# specify a precompiled header to use
-		use_precompiled_header(${PROJECTNAME}
-			"../../Common/Precompiled.h"
-			"../../Common/Precompiled.cpp"
-		)
-	endif ()
-	
 	# Set up dependencies
 	if(MYGUI_RENDERSYSTEM EQUAL 1)
-		include_directories(../../Common/Base/DirectX)
-		add_definitions("-DMYGUI_DIRECTX_PLATFORM")
+		include_directories(../../Common/Base/Dummy)
+		add_definitions("-DMYGUI_DUMMY_PLATFORM")
 		include_directories(
-			${MYGUI_SOURCE_DIR}/Platforms/DirectX/DirectXPlatform/include
-			${DirectX_INCLUDE_DIR}
+			${MYGUI_SOURCE_DIR}/Platforms/Dummy/DummyPlatform/include
 		)
-		link_directories(${DIRECTX_LIB_DIR})
-	elseif(MYGUI_RENDERSYSTEM EQUAL 2)
+	elseif(MYGUI_RENDERSYSTEM EQUAL 3)
 		include_directories(../../Common/Base/Ogre)
 		add_definitions("-DMYGUI_OGRE_PLATFORM")
 		include_directories(
@@ -127,7 +116,7 @@ function(mygui_app PROJECTNAME SOLUTIONFOLDER)
 			${OGRE_INCLUDE_DIR}
 		)
 		link_directories(${OGRE_LIB_DIR})
-	elseif(MYGUI_RENDERSYSTEM EQUAL 3)
+	elseif(MYGUI_RENDERSYSTEM EQUAL 4)
 		include_directories(../../Common/Base/OpenGL)
 		add_definitions("-DMYGUI_OPENGL_PLATFORM")
 		include_directories(
@@ -135,7 +124,15 @@ function(mygui_app PROJECTNAME SOLUTIONFOLDER)
 			${OPENGL_INCLUDE_DIR}
 		)
 		link_directories(${OPENGL_LIB_DIR})
-	elseif(MYGUI_RENDERSYSTEM EQUAL 4)
+	elseif(MYGUI_RENDERSYSTEM EQUAL 5)
+		include_directories(../../Common/Base/DirectX)
+		add_definitions("-DMYGUI_DIRECTX_PLATFORM")
+		include_directories(
+			${MYGUI_SOURCE_DIR}/Platforms/DirectX/DirectXPlatform/include
+			${DirectX_INCLUDE_DIR}
+		)
+		link_directories(${DIRECTX_LIB_DIR})
+	elseif(MYGUI_RENDERSYSTEM EQUAL 6)
 		include_directories(../../Common/Base/DirectX11)
 		add_definitions("-DMYGUI_DIRECTX11_PLATFORM")
 		include_directories(
@@ -180,13 +177,13 @@ function(mygui_app PROJECTNAME SOLUTIONFOLDER)
 	target_link_libraries(${PROJECTNAME}
 		Common
 	)
-	if(MYGUI_RENDERSYSTEM EQUAL 1)
+	if(MYGUI_RENDERSYSTEM EQUAL 5)
 		add_dependencies(${PROJECTNAME} MyGUI.DirectXPlatform)
 		target_link_libraries(${PROJECTNAME} MyGUI.DirectXPlatform)
-	elseif(MYGUI_RENDERSYSTEM EQUAL 2)
+	elseif(MYGUI_RENDERSYSTEM EQUAL 3)
 		add_dependencies(${PROJECTNAME} MyGUI.OgrePlatform)
 		target_link_libraries(${PROJECTNAME} MyGUI.OgrePlatform)
-	elseif(MYGUI_RENDERSYSTEM EQUAL 3)
+	elseif(MYGUI_RENDERSYSTEM EQUAL 4)
 		add_dependencies(${PROJECTNAME} MyGUI.OpenGLPlatform)
 		target_link_libraries(${PROJECTNAME} MyGUI.OpenGLPlatform)
 		
@@ -196,6 +193,13 @@ function(mygui_app PROJECTNAME SOLUTIONFOLDER)
 		MyGUIEngine
 	)
 
+	if (MYGUI_GENERATE_LIST_FILES_FROM_VSPROJECT)
+		add_custom_command(TARGET ${PROJECTNAME}
+			POST_BUILD
+			COMMAND ${MYGUI_BINARY_DIR}/updateListFiles.bat
+			COMMENT "Generating *.list files")
+	endif ()
+
 	if (APPLE)
 		find_library(CF_LIBRARY CoreFoundation)
 		find_library(IOKIT_LIBRARY IOKit)
@@ -204,6 +208,106 @@ function(mygui_app PROJECTNAME SOLUTIONFOLDER)
 	endif ()
 endfunction(mygui_app)
 
+#setup Tools dll builds
+function(mygui_dll PROJECTNAME SOLUTIONFOLDER)
+	include_directories(
+		.
+		${MYGUI_SOURCE_DIR}/Common
+		${MYGUI_SOURCE_DIR}/MyGUIEngine/include
+	)
+	# define the sources
+	include(${PROJECTNAME}.list)
+
+	# Set up dependencies
+	if(MYGUI_RENDERSYSTEM EQUAL 1)
+		include_directories(../../Common/Base/Dummy)
+		add_definitions("-DMYGUI_DUMMY_PLATFORM")
+		include_directories(
+			${MYGUI_SOURCE_DIR}/Platforms/Dummy/DummyPlatform/include
+		)
+	elseif(MYGUI_RENDERSYSTEM EQUAL 3)
+		include_directories(../../Common/Base/Ogre)
+		add_definitions("-DMYGUI_OGRE_PLATFORM")
+		include_directories(
+			${MYGUI_SOURCE_DIR}/Platforms/Ogre/OgrePlatform/include
+			${OGRE_INCLUDE_DIR}
+		)
+		link_directories(${OGRE_LIB_DIR})
+	elseif(MYGUI_RENDERSYSTEM EQUAL 4)
+		include_directories(../../Common/Base/OpenGL)
+		add_definitions("-DMYGUI_OPENGL_PLATFORM")
+		include_directories(
+			${MYGUI_SOURCE_DIR}/Platforms/OpenGL/OpenGLPlatform/include
+			${OPENGL_INCLUDE_DIR}
+		)
+		link_directories(${OPENGL_LIB_DIR})
+	elseif(MYGUI_RENDERSYSTEM EQUAL 5)
+		include_directories(../../Common/Base/DirectX)
+		add_definitions("-DMYGUI_DIRECTX_PLATFORM")
+		include_directories(
+			${MYGUI_SOURCE_DIR}/Platforms/DirectX/DirectXPlatform/include
+			${DirectX_INCLUDE_DIR}
+		)
+		link_directories(${DIRECTX_LIB_DIR})
+	elseif(MYGUI_RENDERSYSTEM EQUAL 6)
+		include_directories(../../Common/Base/DirectX11)
+		add_definitions("-DMYGUI_DIRECTX11_PLATFORM")
+		include_directories(
+			${MYGUI_SOURCE_DIR}/Platforms/DirectX11/DirectX11Platform/include
+			${DirectX_INCLUDE_DIR}
+		)
+		link_directories(${DIRECTX_LIB_DIR})
+	endif()
+	
+		
+	add_definitions("-D_USRDLL -DMYGUI_BUILD_DLL")
+	add_library(${PROJECTNAME} ${MYGUI_LIB_TYPE} ${HEADER_FILES} ${SOURCE_FILES})
+	set_target_properties(${PROJECTNAME} PROPERTIES FOLDER ${SOLUTIONFOLDER})
+	add_dependencies(${PROJECTNAME} MyGUIEngine)
+	target_link_libraries(${PROJECTNAME} MyGUIEngine)
+	
+	mygui_config_lib(${PROJECTNAME})
+	
+	add_dependencies(${PROJECTNAME} MyGUIEngine Common)
+
+	mygui_config_sample(${PROJECTNAME})
+	
+	# link Common, Platform and MyGUIEngine
+	target_link_libraries(${PROJECTNAME}
+		Common
+	)
+
+	if(MYGUI_RENDERSYSTEM EQUAL 5)
+		add_dependencies(${PROJECTNAME} MyGUI.DirectXPlatform)
+		target_link_libraries(${PROJECTNAME} MyGUI.DirectXPlatform)
+	elseif(MYGUI_RENDERSYSTEM EQUAL 3)
+		add_dependencies(${PROJECTNAME} MyGUI.OgrePlatform)
+		target_link_libraries(${PROJECTNAME} MyGUI.OgrePlatform)
+	elseif(MYGUI_RENDERSYSTEM EQUAL 4)
+		add_dependencies(${PROJECTNAME} MyGUI.OpenGLPlatform)
+		target_link_libraries(${PROJECTNAME} MyGUI.OpenGLPlatform)
+		
+		target_link_libraries(${PROJECTNAME} gdiplus)
+	endif()
+
+	target_link_libraries(${PROJECTNAME}
+		MyGUIEngine
+	)
+
+	if (MYGUI_GENERATE_LIST_FILES_FROM_VSPROJECT)
+		add_custom_command(TARGET ${PROJECTNAME}
+			POST_BUILD
+			COMMAND ${MYGUI_BINARY_DIR}/updateListFiles.bat
+			COMMENT "Generating *.list files")
+	endif ()
+
+	if (APPLE)
+		find_library(CF_LIBRARY CoreFoundation)
+		find_library(IOKIT_LIBRARY IOKit)
+		target_link_libraries(${PROJECTNAME} ${CF_LIBRARY})
+		target_link_libraries(${PROJECTNAME} ${IOKIT_LIBRARY})
+	endif ()
+endfunction(mygui_dll)
 
 function(mygui_demo PROJECTNAME)
 	mygui_app(${PROJECTNAME} Demos)
@@ -218,6 +322,18 @@ function(mygui_tool PROJECTNAME)
 	if (MYGUI_INSTALL_TOOLS)
 		mygui_install_app(${PROJECTNAME})
 	endif ()
+
+	include_directories(${MYGUI_SOURCE_DIR}/Tools/EditorFramework)
+	include(PrecompiledHeader)
+	# specify a precompiled header to use
+	use_precompiled_header(${PROJECTNAME}
+		"../../Common/Precompiled.h"
+		"../../Common/Precompiled.cpp"
+	)
+
+	target_link_libraries(${PROJECTNAME}
+		EditorFramework
+	)
 endfunction(mygui_tool)
 
 
@@ -226,9 +342,19 @@ function(mygui_unit_test PROJECTNAME)
 endfunction(mygui_unit_test)
 
 
-#function(mygui_wrapper_base_app PROJECTNAME)
-#	mygui_app(${PROJECTNAME} Wrappers)
-#endfunction(mygui_wrapper_base_app)
+function(mygui_tool_dll PROJECTNAME)
+	mygui_dll(${PROJECTNAME} Tools)
+	if (MYGUI_INSTALL_TOOLS)
+		mygui_install_app(${PROJECTNAME})
+	endif ()
+
+	include(PrecompiledHeader)
+	# specify a precompiled header to use
+	use_precompiled_header(${PROJECTNAME}
+		"../../Common/Precompiled.h"
+		"../../Common/Precompiled.cpp"
+	)
+endfunction(mygui_tool_dll)
 
 
 function(mygui_install_app PROJECTNAME)

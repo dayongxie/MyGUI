@@ -35,12 +35,6 @@ namespace input
 		#define GET_HIWORD(param) ((short)HIWORD(param))
 		#define GET_LOWORD(param) ((short)LOWORD(param))
 
-		static int old_x = 0;
-		static int old_y = 0;
-		static int old_z = 0;
-		static bool left_button = false;
-		static bool right_button = false;
-
 		// на нас кидают файлы
 		if (WM_DROPFILES == uMsg)
 		{
@@ -65,6 +59,12 @@ namespace input
 		}
 		else if ((uMsg >= WM_MOUSEFIRST) && (uMsg <= __WM_REALMOUSELAST))
 		{
+			static int old_x = 0;
+			static int old_y = 0;
+			static int old_z = 0;
+			static bool left_button = false;
+			static bool right_button = false;
+
 			switch (uMsg)
 			{
 			case WM_MOUSEMOVE:
@@ -247,7 +247,7 @@ namespace input
 	{
 		MyGUI::Char text = (MyGUI::Char)_arg.text;
 		MyGUI::KeyCode key = MyGUI::KeyCode::Enum(_arg.key);
-		int scan_code = key.toValue();
+		int scan_code = key.getValue();
 
 		if (scan_code > 70 && scan_code < 84)
 		{
@@ -261,7 +261,7 @@ namespace input
 		else
 		{
 #if MYGUI_PLATFORM == MYGUI_PLATFORM_WIN32
-			text = (MyGUI::Char)ScanCodeToText((int)key.toValue());
+			text = (MyGUI::Char)ScanCodeToText((int)key.getValue());
 #endif
 		}
 
