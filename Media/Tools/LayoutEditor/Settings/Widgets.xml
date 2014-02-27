@@ -204,8 +204,9 @@
 	<Widget name="ImageBox">
 		<Property key="DefaultSkin" value="ImageBox"/>
 		<Property key="Base" value="Widget"/>
-		<Property key="Skin" value="RotatingSkin"/>
+		<Property key="Skin" value="ImageView"/>
 		<Property key="Skin" value="ImageBox"/>
+		<Property key="Skin" value="RotatingSkin"/>
 		<Property key="Parent" value="true"/>
 		<Property key="Child" value="true"/>
 		<Parameter key="ImageTexture" value="FileName"/>
@@ -215,6 +216,7 @@
 		<Parameter key="ImageResource" value="String"/>
 		<Parameter key="ImageGroup" value="String"/>
 		<Parameter key="ImageName" value="String"/>
+		<Parameter key="ImageAlign" value="Align"/>
 	</Widget>
 	<Widget name="TextBox">
 		<Property key="DefaultSkin" value="TextBox"/>

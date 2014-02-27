@@ -8,6 +8,8 @@ set (HEADER_FILES
   include/MyGUI_OgreRenderManager.h
   include/MyGUI_OgreTexture.h
   include/MyGUI_OgreVertexBuffer.h
+  include/MyGUI_OgreFont.h
+  include/MyGUI_OgreFont_win.h
 )
 set (SOURCE_FILES
   src/MyGUI_OgreDataManager.cpp
@@ -16,6 +18,8 @@ set (SOURCE_FILES
   src/MyGUI_OgreRenderManager.cpp
   src/MyGUI_OgreTexture.cpp
   src/MyGUI_OgreVertexBuffer.cpp
+  src/MyGUI_OgreFont.cpp
+  src/MyGUI_OgreFont_win.cpp
 )
 SOURCE_GROUP("Header Files" FILES
   include/MyGUI_LastHeader.h
@@ -27,6 +31,8 @@ SOURCE_GROUP("Header Files" FILES
   include/MyGUI_OgreRenderManager.h
   include/MyGUI_OgreTexture.h
   include/MyGUI_OgreVertexBuffer.h
+  include/MyGUI_OgreFont.h
+  include/MyGUI_OgreFont_win.h
 )
 SOURCE_GROUP("Source Files" FILES
   src/MyGUI_OgreDataManager.cpp
@@ -35,4 +41,6 @@ SOURCE_GROUP("Source Files" FILES
   src/MyGUI_OgreRenderManager.cpp
   src/MyGUI_OgreTexture.cpp
   src/MyGUI_OgreVertexBuffer.cpp
+  src/MyGUI_OgreFont.cpp
+  src/MyGUI_OgreFont_win.cpp
 )

@@ -1,0 +1,623 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D7B239E015E47F8500646C65 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7B239DF15E47F8500646C65 /* UIKit.framework */; };
+		D7B239E215E47F8500646C65 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7B239E115E47F8500646C65 /* Foundation.framework */; };
+		D7B239E415E47F8500646C65 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7B239E315E47F8500646C65 /* CoreGraphics.framework */; };
+		D7B239EA15E47F8500646C65 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D7B239E815E47F8500646C65 /* InfoPlist.strings */; };
+		D7B239EC15E47F8500646C65 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D7B239EB15E47F8500646C65 /* main.m */; };
+		D7B23A0315E4854600646C65 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = D7B23A0015E4854600646C65 /* AppController.mm */; };
+		D7B23A0415E4854600646C65 /* RootViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = D7B23A0215E4854600646C65 /* RootViewController.mm */; };
+		D7B23A2615E485FC00646C65 /* ColourWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7B23A1515E485FC00646C65 /* ColourWindow.cpp */; };
+		D7B23A2715E485FC00646C65 /* ColourWindowBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7B23A1715E485FC00646C65 /* ColourWindowBox.cpp */; };
+		D7B23A2815E485FC00646C65 /* ColourWindowCellView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7B23A1A15E485FC00646C65 /* ColourWindowCellView.cpp */; };
+		D7B23A2915E485FC00646C65 /* DemoKeeper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7B23A1C15E485FC00646C65 /* DemoKeeper.cpp */; };
+		D7B23A2A15E485FC00646C65 /* EditorWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7B23A1E15E485FC00646C65 /* EditorWindow.cpp */; };
+		D7B23A2B15E485FC00646C65 /* HelloWorldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7B23A2015E485FC00646C65 /* HelloWorldScene.cpp */; };
+		D7B23A2C15E485FC00646C65 /* InformationWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7B23A2215E485FC00646C65 /* InformationWindow.cpp */; };
+		D7B23A2D15E485FC00646C65 /* MainPanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7B23A2415E485FC00646C65 /* MainPanel.cpp */; };
+		D7B23A9815E48F5100646C65 /* libcocos2dx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D7B23A9315E48EB300646C65 /* libcocos2dx.a */; };
+		D7B23A9915E48F5100646C65 /* libMyGUIEngine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D7B23A8915E48E8200646C65 /* libMyGUIEngine.a */; };
+		D7B23A9C15E48F5100646C65 /* libMyGUICommon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D7B23A9A15E48F5100646C65 /* libMyGUICommon.a */; };
+		D7B23A9D15E48F5100646C65 /* libMyGUIPlatform.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D7B23A9B15E48F5100646C65 /* libMyGUIPlatform.a */; };
+		D7B23AA415E48FB600646C65 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7B23AA315E48FB600646C65 /* OpenGLES.framework */; };
+		D7B23AA615E48FCD00646C65 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D7B23AA515E48FCD00646C65 /* libxml2.dylib */; };
+		D7B23AA815E48FE700646C65 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D7B23AA715E48FE700646C65 /* libz.dylib */; };
+		D7B23AAA15E4900C00646C65 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7B23AA915E4900C00646C65 /* QuartzCore.framework */; };
+		D7B23AD615E492E600646C65 /* app.config.txt in Resources */ = {isa = PBXBuildFile; fileRef = D7B23ACB15E492E600646C65 /* app.config.txt */; };
+		D7B23AD715E492E600646C65 /* app.icf in Resources */ = {isa = PBXBuildFile; fileRef = D7B23ACC15E492E600646C65 /* app.icf */; };
+		D7B23AD815E492E600646C65 /* CloseNormal.png in Resources */ = {isa = PBXBuildFile; fileRef = D7B23ACD15E492E600646C65 /* CloseNormal.png */; };
+		D7B23AD915E492E600646C65 /* CloseSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = D7B23ACE15E492E600646C65 /* CloseSelected.png */; };
+		D7B23ADA15E492E600646C65 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = D7B23ACF15E492E600646C65 /* fonts */; };
+		D7B23ADB15E492E600646C65 /* fps_images-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = D7B23AD015E492E600646C65 /* fps_images-hd.png */; };
+		D7B23ADC15E492E600646C65 /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = D7B23AD115E492E600646C65 /* fps_images-ipadhd.png */; };
+		D7B23ADD15E492E600646C65 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = D7B23AD215E492E600646C65 /* fps_images.png */; };
+		D7B23ADE15E492E600646C65 /* HelloWorld.png in Resources */ = {isa = PBXBuildFile; fileRef = D7B23AD315E492E600646C65 /* HelloWorld.png */; };
+		D7B23ADF15E492E600646C65 /* MyGUI in Resources */ = {isa = PBXBuildFile; fileRef = D7B23AD415E492E600646C65 /* MyGUI */; };
+		D7B23AE015E492E600646C65 /* resources.xml in Resources */ = {isa = PBXBuildFile; fileRef = D7B23AD515E492E600646C65 /* resources.xml */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D7B23A8815E48E8200646C65 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D7B23A8415E48E8200646C65 /* MyGUIEngine.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D7F5FCDD15AAC2D400D197A4;
+			remoteInfo = MyGUIEngine;
+		};
+		D7B23A9215E48EB300646C65 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D7B23A8B15E48EB200646C65 /* cocos2dx.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1551A33F158F2AB200E66CFE;
+			remoteInfo = cocos2dx;
+		};
+		D7B23A9415E48EE300646C65 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D7B23A8B15E48EB200646C65 /* cocos2dx.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 1551A33E158F2AB200E66CFE;
+			remoteInfo = cocos2dx;
+		};
+		D7B23A9615E48EE600646C65 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D7B23A8415E48E8200646C65 /* MyGUIEngine.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D7F5FCDC15AAC2D400D197A4;
+			remoteInfo = MyGUIEngine;
+		};
+		D7B23AE615E4A18700646C65 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D7B23AE215E4A18700646C65 /* MyGUIPlatform.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D7F5FE1515AAE41000D197A4;
+			remoteInfo = MyGUIPlatform;
+		};
+		D7B23AEC15E4A19700646C65 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D7B23AE815E4A19600646C65 /* MyGUICommon.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D7F5FDEA15AAD0A600D197A4;
+			remoteInfo = MyGUICommon;
+		};
+		D7B23B0E15E4A2D200646C65 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D7B23AE815E4A19600646C65 /* MyGUICommon.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D7F5FDE915AAD0A600D197A4;
+			remoteInfo = MyGUICommon;
+		};
+		D7B23B1015E4A2D500646C65 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D7B23AE215E4A18700646C65 /* MyGUIPlatform.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D7F5FE1415AAE41000D197A4;
+			remoteInfo = MyGUIPlatform;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		D7B239DB15E47F8500646C65 /* MyGUIDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyGUIDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D7B239DF15E47F8500646C65 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		D7B239E115E47F8500646C65 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		D7B239E315E47F8500646C65 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		D7B239E715E47F8500646C65 /* MyGUIDemo-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MyGUIDemo-Info.plist"; sourceTree = "<group>"; };
+		D7B239E915E47F8500646C65 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D7B239EB15E47F8500646C65 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		D7B239ED15E47F8500646C65 /* MyGUIDemo-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MyGUIDemo-Prefix.pch"; sourceTree = "<group>"; };
+		D7B239FF15E4854600646C65 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
+		D7B23A0015E4854600646C65 /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = "<group>"; };
+		D7B23A0115E4854600646C65 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
+		D7B23A0215E4854600646C65 /* RootViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RootViewController.mm; sourceTree = "<group>"; };
+		D7B23A1515E485FC00646C65 /* ColourWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ColourWindow.cpp; path = ../../Classes/ColourWindow.cpp; sourceTree = "<group>"; };
+		D7B23A1615E485FC00646C65 /* ColourWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ColourWindow.h; path = ../../Classes/ColourWindow.h; sourceTree = "<group>"; };
+		D7B23A1715E485FC00646C65 /* ColourWindowBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ColourWindowBox.cpp; path = ../../Classes/ColourWindowBox.cpp; sourceTree = "<group>"; };
+		D7B23A1815E485FC00646C65 /* ColourWindowBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ColourWindowBox.h; path = ../../Classes/ColourWindowBox.h; sourceTree = "<group>"; };
+		D7B23A1915E485FC00646C65 /* ColourWindowCellData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ColourWindowCellData.h; path = ../../Classes/ColourWindowCellData.h; sourceTree = "<group>"; };
+		D7B23A1A15E485FC00646C65 /* ColourWindowCellView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ColourWindowCellView.cpp; path = ../../Classes/ColourWindowCellView.cpp; sourceTree = "<group>"; };
+		D7B23A1B15E485FC00646C65 /* ColourWindowCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ColourWindowCellView.h; path = ../../Classes/ColourWindowCellView.h; sourceTree = "<group>"; };
+		D7B23A1C15E485FC00646C65 /* DemoKeeper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DemoKeeper.cpp; path = ../../Classes/DemoKeeper.cpp; sourceTree = "<group>"; };
+		D7B23A1D15E485FC00646C65 /* DemoKeeper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DemoKeeper.h; path = ../../Classes/DemoKeeper.h; sourceTree = "<group>"; };
+		D7B23A1E15E485FC00646C65 /* EditorWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EditorWindow.cpp; path = ../../Classes/EditorWindow.cpp; sourceTree = "<group>"; };
+		D7B23A1F15E485FC00646C65 /* EditorWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EditorWindow.h; path = ../../Classes/EditorWindow.h; sourceTree = "<group>"; };
+		D7B23A2015E485FC00646C65 /* HelloWorldScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = HelloWorldScene.cpp; path = ../../Classes/HelloWorldScene.cpp; sourceTree = "<group>"; };
+		D7B23A2115E485FC00646C65 /* HelloWorldScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HelloWorldScene.h; path = ../../Classes/HelloWorldScene.h; sourceTree = "<group>"; };
+		D7B23A2215E485FC00646C65 /* InformationWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = InformationWindow.cpp; path = ../../Classes/InformationWindow.cpp; sourceTree = "<group>"; };
+		D7B23A2315E485FC00646C65 /* InformationWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InformationWindow.h; path = ../../Classes/InformationWindow.h; sourceTree = "<group>"; };
+		D7B23A2415E485FC00646C65 /* MainPanel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MainPanel.cpp; path = ../../Classes/MainPanel.cpp; sourceTree = "<group>"; };
+		D7B23A2515E485FC00646C65 /* MainPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainPanel.h; path = ../../Classes/MainPanel.h; sourceTree = "<group>"; };
+		D7B23A8415E48E8200646C65 /* MyGUIEngine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MyGUIEngine.xcodeproj; path = ../../../MyGUIEngine/proj.ios/MyGUIEngine.xcodeproj; sourceTree = "<group>"; };
+		D7B23A8B15E48EB200646C65 /* cocos2dx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2dx.xcodeproj; path = "../../../../cocos2d-x/cocos2dx/proj.ios/cocos2dx.xcodeproj"; sourceTree = "<group>"; };
+		D7B23A9A15E48F5100646C65 /* libMyGUICommon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMyGUICommon.a; path = "../../../Common/proj.ios/build/Release-iphoneos/libMyGUICommon.a"; sourceTree = "<group>"; };
+		D7B23A9B15E48F5100646C65 /* libMyGUIPlatform.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMyGUIPlatform.a; path = "../../../../../../../../Library/Developer/Xcode/DerivedData/MyGUI-dyogehuompjckggnrhyiikglgiqp/Build/Products/Debug-iphoneos/libMyGUIPlatform.a"; sourceTree = "<group>"; };
+		D7B23AA315E48FB600646C65 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		D7B23AA515E48FCD00646C65 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
+		D7B23AA715E48FE700646C65 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		D7B23AA915E4900C00646C65 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		D7B23ACB15E492E600646C65 /* app.config.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = app.config.txt; path = ../Resources/app.config.txt; sourceTree = "<group>"; };
+		D7B23ACC15E492E600646C65 /* app.icf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = app.icf; path = ../Resources/app.icf; sourceTree = "<group>"; };
+		D7B23ACD15E492E600646C65 /* CloseNormal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = CloseNormal.png; path = ../Resources/CloseNormal.png; sourceTree = "<group>"; };
+		D7B23ACE15E492E600646C65 /* CloseSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = CloseSelected.png; path = ../Resources/CloseSelected.png; sourceTree = "<group>"; };
+		D7B23ACF15E492E600646C65 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = fonts; path = ../Resources/fonts; sourceTree = "<group>"; };
+		D7B23AD015E492E600646C65 /* fps_images-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "fps_images-hd.png"; path = "../Resources/fps_images-hd.png"; sourceTree = "<group>"; };
+		D7B23AD115E492E600646C65 /* fps_images-ipadhd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "fps_images-ipadhd.png"; path = "../Resources/fps_images-ipadhd.png"; sourceTree = "<group>"; };
+		D7B23AD215E492E600646C65 /* fps_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fps_images.png; path = ../Resources/fps_images.png; sourceTree = "<group>"; };
+		D7B23AD315E492E600646C65 /* HelloWorld.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = HelloWorld.png; path = ../Resources/HelloWorld.png; sourceTree = "<group>"; };
+		D7B23AD415E492E600646C65 /* MyGUI */ = {isa = PBXFileReference; lastKnownFileType = folder; name = MyGUI; path = ../Resources/MyGUI; sourceTree = "<group>"; };
+		D7B23AD515E492E600646C65 /* resources.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = resources.xml; path = ../Resources/resources.xml; sourceTree = "<group>"; };
+		D7B23AE215E4A18700646C65 /* MyGUIPlatform.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MyGUIPlatform.xcodeproj; path = ../../../Platforms/proj.ios/MyGUIPlatform.xcodeproj; sourceTree = "<group>"; };
+		D7B23AE815E4A19600646C65 /* MyGUICommon.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MyGUICommon.xcodeproj; path = ../../../Common/proj.ios/MyGUICommon.xcodeproj; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D7B239D815E47F8500646C65 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D7B23AAA15E4900C00646C65 /* QuartzCore.framework in Frameworks */,
+				D7B23AA815E48FE700646C65 /* libz.dylib in Frameworks */,
+				D7B23AA615E48FCD00646C65 /* libxml2.dylib in Frameworks */,
+				D7B23AA415E48FB600646C65 /* OpenGLES.framework in Frameworks */,
+				D7B23A9C15E48F5100646C65 /* libMyGUICommon.a in Frameworks */,
+				D7B23A9D15E48F5100646C65 /* libMyGUIPlatform.a in Frameworks */,
+				D7B23A9815E48F5100646C65 /* libcocos2dx.a in Frameworks */,
+				D7B23A9915E48F5100646C65 /* libMyGUIEngine.a in Frameworks */,
+				D7B239E015E47F8500646C65 /* UIKit.framework in Frameworks */,
+				D7B239E215E47F8500646C65 /* Foundation.framework in Frameworks */,
+				D7B239E415E47F8500646C65 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D7B239D015E47F8400646C65 = {
+			isa = PBXGroup;
+			children = (
+				D7B23AE815E4A19600646C65 /* MyGUICommon.xcodeproj */,
+				D7B23AE215E4A18700646C65 /* MyGUIPlatform.xcodeproj */,
+				D7B23A8B15E48EB200646C65 /* cocos2dx.xcodeproj */,
+				D7B23A8415E48E8200646C65 /* MyGUIEngine.xcodeproj */,
+				D7B239E515E47F8500646C65 /* MyGUIDemo */,
+				D7B239DE15E47F8500646C65 /* Frameworks */,
+				D7B239DC15E47F8500646C65 /* Products */,
+				D7B23AE115E4930400646C65 /* Resource */,
+			);
+			sourceTree = "<group>";
+		};
+		D7B239DC15E47F8500646C65 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D7B239DB15E47F8500646C65 /* MyGUIDemo.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D7B239DE15E47F8500646C65 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D7B23AA715E48FE700646C65 /* libz.dylib */,
+				D7B23AA515E48FCD00646C65 /* libxml2.dylib */,
+				D7B23AA315E48FB600646C65 /* OpenGLES.framework */,
+				D7B23A9A15E48F5100646C65 /* libMyGUICommon.a */,
+				D7B23A9B15E48F5100646C65 /* libMyGUIPlatform.a */,
+				D7B23AA915E4900C00646C65 /* QuartzCore.framework */,
+				D7B239DF15E47F8500646C65 /* UIKit.framework */,
+				D7B239E115E47F8500646C65 /* Foundation.framework */,
+				D7B239E315E47F8500646C65 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D7B239E515E47F8500646C65 /* MyGUIDemo */ = {
+			isa = PBXGroup;
+			children = (
+				D7B23A1515E485FC00646C65 /* ColourWindow.cpp */,
+				D7B23A1615E485FC00646C65 /* ColourWindow.h */,
+				D7B23A1715E485FC00646C65 /* ColourWindowBox.cpp */,
+				D7B23A1815E485FC00646C65 /* ColourWindowBox.h */,
+				D7B23A1915E485FC00646C65 /* ColourWindowCellData.h */,
+				D7B23A1A15E485FC00646C65 /* ColourWindowCellView.cpp */,
+				D7B23A1B15E485FC00646C65 /* ColourWindowCellView.h */,
+				D7B23A1C15E485FC00646C65 /* DemoKeeper.cpp */,
+				D7B23A1D15E485FC00646C65 /* DemoKeeper.h */,
+				D7B23A1E15E485FC00646C65 /* EditorWindow.cpp */,
+				D7B23A1F15E485FC00646C65 /* EditorWindow.h */,
+				D7B23A2015E485FC00646C65 /* HelloWorldScene.cpp */,
+				D7B23A2115E485FC00646C65 /* HelloWorldScene.h */,
+				D7B23A2215E485FC00646C65 /* InformationWindow.cpp */,
+				D7B23A2315E485FC00646C65 /* InformationWindow.h */,
+				D7B23A2415E485FC00646C65 /* MainPanel.cpp */,
+				D7B23A2515E485FC00646C65 /* MainPanel.h */,
+				D7B239E615E47F8500646C65 /* Supporting Files */,
+			);
+			path = MyGUIDemo;
+			sourceTree = "<group>";
+		};
+		D7B239E615E47F8500646C65 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D7B239FF15E4854600646C65 /* AppController.h */,
+				D7B23A0015E4854600646C65 /* AppController.mm */,
+				D7B23A0115E4854600646C65 /* RootViewController.h */,
+				D7B23A0215E4854600646C65 /* RootViewController.mm */,
+				D7B239E715E47F8500646C65 /* MyGUIDemo-Info.plist */,
+				D7B239E815E47F8500646C65 /* InfoPlist.strings */,
+				D7B239EB15E47F8500646C65 /* main.m */,
+				D7B239ED15E47F8500646C65 /* MyGUIDemo-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D7B23A8515E48E8200646C65 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D7B23A8915E48E8200646C65 /* libMyGUIEngine.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D7B23A8C15E48EB200646C65 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D7B23A9315E48EB300646C65 /* libcocos2dx.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D7B23AE115E4930400646C65 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				D7B23ACB15E492E600646C65 /* app.config.txt */,
+				D7B23ACC15E492E600646C65 /* app.icf */,
+				D7B23ACD15E492E600646C65 /* CloseNormal.png */,
+				D7B23ACE15E492E600646C65 /* CloseSelected.png */,
+				D7B23ACF15E492E600646C65 /* fonts */,
+				D7B23AD015E492E600646C65 /* fps_images-hd.png */,
+				D7B23AD115E492E600646C65 /* fps_images-ipadhd.png */,
+				D7B23AD215E492E600646C65 /* fps_images.png */,
+				D7B23AD315E492E600646C65 /* HelloWorld.png */,
+				D7B23AD415E492E600646C65 /* MyGUI */,
+				D7B23AD515E492E600646C65 /* resources.xml */,
+			);
+			name = Resource;
+			sourceTree = "<group>";
+		};
+		D7B23AE315E4A18700646C65 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D7B23AE715E4A18700646C65 /* libMyGUIPlatform.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D7B23AE915E4A19600646C65 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D7B23AED15E4A19700646C65 /* libMyGUICommon.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D7B239DA15E47F8500646C65 /* MyGUIDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D7B239F315E47F8500646C65 /* Build configuration list for PBXNativeTarget "MyGUIDemo" */;
+			buildPhases = (
+				D7B239D715E47F8500646C65 /* Sources */,
+				D7B239D815E47F8500646C65 /* Frameworks */,
+				D7B239D915E47F8500646C65 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D7B23B1115E4A2D500646C65 /* PBXTargetDependency */,
+				D7B23B0F15E4A2D200646C65 /* PBXTargetDependency */,
+				D7B23A9715E48EE600646C65 /* PBXTargetDependency */,
+				D7B23A9515E48EE300646C65 /* PBXTargetDependency */,
+			);
+			name = MyGUIDemo;
+			productName = MyGUIDemo;
+			productReference = D7B239DB15E47F8500646C65 /* MyGUIDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D7B239D215E47F8400646C65 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0430;
+			};
+			buildConfigurationList = D7B239D515E47F8400646C65 /* Build configuration list for PBXProject "MyGUIDemo" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = D7B239D015E47F8400646C65;
+			productRefGroup = D7B239DC15E47F8500646C65 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = D7B23A8C15E48EB200646C65 /* Products */;
+					ProjectRef = D7B23A8B15E48EB200646C65 /* cocos2dx.xcodeproj */;
+				},
+				{
+					ProductGroup = D7B23AE915E4A19600646C65 /* Products */;
+					ProjectRef = D7B23AE815E4A19600646C65 /* MyGUICommon.xcodeproj */;
+				},
+				{
+					ProductGroup = D7B23A8515E48E8200646C65 /* Products */;
+					ProjectRef = D7B23A8415E48E8200646C65 /* MyGUIEngine.xcodeproj */;
+				},
+				{
+					ProductGroup = D7B23AE315E4A18700646C65 /* Products */;
+					ProjectRef = D7B23AE215E4A18700646C65 /* MyGUIPlatform.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				D7B239DA15E47F8500646C65 /* MyGUIDemo */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		D7B23A8915E48E8200646C65 /* libMyGUIEngine.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libMyGUIEngine.a;
+			remoteRef = D7B23A8815E48E8200646C65 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D7B23A9315E48EB300646C65 /* libcocos2dx.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libcocos2dx.a;
+			remoteRef = D7B23A9215E48EB300646C65 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D7B23AE715E4A18700646C65 /* libMyGUIPlatform.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libMyGUIPlatform.a;
+			remoteRef = D7B23AE615E4A18700646C65 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D7B23AED15E4A19700646C65 /* libMyGUICommon.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libMyGUICommon.a;
+			remoteRef = D7B23AEC15E4A19700646C65 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D7B239D915E47F8500646C65 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D7B239EA15E47F8500646C65 /* InfoPlist.strings in Resources */,
+				D7B23AD615E492E600646C65 /* app.config.txt in Resources */,
+				D7B23AD715E492E600646C65 /* app.icf in Resources */,
+				D7B23AD815E492E600646C65 /* CloseNormal.png in Resources */,
+				D7B23AD915E492E600646C65 /* CloseSelected.png in Resources */,
+				D7B23ADA15E492E600646C65 /* fonts in Resources */,
+				D7B23ADB15E492E600646C65 /* fps_images-hd.png in Resources */,
+				D7B23ADC15E492E600646C65 /* fps_images-ipadhd.png in Resources */,
+				D7B23ADD15E492E600646C65 /* fps_images.png in Resources */,
+				D7B23ADE15E492E600646C65 /* HelloWorld.png in Resources */,
+				D7B23ADF15E492E600646C65 /* MyGUI in Resources */,
+				D7B23AE015E492E600646C65 /* resources.xml in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D7B239D715E47F8500646C65 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D7B239EC15E47F8500646C65 /* main.m in Sources */,
+				D7B23A0315E4854600646C65 /* AppController.mm in Sources */,
+				D7B23A0415E4854600646C65 /* RootViewController.mm in Sources */,
+				D7B23A2615E485FC00646C65 /* ColourWindow.cpp in Sources */,
+				D7B23A2715E485FC00646C65 /* ColourWindowBox.cpp in Sources */,
+				D7B23A2815E485FC00646C65 /* ColourWindowCellView.cpp in Sources */,
+				D7B23A2915E485FC00646C65 /* DemoKeeper.cpp in Sources */,
+				D7B23A2A15E485FC00646C65 /* EditorWindow.cpp in Sources */,
+				D7B23A2B15E485FC00646C65 /* HelloWorldScene.cpp in Sources */,
+				D7B23A2C15E485FC00646C65 /* InformationWindow.cpp in Sources */,
+				D7B23A2D15E485FC00646C65 /* MainPanel.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D7B23A9515E48EE300646C65 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = cocos2dx;
+			targetProxy = D7B23A9415E48EE300646C65 /* PBXContainerItemProxy */;
+		};
+		D7B23A9715E48EE600646C65 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = MyGUIEngine;
+			targetProxy = D7B23A9615E48EE600646C65 /* PBXContainerItemProxy */;
+		};
+		D7B23B0F15E4A2D200646C65 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = MyGUICommon;
+			targetProxy = D7B23B0E15E4A2D200646C65 /* PBXContainerItemProxy */;
+		};
+		D7B23B1115E4A2D500646C65 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = MyGUIPlatform;
+			targetProxy = D7B23B1015E4A2D500646C65 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		D7B239E815E47F8500646C65 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D7B239E915E47F8500646C65 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		D7B239F115E47F8500646C65 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		D7B239F215E47F8500646C65 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D7B239F415E47F8500646C65 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MyGUIDemo/MyGUIDemo-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					DEBUG,
+					USE_FILE32API,
+					TARGET_OS_IPHONE,
+					IOS,
+				);
+				HEADER_SEARCH_PATHS = (
+					../../../Common,
+					../../../Common/FileSystemInfo/Cocos2d,
+					../../../Common/Input/Cocos2d,
+					../../../Common/Base/Cocos2d,
+					../../../Platforms/Cocos2d/Cocos2dPlatform/include,
+					"\"../../../MyGUIEngine/include\"",
+					"\"../../../../cocos2d-x/cocos2dx/\"",
+					"\"../../../../cocos2d-x/cocos2dx/include\"",
+					"\"../../../../cocos2d-x/cocos2dx/platform/ios\"",
+					"\"../../../cocos2d-x/cocos2dx/kazmath/include\"",
+				);
+				INFOPLIST_FILE = "MyGUIDemo/MyGUIDemo-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../../../../../../Library/Developer/Xcode/DerivedData/MyGUI-dyogehuompjckggnrhyiikglgiqp/Build/Products/Debug-iphoneos\"",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 2;
+				USER_HEADER_SEARCH_PATHS = "\"../../../MyGUIEngine/include\" \"../../../../cocos2d-x/cocos2dx/\" \"../../../../cocos2d-x/cocos2dx/include\" \"../../../../cocos2d-x/cocos2dx/platform/ios\" \"../../../../cocos2d-x/cocos2dx/kazmath/include\"";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		D7B239F515E47F8500646C65 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MyGUIDemo/MyGUIDemo-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					USE_FILE32API,
+					TARGET_OS_IPHONE,
+					IOS,
+				);
+				HEADER_SEARCH_PATHS = (
+					../../../Common,
+					../../../Common/FileSystemInfo/Cocos2d,
+					../../../Common/Input/Cocos2d,
+					../../../Common/Base/Cocos2d,
+					../../../Platforms/Cocos2d/Cocos2dPlatform/include,
+					"\"../../../MyGUIEngine/include\"",
+					"\"../../../../cocos2d-x/cocos2dx/\"",
+					"\"../../../../cocos2d-x/cocos2dx/include\"",
+					"\"../../../../cocos2d-x/cocos2dx/platform/ios\"",
+					"\"../../../cocos2d-x/cocos2dx/kazmath/include\"",
+				);
+				INFOPLIST_FILE = "MyGUIDemo/MyGUIDemo-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../../../../../../Library/Developer/Xcode/DerivedData/MyGUI-dyogehuompjckggnrhyiikglgiqp/Build/Products/Debug-iphoneos\"",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 2;
+				USER_HEADER_SEARCH_PATHS = "\"../../../MyGUIEngine/include\" \"../../../../cocos2d-x/cocos2dx/\" \"../../../../cocos2d-x/cocos2dx/include\" \"../../../../cocos2d-x/cocos2dx/platform/ios\" \"../../../../cocos2d-x/cocos2dx/kazmath/include\"";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D7B239D515E47F8400646C65 /* Build configuration list for PBXProject "MyGUIDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D7B239F115E47F8500646C65 /* Debug */,
+				D7B239F215E47F8500646C65 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D7B239F315E47F8500646C65 /* Build configuration list for PBXNativeTarget "MyGUIDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D7B239F415E47F8500646C65 /* Debug */,
+				D7B239F515E47F8500646C65 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D7B239D215E47F8400646C65 /* Project object */;
+}

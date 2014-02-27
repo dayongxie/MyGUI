@@ -92,6 +92,15 @@ namespace MyGUI
 		return stream.str();
 	}
 
+	std::string Colour::text() const
+	{
+		const size_t SIZE = 16;
+		char buff[SIZE];
+		sprintf(buff, "#%.2X%.2X%.2X\0", (int)(red * 255), (int)(green * 255), (int)(blue * 255));
+
+		return buff;
+	}
+
 	Colour Colour::parse(const std::string& _value)
 	{
 		if (!_value.empty())
@@ -103,7 +112,7 @@ namespace MyGUI
 				stream >> std::hex >> result;
 				if (!stream.fail())
 				{
-					return Colour( (unsigned char)( result >> 16 ) / 256.0f, (unsigned char)( result >> 8 ) / 256.0f, (unsigned char)( result ) / 256.0f );
+					return Colour( (unsigned char)( result >> 16 ) / 255.0f, (unsigned char)( result >> 8 ) / 255.0f, (unsigned char)( result ) / 255.0f );
 				}
 			}
 			else

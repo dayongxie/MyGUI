@@ -193,28 +193,36 @@ namespace MyGUI
 				// если два подряд, то рисуем один шарп, если нет то меняем цвет
 				if (character != L'#')
 				{
-					// парсим первый символ
-					uint32 colour = convert_colour[(character - 48) & 0x3F];
-
-					// и еще пять символов после шарпа
-					for (char i = 0; i < 5; i++)
+					if (character != L'^')
 					{
-						++ index;
-						if (index == end)
+						// парсим первый символ
+						uint32 colour = convert_colour[(character - 48) & 0x3F];
+
+						// и еще пять символов после шарпа
+						for (char i = 0; i < 5; i++)
 						{
-							--index;    // это защита
-							continue;
+							++ index;
+							if (index == end)
+							{
+								--index;    // это защита
+								continue;
+							}
+							colour <<= 4;
+							colour += convert_colour[ ((*index) - 48) & 0x3F ];
 						}
-						colour <<= 4;
-						colour += convert_colour[ ((*index) - 48) & 0x3F ];
+
+						// если нужно, то меняем красный и синий компоненты
+						texture_utility::convertColour(colour, _format);
+
+						line_info.simbols.push_back( CharInfo(colour) );
+
+						continue;
 					}
-
-					// если нужно, то меняем красный и синий компоненты
-					texture_utility::convertColour(colour, _format);
-
-					line_info.simbols.push_back( CharInfo(colour) );
-
-					continue;
+					else
+					{
+						line_info.simbols.push_back( CharInfo(CharInfo::ColourReset));
+						continue;
+					}
 				}
 			}
 
@@ -223,14 +231,15 @@ namespace MyGUI
 			if (info == nullptr)
 				continue;
 
-			if (FontCodeType::Space == character)
+		
+
+			/*	if (FontCodeType::Space == character)
 			{
-				roll_back.set(line_info.simbols.size(), index, count, width);
+			roll_back.set(line_info.simbols.size(), index, count, width);
 			}
 			else if (FontCodeType::Tab == character)
-			{
-				roll_back.set(line_info.simbols.size(), index, count, width);
-			}
+			{*/
+		//	}
 
 			float char_width = info->width;
 			float char_height = info->height;
@@ -250,6 +259,12 @@ namespace MyGUI
 			}
 
 			float char_fullAdvance = char_bearingX + char_advance;
+
+			line_info.simbols.push_back(CharInfo(info->uvRect, char_width, char_height, char_advance, char_bearingX, char_bearingY));
+			width += char_fullAdvance;
+			count ++;
+
+			roll_back.set(line_info.simbols.size(), index, count, width);
 
 			// перенос слов
 			if (_maxWidth != -1
@@ -272,6 +287,7 @@ namespace MyGUI
 				width = 0;
 				count = 0;
 
+				line_info.autonewline = true;
 				mLineInfo.push_back(line_info);
 				line_info.clear();
 
@@ -281,9 +297,7 @@ namespace MyGUI
 				continue;
 			}
 
-			line_info.simbols.push_back(CharInfo(info->uvRect, char_width, char_height, char_advance, char_bearingX, char_bearingY));
-			width += char_fullAdvance;
-			count ++;
+		
 		}
 
 		line_info.width = (int)ceil(width);
@@ -346,7 +360,9 @@ namespace MyGUI
 			if (!lastline)
 			{
 				top += height;
-				result += line->count + 1;
+				result += line->count;
+				if (!line->autonewline)
+					result++;
 			}
 		}
 
@@ -378,7 +394,9 @@ namespace MyGUI
 				}
 				break;
 			}
-			position += line->count + 1;
+			position += line->count;
+			if (!line->autonewline)
+				position++;
 			top += mFontHeight;
 		}
 

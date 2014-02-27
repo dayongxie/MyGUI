@@ -53,6 +53,11 @@ namespace MyGUI
 		mVertexBuffer = nullptr;
 	}
 
+	void RenderItem::releaseVertexBuffer()
+	{
+		mVertexBuffer->releaseVBO();
+	}
+
 	void RenderItem::renderToTarget(IRenderTarget* _target, bool _update)
 	{
 		if (mTexture == nullptr)
@@ -66,6 +71,9 @@ namespace MyGUI
 		{
 			mCountVertex = 0;
 			Vertex* buffer = mVertexBuffer->lock();
+
+			mOutOfDate = false;
+
 			if (buffer != nullptr)
 			{
 				for (VectorDrawItem::iterator iter = mDrawItems.begin(); iter != mDrawItems.end(); ++iter)
@@ -84,8 +92,6 @@ namespace MyGUI
 
 				mVertexBuffer->unlock();
 			}
-
-			mOutOfDate = false;
 		}
 
 		// хоть с 0 не выводиться батч, но все равно не будем дергать стейт и операцию

@@ -33,7 +33,6 @@ namespace MyGUI
 
 	class ControllerItem;
 
-	typedef delegates::CMultiDelegate1<Widget*> EventHandle_WidgetPtr;
 	typedef delegates::CMultiDelegate2<Widget*, ControllerItem*> EventHandle_WidgetPtrControllerItemPtr;
 
 	/** Base interface for controllers */
@@ -54,21 +53,21 @@ namespace MyGUI
 			signature : void method(MyGUI::Widget* _sender, ControllerItem* _controller)\n
 			@param _sender widget under control
 		*/
-		EventPairAddParameter<EventHandle_WidgetPtr, EventHandle_WidgetPtrControllerItemPtr>
+		EventHandle_WidgetPtrControllerItemPtr
 			eventPreAction;
 
 		/** Event : Controller updated (called every frame).\n
 			signature : void method(MyGUI::Widget* _sender, ControllerItem* _controller)\n
 			@param _sender widget under control
 		*/
-		EventPairAddParameter<EventHandle_WidgetPtr, EventHandle_WidgetPtrControllerItemPtr>
+		EventHandle_WidgetPtrControllerItemPtr
 			eventUpdateAction;
 
 		/** Event : After controller finished working.\n
 			signature : void method(MyGUI::Widget* _sender, ControllerItem* _controller)\n
 			@param _sender widget under control
 		*/
-		EventPairAddParameter<EventHandle_WidgetPtr, EventHandle_WidgetPtrControllerItemPtr>
+		EventHandle_WidgetPtrControllerItemPtr
 			eventPostAction;
 
 	};

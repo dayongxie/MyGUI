@@ -7,7 +7,7 @@
 #include "Precompiled.h"
 #include "RecentFilesManager.h"
 #include "SettingsManager.h"
-#include "FileSystemInfo/FileSystemInfo.h"
+#include "FileSystemInfo.h"
 
 template <> tools::RecentFilesManager* MyGUI::Singleton<tools::RecentFilesManager>::msInstance = nullptr;
 template <> const char* MyGUI::Singleton<tools::RecentFilesManager>::mClassTypeName = "RecentFilesManager";

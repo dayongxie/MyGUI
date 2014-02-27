@@ -38,7 +38,6 @@
 
 namespace MyGUI
 {
-
 	class MYGUI_EXPORT InputManager :
 		public Singleton<InputManager>,
 		public IUnlinkWidget,
@@ -141,6 +140,8 @@ namespace MyGUI
 		delegates::CMultiDelegate1<Widget*>
 			eventChangeKeyFocus;
 
+		delegates::CMultiDelegate1<Widget*>
+			eventWidgetClick;
 		/*internal:*/
 		void _resetMouseFocusWidget();
 

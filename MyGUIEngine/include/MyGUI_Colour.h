@@ -44,6 +44,7 @@ namespace MyGUI
 		void clear();
 
 		std::string print() const;
+		std::string text() const;
 
 		static Colour parse(const std::string& _value);
 

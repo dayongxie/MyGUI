@@ -53,6 +53,18 @@ namespace MyGUI
 		/** Delete all user strings */
 		void clearUserStrings();
 
+		//////////////////////////////////////////////////////////////////////////
+		void setUserDataset(const std::string, Any _data);
+
+		Any& getUserDataset(const std::string& _key);
+
+		template <typename ValueType>
+		ValueType* getUserDataset(const std::string _key, bool _throw = true)
+		{
+			return getUserDataset(_key).castType<ValueType>(_throw);
+		}
+
+		//////////////////////////////////////////////////////////////////////////
 		/** Set any user data to store inside widget */
 		void setUserData(Any _data);
 
@@ -76,9 +88,10 @@ namespace MyGUI
 		// пользовательские данные
 		MapString mMapUserString;
 		Any mUserData;
-
 		// для внутренниего использования
 		Any mInternalData;
+
+		std::map<std::string, Any> mMapUserData;
 	};
 
 } // namespace MyGUI

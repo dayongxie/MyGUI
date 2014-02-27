@@ -14,6 +14,7 @@
 #include "MyGUI_OgreDataManager.h"
 #include "MyGUI_OgreDiagnostic.h"
 #include "MyGUI_OgreTexture.h"
+#include "MyGUI_OgreFont.h"
 #include "MyGUI_LogManager.h"
 
 #include "MyGUI_LastHeader.h"
@@ -30,6 +31,7 @@ namespace MyGUI
 			mLogManager = new LogManager();
 			mRenderManager = new OgreRenderManager();
 			mDataManager = new OgreDataManager();
+			mFontBuilder = new OgreFontBuilder();
 		}
 
 		~OgrePlatform()
@@ -38,6 +40,7 @@ namespace MyGUI
 			delete mRenderManager;
 			delete mDataManager;
 			delete mLogManager;
+			delete mFontBuilder;
 		}
 
 		void initialise(Ogre::RenderWindow* _window, Ogre::SceneManager* _scene, const std::string& _group = Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, const std::string& _logName = MYGUI_PLATFORM_LOG_FILENAME)
@@ -50,6 +53,7 @@ namespace MyGUI
 
 			mRenderManager->initialise(_window, _scene);
 			mDataManager->initialise(_group);
+			mFontBuilder->initialise();
 		}
 
 		void shutdown()
@@ -59,6 +63,7 @@ namespace MyGUI
 
 			mRenderManager->shutdown();
 			mDataManager->shutdown();
+			mFontBuilder->shutdown();
 		}
 
 		OgreRenderManager* getRenderManagerPtr()
@@ -77,6 +82,7 @@ namespace MyGUI
 		bool mIsInitialise;
 		OgreRenderManager* mRenderManager;
 		OgreDataManager* mDataManager;
+		OgreFontBuilder* mFontBuilder;
 		LogManager* mLogManager;
 	};
 

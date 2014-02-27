@@ -88,6 +88,7 @@ namespace MyGUI
 			mClient->eventMouseLostFocus += newDelegate(this, &EditBox::notifyMouseLostFocus);
 			mClient->eventMouseButtonPressed += newDelegate(this, &EditBox::notifyMousePressed);
 			mClient->eventMouseButtonReleased += newDelegate(this, &EditBox::notifyMouseReleased);
+			mClient->eventMouseButtonClick += newDelegate(this, &EditBox::notifyMouseClick);
 			mClient->eventMouseDrag += newDelegate(this, &EditBox::notifyMouseDrag);
 			mClient->eventMouseButtonDoubleClick += newDelegate(this, &EditBox::notifyMouseButtonDoubleClick);
 			mClient->eventMouseWheel += newDelegate(this, &EditBox::notifyMouseWheel);
@@ -179,6 +180,12 @@ namespace MyGUI
 		mMouseLeftPressed = false;
 	}
 
+	void EditBox::notifyMouseClick(Widget* _sender)
+	{
+        if (!mModeReadOnly && !mModeStatic && IMEManager::getInstancePtr())
+            IMEManager::getInstance().activateIMEKeyboard();
+	}
+
 	void EditBox::notifyMouseDrag(Widget* _sender, int _left, int _top, MouseButton _id)
 	{
 		if (_id != MouseButton::Left)
@@ -216,7 +223,6 @@ namespace MyGUI
 			mClientText->setTextSelection(mEndSelect, mStartSelect);
 		else
 			mClientText->setTextSelection(mStartSelect, mEndSelect);
-
 	}
 
 	void EditBox::notifyMouseButtonDoubleClick(Widget* _sender)
@@ -280,6 +286,9 @@ namespace MyGUI
 					mClientText->setVisibleCursor(true);
 					mClientText->setSelectBackground(true);
 					mCursorTimer = 0;
+
+                    if (!mModeReadOnly && IMEManager::getInstancePtr())
+                        IMEManager::getInstance().attachIMEHandler(this);
 				}
 			}
 		}
@@ -300,6 +309,9 @@ namespace MyGUI
 				Gui::getInstance().eventFrameStart -= newDelegate(this, &EditBox::frameEntered);
 				mClientText->setVisibleCursor(false);
 				mClientText->setSelectBackground(false);
+                
+                if (!mModeReadOnly && IMEManager::getInstancePtr())
+                    IMEManager::getInstance().detachIMEHandler(this);
 			}
 		}
 
@@ -314,7 +326,6 @@ namespace MyGUI
 			return;
 		}
 
-		// в статическом режиме ничего не доступно
 		if (mModeStatic)
 		{
 			Base::onKeyButtonPressed(_key, _char);
@@ -1560,6 +1571,8 @@ namespace MyGUI
 	void EditBox::setCaption(const UString& _value)
 	{
 		setText(_value, false);
+		if (m_autoAdapt)
+			adaptCoord();
 	}
 
 	const UString& EditBox::getCaption()
@@ -2236,12 +2249,172 @@ namespace MyGUI
 			mClientText->setShadow(_value);
 	}
 
+	void EditBox::setTextShadowOffset(const FloatPoint& _value)
+	{
+		Base::setTextShadowOffset(_value);
+
+		if (mClientText != nullptr)
+			mClientText->setShadowOffset(_value);
+	}
+
 	void EditBox::baseUpdateEnable()
 	{
 		Base::baseUpdateEnable();
 
 		if (mClient != nullptr && mClient != this)
 			mClient->setEnabled(getEnabled());
+	}
+	
+	bool EditBox::canAttachWithIME()
+	{
+		return true;
+	}
+
+	void EditBox::didAttachWithIME()
+	{
+	}
+
+	bool EditBox::canDetachWithIME()
+	{
+		return true;
+	}
+
+	void EditBox::didDetachWithIME()
+	{
+	}
+
+	void EditBox::insertText(const char * text, int len)
+	{
+		if (!mModeReadOnly)
+		{
+			std::string sInsert(text, len);
+
+			// insert \n means input end
+			int nPos = sInsert.find('\n');
+			if ((int)sInsert.npos != nPos)
+			{
+				len = nPos;
+				sInsert.erase(nPos);
+			}
+
+			if (len > 0)
+			{
+				commandResetRedo();
+
+				size_t size = mVectorUndoChangeInfo.size();
+				deleteTextSelect(true);
+				insertText(TextIterator::toTagsString(UString(text, len)), mCursorPosition, true);
+				if ((size + 2) == mVectorUndoChangeInfo.size())
+					commandMerge();
+				eventEditTextChange(this);
+			}
+
+			if ((int)sInsert.npos == nPos) {
+				return;
+			}
+
+			if (IMEManager::getInstancePtr())
+				IMEManager::getInstance().deactiveIMEKeyboard();
+			eventEditSelectAccept(this);
+		}
+	}
+
+	void EditBox::deleteBackward()
+	{
+		if (!mModeReadOnly)
+		{
+			commandResetRedo();
+
+			if (!deleteTextSelect(true))
+			{
+				if (mCursorPosition != 0)
+				{
+					mCursorPosition--;
+					eraseText(mCursorPosition, 1, true);
+				}
+			}
+			eventEditTextChange(this);
+		}
+	}
+
+	void EditBox::deleteForward()
+	{
+		if (!mModeReadOnly)
+		{
+			commandResetRedo();
+
+			if (!deleteTextSelect(true))
+			{
+				if (mCursorPosition < mTextLength)
+				{
+					eraseText(mCursorPosition, 1, true);
+				}
+			}
+			eventEditTextChange(this);
+		}
+	}
+
+	const char * EditBox::getContentText()
+	{
+		return this->getCaption().asUTF8().c_str();
+	}
+
+	int EditBox::getContentTextCursor()
+	{
+		return this->getTextCursor();
+	}
+
+	void EditBox::adaptCoord()
+	{
+		if (mClientText == nullptr)
+		{
+			Base::adaptCoord();
+			return;
+		}
+
+		Align align = getAlign();
+		const IntCoord& origCoord = getCoord();
+		IntCoord textCoord = mClientText->getCoord();
+		IntSize textMargin;
+		textMargin.width = origCoord.width - textCoord.width;
+		textMargin.height = origCoord.height - textCoord.height;
+
+		IntCoord coord = origCoord;
+		IntSize textSize = mClientText->getTextSize();
+
+		if (!align.isHStretch())
+			coord.width = textSize.width + textMargin.width;
+		if (!align.isVStretch())
+			coord.height = textSize.height + textMargin.height;
+
+		Align textAlign = getTextAlign();
+		if (textAlign.isLeft())
+			coord.left = origCoord.left;
+		else if (textAlign.isRight())
+			coord.left = origCoord.right() - coord.width;
+		else if (textAlign.isHCenter())
+		{
+			if (!align.isHStretch() && coord.width % 2 != 0)
+			{
+				coord.width++;
+			}
+			coord.left += (origCoord.width - coord.width) / 2;
+		}
+
+		if (textAlign.isTop())
+			coord.top = origCoord.top;
+		else if (textAlign.isBottom())
+			coord.top = origCoord.bottom() - coord.height;
+		else if (textAlign.isVCenter())
+		{
+			if (!align.isVStretch() && coord.height % 2 != 0)
+			{
+				coord.height++;
+			}
+			coord.top += (origCoord.height - coord.height) / 2;
+		}
+
+		setCoord(coord);
 	}
 
 } // namespace MyGUI

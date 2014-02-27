@@ -24,6 +24,7 @@
 
 #include "MyGUI_Prerequest.h"
 #include "MyGUI_RTTI.h"
+#include "MyGUI_ScriptBridge.h"
 
 namespace MyGUI
 {

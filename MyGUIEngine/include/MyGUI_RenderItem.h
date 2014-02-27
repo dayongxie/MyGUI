@@ -67,6 +67,7 @@ namespace MyGUI
 
 		bool getCompression();
 
+		void releaseVertexBuffer();
 	private:
 #if MYGUI_DEBUG_MODE == 1
 		std::string mTextureName;

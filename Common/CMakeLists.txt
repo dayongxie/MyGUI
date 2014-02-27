@@ -1,11 +1,33 @@
 function(mygui_add_base_manager_source PLATFORM)
 	include_directories(Base/${PLATFORM})
-	set (HEADER_FILES ${HEADER_FILES} Base/${PLATFORM}/BaseManager.h PARENT_SCOPE)
-	set (SOURCE_FILES ${SOURCE_FILES} Base/${PLATFORM}/BaseManager.cpp PARENT_SCOPE)
+	
+	if (MYGUI_RENDERSYSTEM EQUAL 7)
+		set (HEADER_FILES ${HEADER_FILES} 
+			Base/${PLATFORM}/BaseManager.h
+			FileSystemInfo/${PLATFORM}/FileSystemInfo.h
+			Cocos2d/RenderBox/RenderBox.h
+			PARENT_SCOPE)
+			
+		set (SOURCE_FILES ${SOURCE_FILES}
+			Base/${PLATFORM}/BaseManager.cpp
+			FileSystemInfo/${PLATFORM}/FileSystemInfo_pc.cpp
+			Cocos2d/RenderBox/RenderBox.cpp
+			PARENT_SCOPE)
+	else()
+		set (HEADER_FILES ${HEADER_FILES}
+			Base/${PLATFORM}/BaseManager.h
+			FileSystemInfo/Default/FileSystemInfo.h
+			PARENT_SCOPE)
+		set (SOURCE_FILES ${SOURCE_FILES}
+			Base/${PLATFORM}/BaseManager.cpp
+			PARENT_SCOPE)
+	endif()
+	
 	SOURCE_GROUP("Base" FILES
 		Base/${PLATFORM}/BaseManager.h
 		Base/${PLATFORM}/BaseManager.cpp
 	)
+	
 endfunction(mygui_add_base_manager_source)
 
 function(mygui_add_input_source PLATFORM)
@@ -76,6 +98,14 @@ elseif(MYGUI_RENDERSYSTEM EQUAL 6)
 		${DirectX_INCLUDE_DIR}
 	)
 	link_directories(${DIRECTX_LIB_DIR})
+elseif(MYGUI_RENDERSYSTEM EQUAL 7)
+	mygui_add_base_manager_source(Cocos2d)
+	add_definitions("-DMYGUI_COCOS2D_PLATFORM -DUNICODE -D_UNICODE")
+	include_directories(
+		${MYGUI_SOURCE_DIR}/Platforms/Cocos2d/Cocos2dPlatform/include
+		${COCOS2D_INCLUDE_DIR}
+		${COCOS2D_SOURCE_DIR}/kazmath/include
+	)
 endif()
 
 if(MYGUI_SAMPLES_INPUT EQUAL 1)
@@ -86,6 +116,8 @@ elseif(MYGUI_SAMPLES_INPUT EQUAL 2)
 elseif(MYGUI_SAMPLES_INPUT EQUAL 3)
 	include_directories(${OIS_INCLUDE_DIRS})
 	mygui_add_input_source(Win32_OIS)
+elseif(MYGUI_SAMPLES_INPUT EQUAL 4)
+	mygui_add_input_source(Cocos2d)
 endif()
 
 add_library(${PROJECTNAME} ${HEADER_FILES} ${SOURCE_FILES})
@@ -105,6 +137,9 @@ elseif(MYGUI_RENDERSYSTEM EQUAL 5)
 elseif(MYGUI_RENDERSYSTEM EQUAL 6)
 	add_dependencies(${PROJECTNAME} MyGUI.DirectX11Platform)
 	target_link_libraries(${PROJECTNAME} MyGUI.DirectX11Platform)
+elseif(MYGUI_RENDERSYSTEM EQUAL 7)
+	add_dependencies(${PROJECTNAME} MyGUI.Cocos2dPlatform)
+	target_link_libraries(${PROJECTNAME} MyGUI.Cocos2dPlatform)
 endif()
 
 add_dependencies(${PROJECTNAME} MyGUIEngine)
@@ -119,4 +154,6 @@ elseif(MYGUI_SAMPLES_INPUT EQUAL 3)
 	add_definitions("-DMYGUI_SAMPLES_INPUT_WIN32_OIS")
 	link_directories(${OIS_LIB_DIR})
 	target_link_libraries(${PROJECTNAME} ${OIS_LIBRARIES})
+elseif(MYGUI_SAMPLES_INPUT EQUAL 4)
+	add_definitions("-DMYGUI_SAMPLES_INPUT_COCOS2D")
 endif()

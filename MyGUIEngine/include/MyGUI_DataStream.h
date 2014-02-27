@@ -46,6 +46,25 @@ namespace MyGUI
 		size_t mSize;
 	};
 
+	template <class StreamClass>
+	class CommonDataStream : public DataStream
+	{
+	public:
+		CommonDataStream(StreamClass* _stream)
+			:DataStream(_stream)
+		{
+		}
+
+		virtual ~CommonDataStream()
+		{
+			if (mStream)
+			{
+				delete (StreamClass*)mStream;
+				mStream = nullptr;
+			}
+		}
+	};
+
 } // namespace MyGUI
 
 #endif // __MYGUI_DATA_STREAM_H__

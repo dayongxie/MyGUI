@@ -33,7 +33,7 @@ namespace MyGUI
 		TabItem widget description should be here.
 	*/
 	class MYGUI_EXPORT TabItem :
-		public TextBox // FIXME пока для кэпшена вместо виджета текст (Bug #190)
+		public TextBox // FIXME пока для кэпшен?вместо виджет?текс?(Bug #190)
 	{
 		MYGUI_RTTI_DERIVED( TabItem )
 

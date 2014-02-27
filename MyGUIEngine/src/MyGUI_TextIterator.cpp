@@ -234,7 +234,7 @@ namespace MyGUI
 				if (iter == end) break;
 
 				// тэг цвета
-				if ((*iter) != L'#')
+				if ((*iter) != L'#' && (*iter) != L'^')
 				{
 					// остальные 5 символов цвета
 					for (size_t pos = 0; pos < 5; pos++)

@@ -28,6 +28,7 @@ namespace MyGUI
 {
 
 	TextBox::TextBox()
+		:m_autoAdapt(false)
 	{
 	}
 
@@ -92,7 +93,11 @@ namespace MyGUI
 	void TextBox::setCaption(const UString& _caption)
 	{
 		if (nullptr != getSubWidgetText())
+		{
 			getSubWidgetText()->setCaption(_caption);
+			if (m_autoAdapt)
+				adaptCoord();
+		}
 	}
 
 	const UString& TextBox::getCaption()
@@ -104,23 +109,17 @@ namespace MyGUI
 
 	void TextBox::setCaptionWithReplacing(const std::string& _value)
 	{
-		// replace "\\n" with char '\n'
-		size_t pos = _value.find("\\n");
-		if (pos == std::string::npos)
+		std::string value = LanguageManager::getInstance().replaceTags(_value);
+
+		size_t pos = value.find("\\n");
+		while (pos != std::string::npos)
 		{
-			setCaption(LanguageManager::getInstance().replaceTags(_value));
+			value[pos++] = '\n';
+			value.erase(pos, 1);
+			pos = value.find("\\n");
 		}
-		else
-		{
-			std::string value(_value);
-			while (pos != std::string::npos)
-			{
-				value[pos++] = '\n';
-				value.erase(pos, 1);
-				pos = value.find("\\n");
-			}
-			setCaption(LanguageManager::getInstance().replaceTags(value));
-		}
+		
+		setCaption(value);
 	}
 
 	void TextBox::setTextShadowColour(const Colour& _value)
@@ -145,6 +144,17 @@ namespace MyGUI
 		return (nullptr == getSubWidgetText()) ? false : getSubWidgetText()->getShadow();
 	}
 
+	void TextBox::setTextShadowOffset(const FloatPoint& _value)
+	{
+		if (nullptr != getSubWidgetText())
+			getSubWidgetText()->setShadowOffset(_value);
+	}
+
+	FloatPoint TextBox::getTextShadowOffset()
+	{
+		return (nullptr == getSubWidgetText()) ? FloatPoint() : getSubWidgetText()->getShadowOffset();
+	}
+
 	void TextBox::setPropertyOverride(const std::string& _key, const std::string& _value)
 	{
 		/// @wproperty{TextBox, TextColour, Colour} Цвет текста.
@@ -163,7 +173,7 @@ namespace MyGUI
 		else if (_key == "FontHeight")
 			setFontHeight(utility::parseValue<int>(_value));
 
-		/// @wproperty{TextBox, Caption, string} Содержимое поля редактирования.
+		/// @wproperty{TextBox, Caption, string} Содержимое по? редактирован?.
 		else if (_key == "Caption")
 			setCaptionWithReplacing(_value);
 
@@ -171,10 +181,13 @@ namespace MyGUI
 		else if (_key == "TextShadowColour")
 			setTextShadowColour(utility::parseValue<Colour>(_value));
 
-		/// @wproperty{TextBox, TextShadow, bool} Режим показа тени текста.
+		/// @wproperty{TextBox, TextShadow, bool} Режи?показа тени текста.
 		else if (_key == "TextShadow")
 			setTextShadow(utility::parseValue<bool>(_value));
-
+		else if (_key == "AutoAdapt")
+			m_autoAdapt = utility::parseValue<bool>(_value);
+		else if (_key == "TextShadowOffset")
+			setTextShadowOffset(FloatPoint::parse(_value));
 		else
 		{
 			Base::setPropertyOverride(_key, _value);
@@ -182,6 +195,62 @@ namespace MyGUI
 		}
 
 		eventChangeProperty(this, _key, _value);
+	}
+
+	void TextBox::adaptCoord()
+	{
+		if (nullptr == getSubWidgetText()) return;
+
+		Align align = getAlign();
+		const IntCoord& origCoord = getCoord();
+		IntCoord textCoord = getSubWidgetText()->getCoord();
+		IntSize textMargin;
+		textMargin.width = origCoord.width - textCoord.width;
+		textMargin.height = origCoord.height - textCoord.height;
+
+		IntCoord coord = origCoord;
+		IntSize textSize = getSubWidgetText()->getTextSize();
+
+		if (!align.isHStretch())
+			coord.width = textSize.width + textMargin.width;
+		if (!align.isVStretch())
+			coord.height = textSize.height + textMargin.height;
+
+		Align textAlign = getTextAlign();
+		if (textAlign.isLeft())
+			coord.left = origCoord.left;
+		else if (textAlign.isRight())
+			coord.left = origCoord.right() - coord.width;
+		else if (textAlign.isHCenter())
+		{
+			if (!align.isHStretch() && coord.width % 2 != 0)
+			{
+				coord.width += 1;
+			}
+			coord.left += origCoord.width / 2 - coord.width / 2;
+		}
+		
+		if (textAlign.isTop())
+			coord.top = origCoord.top;
+		else if (textAlign.isBottom())
+			coord.top = origCoord.bottom() - coord.height;
+		else if (textAlign.isVCenter())
+		{
+			if (!align.isVStretch() && coord.height % 2 != 0)
+			{
+				coord.height += 1;
+			}
+			coord.top += (origCoord.height - coord.height) / 2;
+		}
+
+		setCoord(coord);
+	}
+
+	void TextBox::changeWidgetSkin( const std::string& _skinName )
+	{
+		UString caption = getCaption();
+		Base::changeWidgetSkin(_skinName);
+		setCaption(caption);
 	}
 
 } // namespace MyGUI

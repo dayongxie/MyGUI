@@ -250,7 +250,6 @@ namespace wraps
 	protected:
 		MyGUI::Widget* mMainWidget;
 
-	private:
 		std::string mPrefix;
 		std::string mLayoutName;
 		MyGUI::VectorWidgetPtr mListWindowRoot;

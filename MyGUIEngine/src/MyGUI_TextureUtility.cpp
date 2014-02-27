@@ -74,11 +74,60 @@ namespace MyGUI
 	#if MYGUI_DEBUG_MODE == 1
 			if (!Bitwise::isPO2(prevSize.width) || !Bitwise::isPO2(prevSize.height))
 			{
-				MYGUI_LOG(Warning, "Texture '" + _texture + "' have non power of two size");
+				//MYGUI_LOG(Warning, "Texture '" + _texture + "' have non power of two size");
 			}
 	#endif
 
 			return prevSize;
+		}
+
+		const IntSize& getTextureContentSize(const std::string& _texture, bool _cache)
+		{
+			// предыдущя текстура
+			static std::string old_texture;
+			static IntSize old_size;
+
+			if (old_texture == _texture && _cache)
+				return old_size;
+			old_texture = _texture;
+			old_size.clear();
+
+			if (_texture.empty())
+				return old_size;
+
+			RenderManager& render = RenderManager::getInstance();
+
+			if (nullptr == render.getTexture(_texture))
+			{
+				if (!DataManager::getInstance().isDataExist(_texture))
+				{
+					MYGUI_LOG(Error, "Texture '" + _texture + "' not found");
+					return old_size;
+				}
+				else
+				{
+					ITexture* texture = render.createTexture(_texture);
+					texture->loadFromFile(_texture);
+				}
+			}
+
+			ITexture* texture = render.getTexture(_texture);
+			if (texture == nullptr)
+			{
+				MYGUI_LOG(Error, "Texture '" + _texture + "' not found");
+				return old_size;
+			}
+
+			old_size.set(texture->getContentWidth(), texture->getContentHeight());
+
+#if MYGUI_DEBUG_MODE == 1
+			if (!Bitwise::isPO2(old_size.width) || !Bitwise::isPO2(old_size.height))
+			{
+				MYGUI_LOG(Warning, "Texture '" + _texture + "' have non power of two size");
+			}
+#endif
+
+			return old_size;
 		}
 
 		uint32 toColourARGB(const Colour& _colour)

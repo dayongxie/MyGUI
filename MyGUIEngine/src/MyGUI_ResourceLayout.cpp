@@ -135,10 +135,6 @@ namespace MyGUI
 		if (!widgetName.empty()) widgetName = _prefix + widgetName;
 
 		if (_parent != nullptr && style != WidgetStyle::Popup) widgetLayer.clear();
-		if (_parent == nullptr && widgetLayer.empty())
-		{
-			MYGUI_LOG(Warning, "Root widget's layer is not specified, widget won't be visible. Specify layer or parent or attach it to another widget after load." << " [" << LayoutManager::getInstance().getCurrentLayout() << "]");
-		}
 
 		IntCoord coord;
 		if (_widgetInfo.positionType == WidgetInfo::Pixels) coord = _widgetInfo.intCoord;
@@ -152,7 +148,11 @@ namespace MyGUI
 
 		Widget* wid;
 		if (nullptr == _parent)
-			wid = Gui::getInstance().createWidgetT(_widgetInfo.type, _widgetInfo.skin, coord, _widgetInfo.align, widgetLayer, widgetName);
+		{
+			if (style != WidgetStyle::Overlapped && style != WidgetStyle::Popup && !widgetLayer.empty())
+				style = WidgetStyle::Overlapped;
+			wid = Gui::getInstance().createWidgetT(style, _widgetInfo.type, _widgetInfo.skin, coord, _widgetInfo.align, widgetLayer, widgetName);
+		}
 		else if (_template)
 			wid = _parent->_createSkinWidget(style, _widgetInfo.type, _widgetInfo.skin, coord, _widgetInfo.align, widgetLayer, widgetName);
 		else
@@ -175,22 +175,7 @@ namespace MyGUI
 			createWidget(*iter, _prefix, wid);
 		}
 
-		for (std::vector<ControllerInfo>::const_iterator iter = _widgetInfo.controllers.begin(); iter != _widgetInfo.controllers.end(); ++iter)
-		{
-			MyGUI::ControllerItem* item = MyGUI::ControllerManager::getInstance().createItem(iter->type);
-			if (item)
-			{
-				for (MapString::const_iterator iterProp = iter->properties.begin(); iterProp != iter->properties.end(); ++iterProp)
-				{
-					item->setProperty(iterProp->first, iterProp->second);
-				}
-				MyGUI::ControllerManager::getInstance().addItem(wid, item);
-			}
-			else
-			{
-				MYGUI_LOG(Warning, "Controller '" << iter->type << "' not found");
-			}
-		}
+		wid->setUserDataset("controllers", _widgetInfo.controllers);
 
 		return wid;
 	}

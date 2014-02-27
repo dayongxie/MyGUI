@@ -111,14 +111,15 @@ option(MYGUI_STATIC "Static build" FALSE)
 option(MYGUI_USE_FREETYPE "Use freetype for font rendering" TRUE)
 option(MYGUI_DONT_USE_OBSOLETE "Remove obsole functions from build" FALSE)
 
-set(MYGUI_RENDERSYSTEM 3 CACHE STRING
+set(MYGUI_RENDERSYSTEM 7 CACHE STRING
 "Specify the Render System. Possible values:
   1 - Dummy
   2 - Export (latter)
   3 - Ogre
   4 - OpenGL
   5 - Direct3D 9
-  6 - Direct3D 11"
+  6 - Direct3D 11
+  7 - Cocos2d"
 )
 
 option(MYGUI_BUILD_DEMOS "Build MyGUI demos" TRUE)
@@ -140,11 +141,12 @@ MARK_AS_ADVANCED(MYGUI_STANDALONE_BUILD)
 option(MYGUI_GENERATE_LIST_FILES_FROM_VSPROJECT "Generate .list files from visual studio project files" FALSE)
 
 if (WIN32)
-	set(MYGUI_SAMPLES_INPUT 2 CACHE STRING
+	set(MYGUI_SAMPLES_INPUT 4 CACHE STRING
 	"Specify the Input Manager for samples. Possible values:
 	  1 - OIS
 	  2 - Win32
-	  3 - Win32 (Mouse) + OIS (Keyboard)"
+	  3 - Win32 (Mouse) + OIS (Keyboard)
+	  4 - Cocos2d"
 	)
 else()
 	set(MYGUI_SAMPLES_INPUT 1)

@@ -1,0 +1,629 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		CE1AE787177ECD5D008C4304 /* MyGUI_PathsManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE1AE786177ECD5D008C4304 /* MyGUI_PathsManager.cpp */; };
+		CE8962681788218D0088C7A1 /* MyGUI_ImageSkin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE8962671788218D0088C7A1 /* MyGUI_ImageSkin.cpp */; };
+		D764543C15EC9CCD005A3421 /* MyGUI_IMEManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D764543B15EC9CCD005A3421 /* MyGUI_IMEManager.cpp */; };
+		D781106715E3AC7000F6E655 /* MyGUI_ResourceNativeFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D781106615E3AC7000F6E655 /* MyGUI_ResourceNativeFont.cpp */; };
+		D7DE314017292B3800A73ADF /* MyGUI_ScriptBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7DE313F17292B3800A73ADF /* MyGUI_ScriptBridge.cpp */; };
+		D7F5FCE115AAC2D400D197A4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7F5FCE015AAC2D400D197A4 /* Foundation.framework */; };
+		D7F5FD6C15AACB1600D197A4 /* MyGUI_ActionController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD0E15AACB1600D197A4 /* MyGUI_ActionController.cpp */; };
+		D7F5FD6D15AACB1600D197A4 /* MyGUI_Any.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD0F15AACB1600D197A4 /* MyGUI_Any.cpp */; };
+		D7F5FD6E15AACB1600D197A4 /* MyGUI_BackwardCompatibility.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD1015AACB1600D197A4 /* MyGUI_BackwardCompatibility.cpp */; };
+		D7F5FD6F15AACB1600D197A4 /* MyGUI_BiIndexBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD1115AACB1600D197A4 /* MyGUI_BiIndexBase.cpp */; };
+		D7F5FD7015AACB1600D197A4 /* MyGUI_Button.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD1215AACB1600D197A4 /* MyGUI_Button.cpp */; };
+		D7F5FD7115AACB1600D197A4 /* MyGUI_Canvas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD1315AACB1600D197A4 /* MyGUI_Canvas.cpp */; };
+		D7F5FD7215AACB1600D197A4 /* MyGUI_ChildSkinInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD1415AACB1600D197A4 /* MyGUI_ChildSkinInfo.cpp */; };
+		D7F5FD7315AACB1600D197A4 /* MyGUI_ClipboardManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD1515AACB1600D197A4 /* MyGUI_ClipboardManager.cpp */; };
+		D7F5FD7415AACB1600D197A4 /* MyGUI_Colour.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD1615AACB1600D197A4 /* MyGUI_Colour.cpp */; };
+		D7F5FD7515AACB1600D197A4 /* MyGUI_ComboBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD1715AACB1600D197A4 /* MyGUI_ComboBox.cpp */; };
+		D7F5FD7615AACB1600D197A4 /* MyGUI_ConsoleLogListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD1815AACB1600D197A4 /* MyGUI_ConsoleLogListener.cpp */; };
+		D7F5FD7715AACB1600D197A4 /* MyGUI_Constants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD1915AACB1600D197A4 /* MyGUI_Constants.cpp */; };
+		D7F5FD7815AACB1600D197A4 /* MyGUI_ControllerEdgeHide.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD1A15AACB1600D197A4 /* MyGUI_ControllerEdgeHide.cpp */; };
+		D7F5FD7915AACB1600D197A4 /* MyGUI_ControllerFadeAlpha.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD1B15AACB1600D197A4 /* MyGUI_ControllerFadeAlpha.cpp */; };
+		D7F5FD7A15AACB1600D197A4 /* MyGUI_ControllerManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD1C15AACB1600D197A4 /* MyGUI_ControllerManager.cpp */; };
+		D7F5FD7B15AACB1600D197A4 /* MyGUI_ControllerPosition.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD1D15AACB1600D197A4 /* MyGUI_ControllerPosition.cpp */; };
+		D7F5FD7C15AACB1600D197A4 /* MyGUI_DataFileStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD1E15AACB1600D197A4 /* MyGUI_DataFileStream.cpp */; };
+		D7F5FD7D15AACB1600D197A4 /* MyGUI_DataManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD1F15AACB1600D197A4 /* MyGUI_DataManager.cpp */; };
+		D7F5FD7E15AACB1600D197A4 /* MyGUI_DataStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD2015AACB1600D197A4 /* MyGUI_DataStream.cpp */; };
+		D7F5FD7F15AACB1600D197A4 /* MyGUI_DDContainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD2115AACB1600D197A4 /* MyGUI_DDContainer.cpp */; };
+		D7F5FD8015AACB1600D197A4 /* MyGUI_DynLib.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD2215AACB1600D197A4 /* MyGUI_DynLib.cpp */; };
+		D7F5FD8115AACB1600D197A4 /* MyGUI_DynLibManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD2315AACB1600D197A4 /* MyGUI_DynLibManager.cpp */; };
+		D7F5FD8215AACB1600D197A4 /* MyGUI_EditBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD2415AACB1600D197A4 /* MyGUI_EditBox.cpp */; };
+		D7F5FD8315AACB1600D197A4 /* MyGUI_EditText.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD2515AACB1600D197A4 /* MyGUI_EditText.cpp */; };
+		D7F5FD8415AACB1600D197A4 /* MyGUI_Exception.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD2615AACB1600D197A4 /* MyGUI_Exception.cpp */; };
+		D7F5FD8515AACB1600D197A4 /* MyGUI_FactoryManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD2715AACB1600D197A4 /* MyGUI_FactoryManager.cpp */; };
+		D7F5FD8615AACB1600D197A4 /* MyGUI_FileLogListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD2815AACB1600D197A4 /* MyGUI_FileLogListener.cpp */; };
+		D7F5FD8715AACB1600D197A4 /* MyGUI_FontManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD2915AACB1600D197A4 /* MyGUI_FontManager.cpp */; };
+		D7F5FD8815AACB1600D197A4 /* MyGUI_GeometryUtility.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD2A15AACB1600D197A4 /* MyGUI_GeometryUtility.cpp */; };
+		D7F5FD8915AACB1600D197A4 /* MyGUI_Gui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD2B15AACB1600D197A4 /* MyGUI_Gui.cpp */; };
+		D7F5FD8A15AACB1600D197A4 /* MyGUI_ImageBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD2C15AACB1600D197A4 /* MyGUI_ImageBox.cpp */; };
+		D7F5FD8B15AACB1600D197A4 /* MyGUI_InputManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD2D15AACB1600D197A4 /* MyGUI_InputManager.cpp */; };
+		D7F5FD8C15AACB1600D197A4 /* MyGUI_ItemBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD2E15AACB1600D197A4 /* MyGUI_ItemBox.cpp */; };
+		D7F5FD8D15AACB1600D197A4 /* MyGUI_LanguageManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD2F15AACB1600D197A4 /* MyGUI_LanguageManager.cpp */; };
+		D7F5FD8E15AACB1600D197A4 /* MyGUI_LayerItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD3015AACB1600D197A4 /* MyGUI_LayerItem.cpp */; };
+		D7F5FD8F15AACB1600D197A4 /* MyGUI_LayerManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD3115AACB1600D197A4 /* MyGUI_LayerManager.cpp */; };
+		D7F5FD9015AACB1600D197A4 /* MyGUI_LayerNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD3215AACB1600D197A4 /* MyGUI_LayerNode.cpp */; };
+		D7F5FD9115AACB1600D197A4 /* MyGUI_LayoutManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD3315AACB1600D197A4 /* MyGUI_LayoutManager.cpp */; };
+		D7F5FD9215AACB1600D197A4 /* MyGUI_LevelLogFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD3415AACB1600D197A4 /* MyGUI_LevelLogFilter.cpp */; };
+		D7F5FD9315AACB1600D197A4 /* MyGUI_ListBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD3515AACB1600D197A4 /* MyGUI_ListBox.cpp */; };
+		D7F5FD9415AACB1600D197A4 /* MyGUI_LogManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD3615AACB1600D197A4 /* MyGUI_LogManager.cpp */; };
+		D7F5FD9515AACB1600D197A4 /* MyGUI_LogSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD3715AACB1600D197A4 /* MyGUI_LogSource.cpp */; };
+		D7F5FD9615AACB1600D197A4 /* MyGUI_MainSkin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD3815AACB1600D197A4 /* MyGUI_MainSkin.cpp */; };
+		D7F5FD9715AACB1600D197A4 /* MyGUI_MaskPickInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD3915AACB1600D197A4 /* MyGUI_MaskPickInfo.cpp */; };
+		D7F5FD9815AACB1600D197A4 /* MyGUI_MenuBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD3A15AACB1600D197A4 /* MyGUI_MenuBar.cpp */; };
+		D7F5FD9915AACB1600D197A4 /* MyGUI_MenuControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD3B15AACB1600D197A4 /* MyGUI_MenuControl.cpp */; };
+		D7F5FD9A15AACB1600D197A4 /* MyGUI_MenuItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD3C15AACB1600D197A4 /* MyGUI_MenuItem.cpp */; };
+		D7F5FD9B15AACB1600D197A4 /* MyGUI_MultiListBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD3D15AACB1600D197A4 /* MyGUI_MultiListBox.cpp */; };
+		D7F5FD9C15AACB1600D197A4 /* MyGUI_MultiListItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD3E15AACB1600D197A4 /* MyGUI_MultiListItem.cpp */; };
+		D7F5FD9D15AACB1600D197A4 /* MyGUI_OverlappedLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD3F15AACB1600D197A4 /* MyGUI_OverlappedLayer.cpp */; };
+		D7F5FD9E15AACB1600D197A4 /* MyGUI_PluginManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD4015AACB1600D197A4 /* MyGUI_PluginManager.cpp */; };
+		D7F5FD9F15AACB1600D197A4 /* MyGUI_PointerManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD4115AACB1600D197A4 /* MyGUI_PointerManager.cpp */; };
+		D7F5FDA015AACB1600D197A4 /* MyGUI_PolygonalSkin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD4215AACB1600D197A4 /* MyGUI_PolygonalSkin.cpp */; };
+		D7F5FDA115AACB1600D197A4 /* MyGUI_PopupMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD4315AACB1600D197A4 /* MyGUI_PopupMenu.cpp */; };
+		D7F5FDA215AACB1600D197A4 /* MyGUI_Precompiled.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD4415AACB1600D197A4 /* MyGUI_Precompiled.cpp */; };
+		D7F5FDA315AACB1600D197A4 /* MyGUI_ProgressBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD4515AACB1600D197A4 /* MyGUI_ProgressBar.cpp */; };
+		D7F5FDA415AACB1600D197A4 /* MyGUI_RenderItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD4615AACB1600D197A4 /* MyGUI_RenderItem.cpp */; };
+		D7F5FDA515AACB1600D197A4 /* MyGUI_RenderManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD4715AACB1600D197A4 /* MyGUI_RenderManager.cpp */; };
+		D7F5FDA615AACB1600D197A4 /* MyGUI_ResourceImageSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD4815AACB1600D197A4 /* MyGUI_ResourceImageSet.cpp */; };
+		D7F5FDA715AACB1600D197A4 /* MyGUI_ResourceImageSetPointer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD4915AACB1600D197A4 /* MyGUI_ResourceImageSetPointer.cpp */; };
+		D7F5FDA815AACB1600D197A4 /* MyGUI_ResourceLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD4A15AACB1600D197A4 /* MyGUI_ResourceLayout.cpp */; };
+		D7F5FDA915AACB1600D197A4 /* MyGUI_ResourceManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD4B15AACB1600D197A4 /* MyGUI_ResourceManager.cpp */; };
+		D7F5FDAA15AACB1600D197A4 /* MyGUI_ResourceManualFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD4C15AACB1600D197A4 /* MyGUI_ResourceManualFont.cpp */; };
+		D7F5FDAB15AACB1600D197A4 /* MyGUI_ResourceManualPointer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD4D15AACB1600D197A4 /* MyGUI_ResourceManualPointer.cpp */; };
+		D7F5FDAC15AACB1600D197A4 /* MyGUI_ResourceSkin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD4E15AACB1600D197A4 /* MyGUI_ResourceSkin.cpp */; };
+		D7F5FDAD15AACB1600D197A4 /* MyGUI_ResourceTrueTypeFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD4F15AACB1600D197A4 /* MyGUI_ResourceTrueTypeFont.cpp */; };
+		D7F5FDAE15AACB1600D197A4 /* MyGUI_RotatingSkin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD5015AACB1600D197A4 /* MyGUI_RotatingSkin.cpp */; };
+		D7F5FDAF15AACB1600D197A4 /* MyGUI_ScrollBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD5115AACB1600D197A4 /* MyGUI_ScrollBar.cpp */; };
+		D7F5FDB015AACB1600D197A4 /* MyGUI_ScrollView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD5215AACB1600D197A4 /* MyGUI_ScrollView.cpp */; };
+		D7F5FDB115AACB1600D197A4 /* MyGUI_ScrollViewBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD5315AACB1600D197A4 /* MyGUI_ScrollViewBase.cpp */; };
+		D7F5FDB215AACB1600D197A4 /* MyGUI_SharedLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD5415AACB1600D197A4 /* MyGUI_SharedLayer.cpp */; };
+		D7F5FDB315AACB1600D197A4 /* MyGUI_SharedLayerNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD5515AACB1600D197A4 /* MyGUI_SharedLayerNode.cpp */; };
+		D7F5FDB415AACB1600D197A4 /* MyGUI_SimpleText.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD5615AACB1600D197A4 /* MyGUI_SimpleText.cpp */; };
+		D7F5FDB515AACB1600D197A4 /* MyGUI_SkinItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD5715AACB1600D197A4 /* MyGUI_SkinItem.cpp */; };
+		D7F5FDB615AACB1600D197A4 /* MyGUI_SkinManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD5815AACB1600D197A4 /* MyGUI_SkinManager.cpp */; };
+		D7F5FDB715AACB1600D197A4 /* MyGUI_SubSkin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD5915AACB1600D197A4 /* MyGUI_SubSkin.cpp */; };
+		D7F5FDB815AACB1600D197A4 /* MyGUI_SubWidgetBinding.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD5A15AACB1600D197A4 /* MyGUI_SubWidgetBinding.cpp */; };
+		D7F5FDB915AACB1600D197A4 /* MyGUI_SubWidgetManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD5B15AACB1600D197A4 /* MyGUI_SubWidgetManager.cpp */; };
+		D7F5FDBA15AACB1600D197A4 /* MyGUI_TabControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD5C15AACB1600D197A4 /* MyGUI_TabControl.cpp */; };
+		D7F5FDBB15AACB1600D197A4 /* MyGUI_TabItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD5D15AACB1600D197A4 /* MyGUI_TabItem.cpp */; };
+		D7F5FDBC15AACB1600D197A4 /* MyGUI_TextBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD5E15AACB1600D197A4 /* MyGUI_TextBox.cpp */; };
+		D7F5FDBD15AACB1600D197A4 /* MyGUI_TextIterator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD5F15AACB1600D197A4 /* MyGUI_TextIterator.cpp */; };
+		D7F5FDBE15AACB1600D197A4 /* MyGUI_TextureUtility.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD6015AACB1600D197A4 /* MyGUI_TextureUtility.cpp */; };
+		D7F5FDBF15AACB1600D197A4 /* MyGUI_TextView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD6115AACB1600D197A4 /* MyGUI_TextView.cpp */; };
+		D7F5FDC015AACB1600D197A4 /* MyGUI_TileRect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD6215AACB1600D197A4 /* MyGUI_TileRect.cpp */; };
+		D7F5FDC115AACB1600D197A4 /* MyGUI_Timer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD6315AACB1600D197A4 /* MyGUI_Timer.cpp */; };
+		D7F5FDC215AACB1600D197A4 /* MyGUI_ToolTipManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD6415AACB1600D197A4 /* MyGUI_ToolTipManager.cpp */; };
+		D7F5FDC315AACB1600D197A4 /* MyGUI_UString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD6515AACB1600D197A4 /* MyGUI_UString.cpp */; };
+		D7F5FDC415AACB1600D197A4 /* MyGUI_Widget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD6615AACB1600D197A4 /* MyGUI_Widget.cpp */; };
+		D7F5FDC515AACB1600D197A4 /* MyGUI_WidgetInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD6715AACB1600D197A4 /* MyGUI_WidgetInput.cpp */; };
+		D7F5FDC615AACB1600D197A4 /* MyGUI_WidgetManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD6815AACB1600D197A4 /* MyGUI_WidgetManager.cpp */; };
+		D7F5FDC715AACB1600D197A4 /* MyGUI_WidgetUserData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD6915AACB1600D197A4 /* MyGUI_WidgetUserData.cpp */; };
+		D7F5FDC815AACB1600D197A4 /* MyGUI_Window.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD6A15AACB1600D197A4 /* MyGUI_Window.cpp */; };
+		D7F5FDC915AACB1600D197A4 /* MyGUI_XmlDocument.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FD6B15AACB1600D197A4 /* MyGUI_XmlDocument.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		CE1AE786177ECD5D008C4304 /* MyGUI_PathsManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_PathsManager.cpp; path = ../src/MyGUI_PathsManager.cpp; sourceTree = "<group>"; };
+		CE8962671788218D0088C7A1 /* MyGUI_ImageSkin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_ImageSkin.cpp; path = ../src/MyGUI_ImageSkin.cpp; sourceTree = "<group>"; };
+		D764543B15EC9CCD005A3421 /* MyGUI_IMEManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_IMEManager.cpp; path = ../src/MyGUI_IMEManager.cpp; sourceTree = "<group>"; };
+		D781106615E3AC7000F6E655 /* MyGUI_ResourceNativeFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_ResourceNativeFont.cpp; path = ../src/MyGUI_ResourceNativeFont.cpp; sourceTree = "<group>"; };
+		D7DE313F17292B3800A73ADF /* MyGUI_ScriptBridge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_ScriptBridge.cpp; path = ../src/MyGUI_ScriptBridge.cpp; sourceTree = "<group>"; };
+		D7F5FCD715AAC21B00D197A4 /* include */ = {isa = PBXFileReference; lastKnownFileType = folder; name = include; path = ../include; sourceTree = "<group>"; };
+		D7F5FCDD15AAC2D400D197A4 /* libMyGUIEngine.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMyGUIEngine.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		D7F5FCE015AAC2D400D197A4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		D7F5FCE415AAC2D400D197A4 /* MyGUIEngine-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MyGUIEngine-Prefix.pch"; sourceTree = "<group>"; };
+		D7F5FD0E15AACB1600D197A4 /* MyGUI_ActionController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_ActionController.cpp; path = ../src/MyGUI_ActionController.cpp; sourceTree = "<group>"; };
+		D7F5FD0F15AACB1600D197A4 /* MyGUI_Any.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_Any.cpp; path = ../src/MyGUI_Any.cpp; sourceTree = "<group>"; };
+		D7F5FD1015AACB1600D197A4 /* MyGUI_BackwardCompatibility.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_BackwardCompatibility.cpp; path = ../src/MyGUI_BackwardCompatibility.cpp; sourceTree = "<group>"; };
+		D7F5FD1115AACB1600D197A4 /* MyGUI_BiIndexBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_BiIndexBase.cpp; path = ../src/MyGUI_BiIndexBase.cpp; sourceTree = "<group>"; };
+		D7F5FD1215AACB1600D197A4 /* MyGUI_Button.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_Button.cpp; path = ../src/MyGUI_Button.cpp; sourceTree = "<group>"; };
+		D7F5FD1315AACB1600D197A4 /* MyGUI_Canvas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_Canvas.cpp; path = ../src/MyGUI_Canvas.cpp; sourceTree = "<group>"; };
+		D7F5FD1415AACB1600D197A4 /* MyGUI_ChildSkinInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_ChildSkinInfo.cpp; path = ../src/MyGUI_ChildSkinInfo.cpp; sourceTree = "<group>"; };
+		D7F5FD1515AACB1600D197A4 /* MyGUI_ClipboardManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_ClipboardManager.cpp; path = ../src/MyGUI_ClipboardManager.cpp; sourceTree = "<group>"; };
+		D7F5FD1615AACB1600D197A4 /* MyGUI_Colour.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_Colour.cpp; path = ../src/MyGUI_Colour.cpp; sourceTree = "<group>"; };
+		D7F5FD1715AACB1600D197A4 /* MyGUI_ComboBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_ComboBox.cpp; path = ../src/MyGUI_ComboBox.cpp; sourceTree = "<group>"; };
+		D7F5FD1815AACB1600D197A4 /* MyGUI_ConsoleLogListener.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_ConsoleLogListener.cpp; path = ../src/MyGUI_ConsoleLogListener.cpp; sourceTree = "<group>"; };
+		D7F5FD1915AACB1600D197A4 /* MyGUI_Constants.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_Constants.cpp; path = ../src/MyGUI_Constants.cpp; sourceTree = "<group>"; };
+		D7F5FD1A15AACB1600D197A4 /* MyGUI_ControllerEdgeHide.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_ControllerEdgeHide.cpp; path = ../src/MyGUI_ControllerEdgeHide.cpp; sourceTree = "<group>"; };
+		D7F5FD1B15AACB1600D197A4 /* MyGUI_ControllerFadeAlpha.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_ControllerFadeAlpha.cpp; path = ../src/MyGUI_ControllerFadeAlpha.cpp; sourceTree = "<group>"; };
+		D7F5FD1C15AACB1600D197A4 /* MyGUI_ControllerManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_ControllerManager.cpp; path = ../src/MyGUI_ControllerManager.cpp; sourceTree = "<group>"; };
+		D7F5FD1D15AACB1600D197A4 /* MyGUI_ControllerPosition.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_ControllerPosition.cpp; path = ../src/MyGUI_ControllerPosition.cpp; sourceTree = "<group>"; };
+		D7F5FD1E15AACB1600D197A4 /* MyGUI_DataFileStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_DataFileStream.cpp; path = ../src/MyGUI_DataFileStream.cpp; sourceTree = "<group>"; };
+		D7F5FD1F15AACB1600D197A4 /* MyGUI_DataManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_DataManager.cpp; path = ../src/MyGUI_DataManager.cpp; sourceTree = "<group>"; };
+		D7F5FD2015AACB1600D197A4 /* MyGUI_DataStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_DataStream.cpp; path = ../src/MyGUI_DataStream.cpp; sourceTree = "<group>"; };
+		D7F5FD2115AACB1600D197A4 /* MyGUI_DDContainer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_DDContainer.cpp; path = ../src/MyGUI_DDContainer.cpp; sourceTree = "<group>"; };
+		D7F5FD2215AACB1600D197A4 /* MyGUI_DynLib.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_DynLib.cpp; path = ../src/MyGUI_DynLib.cpp; sourceTree = "<group>"; };
+		D7F5FD2315AACB1600D197A4 /* MyGUI_DynLibManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_DynLibManager.cpp; path = ../src/MyGUI_DynLibManager.cpp; sourceTree = "<group>"; };
+		D7F5FD2415AACB1600D197A4 /* MyGUI_EditBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_EditBox.cpp; path = ../src/MyGUI_EditBox.cpp; sourceTree = "<group>"; };
+		D7F5FD2515AACB1600D197A4 /* MyGUI_EditText.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_EditText.cpp; path = ../src/MyGUI_EditText.cpp; sourceTree = "<group>"; };
+		D7F5FD2615AACB1600D197A4 /* MyGUI_Exception.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_Exception.cpp; path = ../src/MyGUI_Exception.cpp; sourceTree = "<group>"; };
+		D7F5FD2715AACB1600D197A4 /* MyGUI_FactoryManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_FactoryManager.cpp; path = ../src/MyGUI_FactoryManager.cpp; sourceTree = "<group>"; };
+		D7F5FD2815AACB1600D197A4 /* MyGUI_FileLogListener.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_FileLogListener.cpp; path = ../src/MyGUI_FileLogListener.cpp; sourceTree = "<group>"; };
+		D7F5FD2915AACB1600D197A4 /* MyGUI_FontManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_FontManager.cpp; path = ../src/MyGUI_FontManager.cpp; sourceTree = "<group>"; };
+		D7F5FD2A15AACB1600D197A4 /* MyGUI_GeometryUtility.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_GeometryUtility.cpp; path = ../src/MyGUI_GeometryUtility.cpp; sourceTree = "<group>"; };
+		D7F5FD2B15AACB1600D197A4 /* MyGUI_Gui.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_Gui.cpp; path = ../src/MyGUI_Gui.cpp; sourceTree = "<group>"; };
+		D7F5FD2C15AACB1600D197A4 /* MyGUI_ImageBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_ImageBox.cpp; path = ../src/MyGUI_ImageBox.cpp; sourceTree = "<group>"; };
+		D7F5FD2D15AACB1600D197A4 /* MyGUI_InputManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_InputManager.cpp; path = ../src/MyGUI_InputManager.cpp; sourceTree = "<group>"; };
+		D7F5FD2E15AACB1600D197A4 /* MyGUI_ItemBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_ItemBox.cpp; path = ../src/MyGUI_ItemBox.cpp; sourceTree = "<group>"; };
+		D7F5FD2F15AACB1600D197A4 /* MyGUI_LanguageManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_LanguageManager.cpp; path = ../src/MyGUI_LanguageManager.cpp; sourceTree = "<group>"; };
+		D7F5FD3015AACB1600D197A4 /* MyGUI_LayerItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_LayerItem.cpp; path = ../src/MyGUI_LayerItem.cpp; sourceTree = "<group>"; };
+		D7F5FD3115AACB1600D197A4 /* MyGUI_LayerManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_LayerManager.cpp; path = ../src/MyGUI_LayerManager.cpp; sourceTree = "<group>"; };
+		D7F5FD3215AACB1600D197A4 /* MyGUI_LayerNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_LayerNode.cpp; path = ../src/MyGUI_LayerNode.cpp; sourceTree = "<group>"; };
+		D7F5FD3315AACB1600D197A4 /* MyGUI_LayoutManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_LayoutManager.cpp; path = ../src/MyGUI_LayoutManager.cpp; sourceTree = "<group>"; };
+		D7F5FD3415AACB1600D197A4 /* MyGUI_LevelLogFilter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_LevelLogFilter.cpp; path = ../src/MyGUI_LevelLogFilter.cpp; sourceTree = "<group>"; };
+		D7F5FD3515AACB1600D197A4 /* MyGUI_ListBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_ListBox.cpp; path = ../src/MyGUI_ListBox.cpp; sourceTree = "<group>"; };
+		D7F5FD3615AACB1600D197A4 /* MyGUI_LogManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_LogManager.cpp; path = ../src/MyGUI_LogManager.cpp; sourceTree = "<group>"; };
+		D7F5FD3715AACB1600D197A4 /* MyGUI_LogSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_LogSource.cpp; path = ../src/MyGUI_LogSource.cpp; sourceTree = "<group>"; };
+		D7F5FD3815AACB1600D197A4 /* MyGUI_MainSkin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_MainSkin.cpp; path = ../src/MyGUI_MainSkin.cpp; sourceTree = "<group>"; };
+		D7F5FD3915AACB1600D197A4 /* MyGUI_MaskPickInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_MaskPickInfo.cpp; path = ../src/MyGUI_MaskPickInfo.cpp; sourceTree = "<group>"; };
+		D7F5FD3A15AACB1600D197A4 /* MyGUI_MenuBar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_MenuBar.cpp; path = ../src/MyGUI_MenuBar.cpp; sourceTree = "<group>"; };
+		D7F5FD3B15AACB1600D197A4 /* MyGUI_MenuControl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_MenuControl.cpp; path = ../src/MyGUI_MenuControl.cpp; sourceTree = "<group>"; };
+		D7F5FD3C15AACB1600D197A4 /* MyGUI_MenuItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_MenuItem.cpp; path = ../src/MyGUI_MenuItem.cpp; sourceTree = "<group>"; };
+		D7F5FD3D15AACB1600D197A4 /* MyGUI_MultiListBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_MultiListBox.cpp; path = ../src/MyGUI_MultiListBox.cpp; sourceTree = "<group>"; };
+		D7F5FD3E15AACB1600D197A4 /* MyGUI_MultiListItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_MultiListItem.cpp; path = ../src/MyGUI_MultiListItem.cpp; sourceTree = "<group>"; };
+		D7F5FD3F15AACB1600D197A4 /* MyGUI_OverlappedLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_OverlappedLayer.cpp; path = ../src/MyGUI_OverlappedLayer.cpp; sourceTree = "<group>"; };
+		D7F5FD4015AACB1600D197A4 /* MyGUI_PluginManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_PluginManager.cpp; path = ../src/MyGUI_PluginManager.cpp; sourceTree = "<group>"; };
+		D7F5FD4115AACB1600D197A4 /* MyGUI_PointerManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_PointerManager.cpp; path = ../src/MyGUI_PointerManager.cpp; sourceTree = "<group>"; };
+		D7F5FD4215AACB1600D197A4 /* MyGUI_PolygonalSkin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_PolygonalSkin.cpp; path = ../src/MyGUI_PolygonalSkin.cpp; sourceTree = "<group>"; };
+		D7F5FD4315AACB1600D197A4 /* MyGUI_PopupMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_PopupMenu.cpp; path = ../src/MyGUI_PopupMenu.cpp; sourceTree = "<group>"; };
+		D7F5FD4415AACB1600D197A4 /* MyGUI_Precompiled.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_Precompiled.cpp; path = ../src/MyGUI_Precompiled.cpp; sourceTree = "<group>"; };
+		D7F5FD4515AACB1600D197A4 /* MyGUI_ProgressBar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_ProgressBar.cpp; path = ../src/MyGUI_ProgressBar.cpp; sourceTree = "<group>"; };
+		D7F5FD4615AACB1600D197A4 /* MyGUI_RenderItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_RenderItem.cpp; path = ../src/MyGUI_RenderItem.cpp; sourceTree = "<group>"; };
+		D7F5FD4715AACB1600D197A4 /* MyGUI_RenderManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_RenderManager.cpp; path = ../src/MyGUI_RenderManager.cpp; sourceTree = "<group>"; };
+		D7F5FD4815AACB1600D197A4 /* MyGUI_ResourceImageSet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_ResourceImageSet.cpp; path = ../src/MyGUI_ResourceImageSet.cpp; sourceTree = "<group>"; };
+		D7F5FD4915AACB1600D197A4 /* MyGUI_ResourceImageSetPointer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_ResourceImageSetPointer.cpp; path = ../src/MyGUI_ResourceImageSetPointer.cpp; sourceTree = "<group>"; };
+		D7F5FD4A15AACB1600D197A4 /* MyGUI_ResourceLayout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_ResourceLayout.cpp; path = ../src/MyGUI_ResourceLayout.cpp; sourceTree = "<group>"; };
+		D7F5FD4B15AACB1600D197A4 /* MyGUI_ResourceManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_ResourceManager.cpp; path = ../src/MyGUI_ResourceManager.cpp; sourceTree = "<group>"; };
+		D7F5FD4C15AACB1600D197A4 /* MyGUI_ResourceManualFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_ResourceManualFont.cpp; path = ../src/MyGUI_ResourceManualFont.cpp; sourceTree = "<group>"; };
+		D7F5FD4D15AACB1600D197A4 /* MyGUI_ResourceManualPointer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_ResourceManualPointer.cpp; path = ../src/MyGUI_ResourceManualPointer.cpp; sourceTree = "<group>"; };
+		D7F5FD4E15AACB1600D197A4 /* MyGUI_ResourceSkin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_ResourceSkin.cpp; path = ../src/MyGUI_ResourceSkin.cpp; sourceTree = "<group>"; };
+		D7F5FD4F15AACB1600D197A4 /* MyGUI_ResourceTrueTypeFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_ResourceTrueTypeFont.cpp; path = ../src/MyGUI_ResourceTrueTypeFont.cpp; sourceTree = "<group>"; };
+		D7F5FD5015AACB1600D197A4 /* MyGUI_RotatingSkin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_RotatingSkin.cpp; path = ../src/MyGUI_RotatingSkin.cpp; sourceTree = "<group>"; };
+		D7F5FD5115AACB1600D197A4 /* MyGUI_ScrollBar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_ScrollBar.cpp; path = ../src/MyGUI_ScrollBar.cpp; sourceTree = "<group>"; };
+		D7F5FD5215AACB1600D197A4 /* MyGUI_ScrollView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_ScrollView.cpp; path = ../src/MyGUI_ScrollView.cpp; sourceTree = "<group>"; };
+		D7F5FD5315AACB1600D197A4 /* MyGUI_ScrollViewBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_ScrollViewBase.cpp; path = ../src/MyGUI_ScrollViewBase.cpp; sourceTree = "<group>"; };
+		D7F5FD5415AACB1600D197A4 /* MyGUI_SharedLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_SharedLayer.cpp; path = ../src/MyGUI_SharedLayer.cpp; sourceTree = "<group>"; };
+		D7F5FD5515AACB1600D197A4 /* MyGUI_SharedLayerNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_SharedLayerNode.cpp; path = ../src/MyGUI_SharedLayerNode.cpp; sourceTree = "<group>"; };
+		D7F5FD5615AACB1600D197A4 /* MyGUI_SimpleText.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_SimpleText.cpp; path = ../src/MyGUI_SimpleText.cpp; sourceTree = "<group>"; };
+		D7F5FD5715AACB1600D197A4 /* MyGUI_SkinItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_SkinItem.cpp; path = ../src/MyGUI_SkinItem.cpp; sourceTree = "<group>"; };
+		D7F5FD5815AACB1600D197A4 /* MyGUI_SkinManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_SkinManager.cpp; path = ../src/MyGUI_SkinManager.cpp; sourceTree = "<group>"; };
+		D7F5FD5915AACB1600D197A4 /* MyGUI_SubSkin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_SubSkin.cpp; path = ../src/MyGUI_SubSkin.cpp; sourceTree = "<group>"; };
+		D7F5FD5A15AACB1600D197A4 /* MyGUI_SubWidgetBinding.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_SubWidgetBinding.cpp; path = ../src/MyGUI_SubWidgetBinding.cpp; sourceTree = "<group>"; };
+		D7F5FD5B15AACB1600D197A4 /* MyGUI_SubWidgetManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_SubWidgetManager.cpp; path = ../src/MyGUI_SubWidgetManager.cpp; sourceTree = "<group>"; };
+		D7F5FD5C15AACB1600D197A4 /* MyGUI_TabControl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_TabControl.cpp; path = ../src/MyGUI_TabControl.cpp; sourceTree = "<group>"; };
+		D7F5FD5D15AACB1600D197A4 /* MyGUI_TabItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_TabItem.cpp; path = ../src/MyGUI_TabItem.cpp; sourceTree = "<group>"; };
+		D7F5FD5E15AACB1600D197A4 /* MyGUI_TextBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_TextBox.cpp; path = ../src/MyGUI_TextBox.cpp; sourceTree = "<group>"; };
+		D7F5FD5F15AACB1600D197A4 /* MyGUI_TextIterator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_TextIterator.cpp; path = ../src/MyGUI_TextIterator.cpp; sourceTree = "<group>"; };
+		D7F5FD6015AACB1600D197A4 /* MyGUI_TextureUtility.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_TextureUtility.cpp; path = ../src/MyGUI_TextureUtility.cpp; sourceTree = "<group>"; };
+		D7F5FD6115AACB1600D197A4 /* MyGUI_TextView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_TextView.cpp; path = ../src/MyGUI_TextView.cpp; sourceTree = "<group>"; };
+		D7F5FD6215AACB1600D197A4 /* MyGUI_TileRect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_TileRect.cpp; path = ../src/MyGUI_TileRect.cpp; sourceTree = "<group>"; };
+		D7F5FD6315AACB1600D197A4 /* MyGUI_Timer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_Timer.cpp; path = ../src/MyGUI_Timer.cpp; sourceTree = "<group>"; };
+		D7F5FD6415AACB1600D197A4 /* MyGUI_ToolTipManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_ToolTipManager.cpp; path = ../src/MyGUI_ToolTipManager.cpp; sourceTree = "<group>"; };
+		D7F5FD6515AACB1600D197A4 /* MyGUI_UString.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_UString.cpp; path = ../src/MyGUI_UString.cpp; sourceTree = "<group>"; };
+		D7F5FD6615AACB1600D197A4 /* MyGUI_Widget.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_Widget.cpp; path = ../src/MyGUI_Widget.cpp; sourceTree = "<group>"; };
+		D7F5FD6715AACB1600D197A4 /* MyGUI_WidgetInput.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_WidgetInput.cpp; path = ../src/MyGUI_WidgetInput.cpp; sourceTree = "<group>"; };
+		D7F5FD6815AACB1600D197A4 /* MyGUI_WidgetManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_WidgetManager.cpp; path = ../src/MyGUI_WidgetManager.cpp; sourceTree = "<group>"; };
+		D7F5FD6915AACB1600D197A4 /* MyGUI_WidgetUserData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_WidgetUserData.cpp; path = ../src/MyGUI_WidgetUserData.cpp; sourceTree = "<group>"; };
+		D7F5FD6A15AACB1600D197A4 /* MyGUI_Window.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_Window.cpp; path = ../src/MyGUI_Window.cpp; sourceTree = "<group>"; };
+		D7F5FD6B15AACB1600D197A4 /* MyGUI_XmlDocument.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyGUI_XmlDocument.cpp; path = ../src/MyGUI_XmlDocument.cpp; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D7F5FCDA15AAC2D400D197A4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D7F5FCE115AAC2D400D197A4 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D7F5FC2315AAC1B900D197A4 = {
+			isa = PBXGroup;
+			children = (
+				D7F5FDCB15AACB6300D197A4 /* src */,
+				D7F5FCD715AAC21B00D197A4 /* include */,
+				D7F5FCE315AAC2D400D197A4 /* Supporting Files */,
+				D7F5FCDF15AAC2D400D197A4 /* Frameworks */,
+				D7F5FCDE15AAC2D400D197A4 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D7F5FCDE15AAC2D400D197A4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D7F5FCDD15AAC2D400D197A4 /* libMyGUIEngine.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D7F5FCDF15AAC2D400D197A4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D7F5FCE015AAC2D400D197A4 /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D7F5FCE315AAC2D400D197A4 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D7F5FCE415AAC2D400D197A4 /* MyGUIEngine-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			path = MyGUIEngine;
+			sourceTree = "<group>";
+		};
+		D7F5FDCB15AACB6300D197A4 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				CE8962671788218D0088C7A1 /* MyGUI_ImageSkin.cpp */,
+				CE1AE786177ECD5D008C4304 /* MyGUI_PathsManager.cpp */,
+				D7DE313F17292B3800A73ADF /* MyGUI_ScriptBridge.cpp */,
+				D764543B15EC9CCD005A3421 /* MyGUI_IMEManager.cpp */,
+				D781106615E3AC7000F6E655 /* MyGUI_ResourceNativeFont.cpp */,
+				D7F5FD0E15AACB1600D197A4 /* MyGUI_ActionController.cpp */,
+				D7F5FD0F15AACB1600D197A4 /* MyGUI_Any.cpp */,
+				D7F5FD1015AACB1600D197A4 /* MyGUI_BackwardCompatibility.cpp */,
+				D7F5FD1115AACB1600D197A4 /* MyGUI_BiIndexBase.cpp */,
+				D7F5FD1215AACB1600D197A4 /* MyGUI_Button.cpp */,
+				D7F5FD1315AACB1600D197A4 /* MyGUI_Canvas.cpp */,
+				D7F5FD1415AACB1600D197A4 /* MyGUI_ChildSkinInfo.cpp */,
+				D7F5FD1515AACB1600D197A4 /* MyGUI_ClipboardManager.cpp */,
+				D7F5FD1615AACB1600D197A4 /* MyGUI_Colour.cpp */,
+				D7F5FD1715AACB1600D197A4 /* MyGUI_ComboBox.cpp */,
+				D7F5FD1815AACB1600D197A4 /* MyGUI_ConsoleLogListener.cpp */,
+				D7F5FD1915AACB1600D197A4 /* MyGUI_Constants.cpp */,
+				D7F5FD1A15AACB1600D197A4 /* MyGUI_ControllerEdgeHide.cpp */,
+				D7F5FD1B15AACB1600D197A4 /* MyGUI_ControllerFadeAlpha.cpp */,
+				D7F5FD1C15AACB1600D197A4 /* MyGUI_ControllerManager.cpp */,
+				D7F5FD1D15AACB1600D197A4 /* MyGUI_ControllerPosition.cpp */,
+				D7F5FD1E15AACB1600D197A4 /* MyGUI_DataFileStream.cpp */,
+				D7F5FD1F15AACB1600D197A4 /* MyGUI_DataManager.cpp */,
+				D7F5FD2015AACB1600D197A4 /* MyGUI_DataStream.cpp */,
+				D7F5FD2115AACB1600D197A4 /* MyGUI_DDContainer.cpp */,
+				D7F5FD2215AACB1600D197A4 /* MyGUI_DynLib.cpp */,
+				D7F5FD2315AACB1600D197A4 /* MyGUI_DynLibManager.cpp */,
+				D7F5FD2415AACB1600D197A4 /* MyGUI_EditBox.cpp */,
+				D7F5FD2515AACB1600D197A4 /* MyGUI_EditText.cpp */,
+				D7F5FD2615AACB1600D197A4 /* MyGUI_Exception.cpp */,
+				D7F5FD2715AACB1600D197A4 /* MyGUI_FactoryManager.cpp */,
+				D7F5FD2815AACB1600D197A4 /* MyGUI_FileLogListener.cpp */,
+				D7F5FD2915AACB1600D197A4 /* MyGUI_FontManager.cpp */,
+				D7F5FD2A15AACB1600D197A4 /* MyGUI_GeometryUtility.cpp */,
+				D7F5FD2B15AACB1600D197A4 /* MyGUI_Gui.cpp */,
+				D7F5FD2C15AACB1600D197A4 /* MyGUI_ImageBox.cpp */,
+				D7F5FD2D15AACB1600D197A4 /* MyGUI_InputManager.cpp */,
+				D7F5FD2E15AACB1600D197A4 /* MyGUI_ItemBox.cpp */,
+				D7F5FD2F15AACB1600D197A4 /* MyGUI_LanguageManager.cpp */,
+				D7F5FD3015AACB1600D197A4 /* MyGUI_LayerItem.cpp */,
+				D7F5FD3115AACB1600D197A4 /* MyGUI_LayerManager.cpp */,
+				D7F5FD3215AACB1600D197A4 /* MyGUI_LayerNode.cpp */,
+				D7F5FD3315AACB1600D197A4 /* MyGUI_LayoutManager.cpp */,
+				D7F5FD3415AACB1600D197A4 /* MyGUI_LevelLogFilter.cpp */,
+				D7F5FD3515AACB1600D197A4 /* MyGUI_ListBox.cpp */,
+				D7F5FD3615AACB1600D197A4 /* MyGUI_LogManager.cpp */,
+				D7F5FD3715AACB1600D197A4 /* MyGUI_LogSource.cpp */,
+				D7F5FD3815AACB1600D197A4 /* MyGUI_MainSkin.cpp */,
+				D7F5FD3915AACB1600D197A4 /* MyGUI_MaskPickInfo.cpp */,
+				D7F5FD3A15AACB1600D197A4 /* MyGUI_MenuBar.cpp */,
+				D7F5FD3B15AACB1600D197A4 /* MyGUI_MenuControl.cpp */,
+				D7F5FD3C15AACB1600D197A4 /* MyGUI_MenuItem.cpp */,
+				D7F5FD3D15AACB1600D197A4 /* MyGUI_MultiListBox.cpp */,
+				D7F5FD3E15AACB1600D197A4 /* MyGUI_MultiListItem.cpp */,
+				D7F5FD3F15AACB1600D197A4 /* MyGUI_OverlappedLayer.cpp */,
+				D7F5FD4015AACB1600D197A4 /* MyGUI_PluginManager.cpp */,
+				D7F5FD4115AACB1600D197A4 /* MyGUI_PointerManager.cpp */,
+				D7F5FD4215AACB1600D197A4 /* MyGUI_PolygonalSkin.cpp */,
+				D7F5FD4315AACB1600D197A4 /* MyGUI_PopupMenu.cpp */,
+				D7F5FD4415AACB1600D197A4 /* MyGUI_Precompiled.cpp */,
+				D7F5FD4515AACB1600D197A4 /* MyGUI_ProgressBar.cpp */,
+				D7F5FD4615AACB1600D197A4 /* MyGUI_RenderItem.cpp */,
+				D7F5FD4715AACB1600D197A4 /* MyGUI_RenderManager.cpp */,
+				D7F5FD4815AACB1600D197A4 /* MyGUI_ResourceImageSet.cpp */,
+				D7F5FD4915AACB1600D197A4 /* MyGUI_ResourceImageSetPointer.cpp */,
+				D7F5FD4A15AACB1600D197A4 /* MyGUI_ResourceLayout.cpp */,
+				D7F5FD4B15AACB1600D197A4 /* MyGUI_ResourceManager.cpp */,
+				D7F5FD4C15AACB1600D197A4 /* MyGUI_ResourceManualFont.cpp */,
+				D7F5FD4D15AACB1600D197A4 /* MyGUI_ResourceManualPointer.cpp */,
+				D7F5FD4E15AACB1600D197A4 /* MyGUI_ResourceSkin.cpp */,
+				D7F5FD4F15AACB1600D197A4 /* MyGUI_ResourceTrueTypeFont.cpp */,
+				D7F5FD5015AACB1600D197A4 /* MyGUI_RotatingSkin.cpp */,
+				D7F5FD5115AACB1600D197A4 /* MyGUI_ScrollBar.cpp */,
+				D7F5FD5215AACB1600D197A4 /* MyGUI_ScrollView.cpp */,
+				D7F5FD5315AACB1600D197A4 /* MyGUI_ScrollViewBase.cpp */,
+				D7F5FD5415AACB1600D197A4 /* MyGUI_SharedLayer.cpp */,
+				D7F5FD5515AACB1600D197A4 /* MyGUI_SharedLayerNode.cpp */,
+				D7F5FD5615AACB1600D197A4 /* MyGUI_SimpleText.cpp */,
+				D7F5FD5715AACB1600D197A4 /* MyGUI_SkinItem.cpp */,
+				D7F5FD5815AACB1600D197A4 /* MyGUI_SkinManager.cpp */,
+				D7F5FD5915AACB1600D197A4 /* MyGUI_SubSkin.cpp */,
+				D7F5FD5A15AACB1600D197A4 /* MyGUI_SubWidgetBinding.cpp */,
+				D7F5FD5B15AACB1600D197A4 /* MyGUI_SubWidgetManager.cpp */,
+				D7F5FD5C15AACB1600D197A4 /* MyGUI_TabControl.cpp */,
+				D7F5FD5D15AACB1600D197A4 /* MyGUI_TabItem.cpp */,
+				D7F5FD5E15AACB1600D197A4 /* MyGUI_TextBox.cpp */,
+				D7F5FD5F15AACB1600D197A4 /* MyGUI_TextIterator.cpp */,
+				D7F5FD6015AACB1600D197A4 /* MyGUI_TextureUtility.cpp */,
+				D7F5FD6115AACB1600D197A4 /* MyGUI_TextView.cpp */,
+				D7F5FD6215AACB1600D197A4 /* MyGUI_TileRect.cpp */,
+				D7F5FD6315AACB1600D197A4 /* MyGUI_Timer.cpp */,
+				D7F5FD6415AACB1600D197A4 /* MyGUI_ToolTipManager.cpp */,
+				D7F5FD6515AACB1600D197A4 /* MyGUI_UString.cpp */,
+				D7F5FD6615AACB1600D197A4 /* MyGUI_Widget.cpp */,
+				D7F5FD6715AACB1600D197A4 /* MyGUI_WidgetInput.cpp */,
+				D7F5FD6815AACB1600D197A4 /* MyGUI_WidgetManager.cpp */,
+				D7F5FD6915AACB1600D197A4 /* MyGUI_WidgetUserData.cpp */,
+				D7F5FD6A15AACB1600D197A4 /* MyGUI_Window.cpp */,
+				D7F5FD6B15AACB1600D197A4 /* MyGUI_XmlDocument.cpp */,
+			);
+			name = src;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		D7F5FCDB15AAC2D400D197A4 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		D7F5FCDC15AAC2D400D197A4 /* MyGUIEngine */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D7F5FCE815AAC2D400D197A4 /* Build configuration list for PBXNativeTarget "MyGUIEngine" */;
+			buildPhases = (
+				D7F5FCD915AAC2D400D197A4 /* Sources */,
+				D7F5FCDA15AAC2D400D197A4 /* Frameworks */,
+				D7F5FCDB15AAC2D400D197A4 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MyGUIEngine;
+			productName = MyGUIEngine;
+			productReference = D7F5FCDD15AAC2D400D197A4 /* libMyGUIEngine.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D7F5FC2515AAC1B900D197A4 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0430;
+			};
+			buildConfigurationList = D7F5FC2815AAC1B900D197A4 /* Build configuration list for PBXProject "MyGUIEngine" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = D7F5FC2315AAC1B900D197A4;
+			productRefGroup = D7F5FCDE15AAC2D400D197A4 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D7F5FCDC15AAC2D400D197A4 /* MyGUIEngine */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D7F5FCD915AAC2D400D197A4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D7F5FD6C15AACB1600D197A4 /* MyGUI_ActionController.cpp in Sources */,
+				D7F5FD6D15AACB1600D197A4 /* MyGUI_Any.cpp in Sources */,
+				D7F5FD6E15AACB1600D197A4 /* MyGUI_BackwardCompatibility.cpp in Sources */,
+				D7F5FD6F15AACB1600D197A4 /* MyGUI_BiIndexBase.cpp in Sources */,
+				D7F5FD7015AACB1600D197A4 /* MyGUI_Button.cpp in Sources */,
+				D7F5FD7115AACB1600D197A4 /* MyGUI_Canvas.cpp in Sources */,
+				D7F5FD7215AACB1600D197A4 /* MyGUI_ChildSkinInfo.cpp in Sources */,
+				D7F5FD7315AACB1600D197A4 /* MyGUI_ClipboardManager.cpp in Sources */,
+				D7F5FD7415AACB1600D197A4 /* MyGUI_Colour.cpp in Sources */,
+				D7F5FD7515AACB1600D197A4 /* MyGUI_ComboBox.cpp in Sources */,
+				D7F5FD7615AACB1600D197A4 /* MyGUI_ConsoleLogListener.cpp in Sources */,
+				D7F5FD7715AACB1600D197A4 /* MyGUI_Constants.cpp in Sources */,
+				D7F5FD7815AACB1600D197A4 /* MyGUI_ControllerEdgeHide.cpp in Sources */,
+				D7F5FD7915AACB1600D197A4 /* MyGUI_ControllerFadeAlpha.cpp in Sources */,
+				D7F5FD7A15AACB1600D197A4 /* MyGUI_ControllerManager.cpp in Sources */,
+				D7F5FD7B15AACB1600D197A4 /* MyGUI_ControllerPosition.cpp in Sources */,
+				D7F5FD7C15AACB1600D197A4 /* MyGUI_DataFileStream.cpp in Sources */,
+				D7F5FD7D15AACB1600D197A4 /* MyGUI_DataManager.cpp in Sources */,
+				D7F5FD7E15AACB1600D197A4 /* MyGUI_DataStream.cpp in Sources */,
+				D7F5FD7F15AACB1600D197A4 /* MyGUI_DDContainer.cpp in Sources */,
+				D7F5FD8015AACB1600D197A4 /* MyGUI_DynLib.cpp in Sources */,
+				D7F5FD8115AACB1600D197A4 /* MyGUI_DynLibManager.cpp in Sources */,
+				D7F5FD8215AACB1600D197A4 /* MyGUI_EditBox.cpp in Sources */,
+				D7F5FD8315AACB1600D197A4 /* MyGUI_EditText.cpp in Sources */,
+				D7F5FD8415AACB1600D197A4 /* MyGUI_Exception.cpp in Sources */,
+				D7F5FD8515AACB1600D197A4 /* MyGUI_FactoryManager.cpp in Sources */,
+				D7F5FD8615AACB1600D197A4 /* MyGUI_FileLogListener.cpp in Sources */,
+				D7F5FD8715AACB1600D197A4 /* MyGUI_FontManager.cpp in Sources */,
+				D7F5FD8815AACB1600D197A4 /* MyGUI_GeometryUtility.cpp in Sources */,
+				D7F5FD8915AACB1600D197A4 /* MyGUI_Gui.cpp in Sources */,
+				D7F5FD8A15AACB1600D197A4 /* MyGUI_ImageBox.cpp in Sources */,
+				D7F5FD8B15AACB1600D197A4 /* MyGUI_InputManager.cpp in Sources */,
+				D7F5FD8C15AACB1600D197A4 /* MyGUI_ItemBox.cpp in Sources */,
+				D7F5FD8D15AACB1600D197A4 /* MyGUI_LanguageManager.cpp in Sources */,
+				D7F5FD8E15AACB1600D197A4 /* MyGUI_LayerItem.cpp in Sources */,
+				D7F5FD8F15AACB1600D197A4 /* MyGUI_LayerManager.cpp in Sources */,
+				D7F5FD9015AACB1600D197A4 /* MyGUI_LayerNode.cpp in Sources */,
+				D7F5FD9115AACB1600D197A4 /* MyGUI_LayoutManager.cpp in Sources */,
+				D7F5FD9215AACB1600D197A4 /* MyGUI_LevelLogFilter.cpp in Sources */,
+				D7F5FD9315AACB1600D197A4 /* MyGUI_ListBox.cpp in Sources */,
+				D7F5FD9415AACB1600D197A4 /* MyGUI_LogManager.cpp in Sources */,
+				D7F5FD9515AACB1600D197A4 /* MyGUI_LogSource.cpp in Sources */,
+				D7F5FD9615AACB1600D197A4 /* MyGUI_MainSkin.cpp in Sources */,
+				D7F5FD9715AACB1600D197A4 /* MyGUI_MaskPickInfo.cpp in Sources */,
+				D7F5FD9815AACB1600D197A4 /* MyGUI_MenuBar.cpp in Sources */,
+				D7F5FD9915AACB1600D197A4 /* MyGUI_MenuControl.cpp in Sources */,
+				D7F5FD9A15AACB1600D197A4 /* MyGUI_MenuItem.cpp in Sources */,
+				D7F5FD9B15AACB1600D197A4 /* MyGUI_MultiListBox.cpp in Sources */,
+				D7F5FD9C15AACB1600D197A4 /* MyGUI_MultiListItem.cpp in Sources */,
+				D7F5FD9D15AACB1600D197A4 /* MyGUI_OverlappedLayer.cpp in Sources */,
+				D7F5FD9E15AACB1600D197A4 /* MyGUI_PluginManager.cpp in Sources */,
+				D7F5FD9F15AACB1600D197A4 /* MyGUI_PointerManager.cpp in Sources */,
+				D7F5FDA015AACB1600D197A4 /* MyGUI_PolygonalSkin.cpp in Sources */,
+				D7F5FDA115AACB1600D197A4 /* MyGUI_PopupMenu.cpp in Sources */,
+				D7F5FDA215AACB1600D197A4 /* MyGUI_Precompiled.cpp in Sources */,
+				D7F5FDA315AACB1600D197A4 /* MyGUI_ProgressBar.cpp in Sources */,
+				D7F5FDA415AACB1600D197A4 /* MyGUI_RenderItem.cpp in Sources */,
+				D7F5FDA515AACB1600D197A4 /* MyGUI_RenderManager.cpp in Sources */,
+				D7F5FDA615AACB1600D197A4 /* MyGUI_ResourceImageSet.cpp in Sources */,
+				D7F5FDA715AACB1600D197A4 /* MyGUI_ResourceImageSetPointer.cpp in Sources */,
+				D7F5FDA815AACB1600D197A4 /* MyGUI_ResourceLayout.cpp in Sources */,
+				D7F5FDA915AACB1600D197A4 /* MyGUI_ResourceManager.cpp in Sources */,
+				D7F5FDAA15AACB1600D197A4 /* MyGUI_ResourceManualFont.cpp in Sources */,
+				D7F5FDAB15AACB1600D197A4 /* MyGUI_ResourceManualPointer.cpp in Sources */,
+				D7F5FDAC15AACB1600D197A4 /* MyGUI_ResourceSkin.cpp in Sources */,
+				D7F5FDAD15AACB1600D197A4 /* MyGUI_ResourceTrueTypeFont.cpp in Sources */,
+				D7F5FDAE15AACB1600D197A4 /* MyGUI_RotatingSkin.cpp in Sources */,
+				D7F5FDAF15AACB1600D197A4 /* MyGUI_ScrollBar.cpp in Sources */,
+				D7F5FDB015AACB1600D197A4 /* MyGUI_ScrollView.cpp in Sources */,
+				D7F5FDB115AACB1600D197A4 /* MyGUI_ScrollViewBase.cpp in Sources */,
+				D7F5FDB215AACB1600D197A4 /* MyGUI_SharedLayer.cpp in Sources */,
+				D7F5FDB315AACB1600D197A4 /* MyGUI_SharedLayerNode.cpp in Sources */,
+				D7F5FDB415AACB1600D197A4 /* MyGUI_SimpleText.cpp in Sources */,
+				D7F5FDB515AACB1600D197A4 /* MyGUI_SkinItem.cpp in Sources */,
+				D7F5FDB615AACB1600D197A4 /* MyGUI_SkinManager.cpp in Sources */,
+				D7F5FDB715AACB1600D197A4 /* MyGUI_SubSkin.cpp in Sources */,
+				D7F5FDB815AACB1600D197A4 /* MyGUI_SubWidgetBinding.cpp in Sources */,
+				D7F5FDB915AACB1600D197A4 /* MyGUI_SubWidgetManager.cpp in Sources */,
+				D7F5FDBA15AACB1600D197A4 /* MyGUI_TabControl.cpp in Sources */,
+				D7F5FDBB15AACB1600D197A4 /* MyGUI_TabItem.cpp in Sources */,
+				D7F5FDBC15AACB1600D197A4 /* MyGUI_TextBox.cpp in Sources */,
+				D7F5FDBD15AACB1600D197A4 /* MyGUI_TextIterator.cpp in Sources */,
+				D7F5FDBE15AACB1600D197A4 /* MyGUI_TextureUtility.cpp in Sources */,
+				D7F5FDBF15AACB1600D197A4 /* MyGUI_TextView.cpp in Sources */,
+				D7F5FDC015AACB1600D197A4 /* MyGUI_TileRect.cpp in Sources */,
+				D7F5FDC115AACB1600D197A4 /* MyGUI_Timer.cpp in Sources */,
+				D7F5FDC215AACB1600D197A4 /* MyGUI_ToolTipManager.cpp in Sources */,
+				D7F5FDC315AACB1600D197A4 /* MyGUI_UString.cpp in Sources */,
+				D7F5FDC415AACB1600D197A4 /* MyGUI_Widget.cpp in Sources */,
+				D7F5FDC515AACB1600D197A4 /* MyGUI_WidgetInput.cpp in Sources */,
+				D7F5FDC615AACB1600D197A4 /* MyGUI_WidgetManager.cpp in Sources */,
+				D7F5FDC715AACB1600D197A4 /* MyGUI_WidgetUserData.cpp in Sources */,
+				D7F5FDC815AACB1600D197A4 /* MyGUI_Window.cpp in Sources */,
+				D7F5FDC915AACB1600D197A4 /* MyGUI_XmlDocument.cpp in Sources */,
+				D781106715E3AC7000F6E655 /* MyGUI_ResourceNativeFont.cpp in Sources */,
+				D764543C15EC9CCD005A3421 /* MyGUI_IMEManager.cpp in Sources */,
+				D7DE314017292B3800A73ADF /* MyGUI_ScriptBridge.cpp in Sources */,
+				CE1AE787177ECD5D008C4304 /* MyGUI_PathsManager.cpp in Sources */,
+				CE8962681788218D0088C7A1 /* MyGUI_ImageSkin.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		D7F5FC2A15AAC1B900D197A4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				USER_HEADER_SEARCH_PATHS = "\"../include\"";
+			};
+			name = Debug;
+		};
+		D7F5FC2B15AAC1B900D197A4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				USER_HEADER_SEARCH_PATHS = "\"../include\"";
+			};
+			name = Release;
+		};
+		D7F5FCE915AAC2D400D197A4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = NO;
+				DSTROOT = /tmp/MyGUIEngine.dst;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MyGUIEngine/MyGUIEngine-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		D7F5FCEA15AAC2D400D197A4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = YES;
+				DSTROOT = /tmp/MyGUIEngine.dst;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MyGUIEngine/MyGUIEngine-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D7F5FC2815AAC1B900D197A4 /* Build configuration list for PBXProject "MyGUIEngine" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D7F5FC2A15AAC1B900D197A4 /* Debug */,
+				D7F5FC2B15AAC1B900D197A4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D7F5FCE815AAC2D400D197A4 /* Build configuration list for PBXNativeTarget "MyGUIEngine" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D7F5FCE915AAC2D400D197A4 /* Debug */,
+				D7F5FCEA15AAC2D400D197A4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D7F5FC2515AAC1B900D197A4 /* Project object */;
+}

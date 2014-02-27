@@ -76,6 +76,12 @@ namespace MyGUI
 		for (VectorSubWidget::iterator skin = mSubSkinChild.begin(); skin != mSubSkinChild.end(); ++skin)
 			(*skin)->_updateView();
 	}
+	
+	void SkinItem::_correctTextView()
+	{
+		for (VectorSubWidget::iterator skin = mSubSkinChild.begin(); skin != mSubSkinChild.end(); ++skin)
+			(*skin)->_correctTextView();
+	}
 
 	bool SkinItem::_setSkinItemState(const std::string& _state)
 	{

@@ -35,7 +35,6 @@
 
 namespace MyGUI
 {
-
 	typedef delegates::CMultiDelegate3<Widget*, const std::string&, const std::string&> EventHandle_WidgetStringString;
 
 	/** \brief @wpage{Widget}
@@ -52,6 +51,7 @@ namespace MyGUI
 	{
 		// для вызова закрытых деструкторов
 		friend class WidgetManager;
+		friend class Gui;
 
 		MYGUI_RTTI_DERIVED( Widget )
 
@@ -224,6 +224,8 @@ namespace MyGUI
 		/** Is widget enabled */
 		bool getEnabled() const;
 
+		bool isRunning() const;
+
 		/** Is widget enabled and all it's parents in hierarchy is enabled. */
 		bool getInheritedEnabled() const;
 
@@ -245,8 +247,11 @@ namespace MyGUI
 		*/
 		void attachToWidget(Widget* _parent, WidgetStyle _style = WidgetStyle::Child, const std::string& _layer = "");
 
+		virtual void attachItemToNode(ILayer* _layer, ILayerNode* _node);
+		virtual void detachFromLayer();
+
 		/** Change widget skin */
-		void changeWidgetSkin(const std::string& _skinName);
+		virtual void changeWidgetSkin(const std::string& _skinName);
 
 		/** Set widget style.
 			@param _style New widget style (see WidgetStyle::Enum)
@@ -280,6 +285,13 @@ namespace MyGUI
 		EventHandle_WidgetVoid
 			eventChangeCoord;
 
+		EventHandle_WidgetVoid
+			eventEnter;
+		EventHandle_WidgetVoid
+			eventExit;
+		EventHandle_WidgetVoid
+			eventShut;
+
 		/*internal:*/
 		// метод для запроса номера айтема и контейнера
 		virtual size_t _getItemIndex(Widget* _item);
@@ -296,6 +308,10 @@ namespace MyGUI
 		void _setContainer(Widget* _value);
 		Widget* _getContainer();
 
+		void _riseExit();
+		void _riseShut();
+		void _riseEnter();
+
 		void _setAlign(const IntSize& _oldsize, const IntSize& _newSize);
 		bool _checkPoint(int _left, int _top) const;
 
@@ -305,7 +321,9 @@ namespace MyGUI
 		virtual void _resetContainer(bool _update);
 
 		bool _setWidgetState(const std::string& _value);
-
+		
+		// update TextView
+		void _correctTextView();
 	protected:
 		// все создание только через фабрику
 		virtual ~Widget();
@@ -357,8 +375,6 @@ namespace MyGUI
 		virtual void setPropertyOverride(const std::string& _key, const std::string& _value);
 
 	private:
-		void frameEntered(float _frame);
-
 		const WidgetInfo* initialiseWidgetSkinBase(ResourceSkin* _info, ResourceLayout* _templateInfo);
 		void shutdownWidgetSkinBase();
 
@@ -380,6 +396,8 @@ namespace MyGUI
 
 		void _linkChildWidget(Widget* _widget);
 		void _unlinkChildWidget(Widget* _widget);
+
+		void _dispatchEnter();
 
 		void setSkinProperty(ResourceSkin* _info);
 
@@ -419,6 +437,8 @@ namespace MyGUI
 
 		Align mAlign;
 		bool mVisible;
+		bool mIsRunning;
+		bool mFrameRised;
 	};
 
 } // namespace MyGUI

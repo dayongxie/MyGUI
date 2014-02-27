@@ -86,6 +86,7 @@ namespace MyGUI
 
 		bool isOutOfDate() const;
 
+		virtual void releaseVertexBuffer();
 	protected:
 		void updateCompression();
 

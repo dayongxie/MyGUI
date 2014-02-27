@@ -741,7 +741,7 @@ namespace MyGUI
 						mLastError = ErrorType::IncorrectAttribute;
 						return false;
 					}
-					end = _content.find_first_of("\"\'", end + 1);
+					end = _content.find_first_of(_content[end], end + 1);
 					if (end == _content.npos)
 					{
 						mLastError = ErrorType::IncorrectAttribute;

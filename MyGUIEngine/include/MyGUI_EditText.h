@@ -110,6 +110,10 @@ namespace MyGUI
 		virtual bool getShadow() const;
 		virtual void setShadow(bool _value);
 
+		virtual FloatPoint getShadowOffset() const;
+
+		virtual void setShadowOffset(const FloatPoint&);
+
 		virtual void setShiftText(bool _shift);
 
 		virtual void setWordWrap(bool _value);
@@ -122,6 +126,7 @@ namespace MyGUI
 		/*internal:*/
 		virtual void _updateView();
 		virtual void _correctView();
+		virtual void _correctTextView();
 
 		virtual void _setAlign(const IntSize& _oldsize);
 
@@ -174,6 +179,7 @@ namespace MyGUI
 		bool mInvertSelect;
 		bool mShadow;
 
+		FloatPoint mShadowOffset;
 		IntPoint mViewOffset; // смещение текста
 
 		ILayerNode* mNode;

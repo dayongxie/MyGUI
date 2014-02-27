@@ -39,6 +39,7 @@
 #include "MyGUI_RenderManager.h"
 #include "MyGUI_ToolTipManager.h"
 #include "MyGUI_LayoutManager.h"
+#include "MyGUI_ControllerManager.h"
 
 namespace MyGUI
 {
@@ -55,7 +56,9 @@ namespace MyGUI
 		mWidgetStyle(WidgetStyle::Child),
 		mContainer(nullptr),
 		mAlign(Align::Default),
-		mVisible(true)
+		mVisible(true),
+		mIsRunning(false),
+		mFrameRised(false)
 	{
 	}
 
@@ -87,8 +90,8 @@ namespace MyGUI
 		// проверяем соответсвие входных данных
 		if (mWidgetStyle == WidgetStyle::Child)
 		{
-			MYGUI_ASSERT(mCroppedParent, "must be cropped");
-			MYGUI_ASSERT(mParent, "must be parent");
+			//MYGUI_ASSERT(mCroppedParent, "must be cropped");
+			//MYGUI_ASSERT(mParent, "must be parent");
 		}
 		else if (mWidgetStyle == WidgetStyle::Overlapped)
 		{
@@ -386,6 +389,16 @@ namespace MyGUI
 		_updateSkinItemView();
 	}
 
+	void Widget::_correctTextView()
+	{
+		for (VectorWidgetPtr::iterator widget = mWidgetChild.begin(); widget != mWidgetChild.end(); ++widget)
+			(*widget)->_correctTextView();
+		for (VectorWidgetPtr::iterator widget = mWidgetChildSkin.begin(); widget != mWidgetChildSkin.end(); ++widget)
+			(*widget)->_correctTextView();
+
+		SkinItem::_correctTextView();
+	}
+
 	bool Widget::_setWidgetState(const std::string& _state)
 	{
 		return _setSkinItemState(_state);
@@ -489,11 +502,19 @@ namespace MyGUI
 			)
 			return nullptr;
 
+		for (VectorLayerItem::const_reverse_iterator widget = mLayerNodes.rbegin(); widget != mLayerNodes.rend(); ++widget)
+		{
+			ILayerItem* item = (*widget)->getLayerItemByPoint(_left - mCoord.left, _top - mCoord.top);
+			if (item != nullptr)
+				return item;
+		}
+
 		// спрашиваем у детишек
+		//for (VectorWidgetPtr::const_iterator widget = mWidgetChild.begin(); widget != mWidgetChild.end(); ++widget)
 		for (VectorWidgetPtr::const_reverse_iterator widget = mWidgetChild.rbegin(); widget != mWidgetChild.rend(); ++widget)
 		{
 			// общаемся только с послушными детьми
-			if ((*widget)->mWidgetStyle == WidgetStyle::Popup)
+			if ((*widget)->mWidgetStyle != WidgetStyle::Child)
 				continue;
 
 			ILayerItem* item = (*widget)->getLayerItemByPoint(_left - mCoord.left, _top - mCoord.top);
@@ -534,11 +555,16 @@ namespace MyGUI
 		if (mWidgetClient != nullptr)
 			mWidgetClient->_forcePick(_widget);
 
-		VectorWidgetPtr::iterator item = std::remove(mWidgetChild.begin(), mWidgetChild.end(), _widget);
+		VectorLayerItem::iterator layerItem = std::find(mLayerNodes.begin(), mLayerNodes.end(), _widget);
+		if (layerItem != mLayerNodes.end())
+		{
+			std::swap(*layerItem, mLayerNodes.back());
+		}
+
+		VectorWidgetPtr::iterator item = std::find(mWidgetChild.begin(), mWidgetChild.end(), _widget);
 		if (item != mWidgetChild.end())
 		{
-			mWidgetChild.erase(item);
-			mWidgetChild.insert(mWidgetChild.begin(), _widget);
+			std::swap(*item, mWidgetChild.back());
 		}
 	}
 
@@ -789,6 +815,7 @@ namespace MyGUI
 			//mIWidgetCreator->_linkChildWidget(this);
 			Gui::getInstance()._linkChildWidget(this);
 			mParent->_unlinkChildWidget(this);
+
 			mParent = nullptr;
 		}
 
@@ -869,6 +896,7 @@ namespace MyGUI
 
 			mParent->addChildItem(this);
 
+			_updateVisible();
 			_updateView();
 		}
 		else if (_style == WidgetStyle::Overlapped)
@@ -895,6 +923,7 @@ namespace MyGUI
 
 			mParent->addChildNode(this);
 
+			_updateVisible();
 			_updateView();
 		}
 
@@ -1287,6 +1316,11 @@ namespace MyGUI
 		return mEnabled;
 	}
 
+	bool Widget::isRunning() const
+	{
+		return mIsRunning;
+	}
+	
 	Widget* Widget::getClientWidget()
 	{
 		return mWidgetClient;
@@ -1340,6 +1374,92 @@ namespace MyGUI
 	void Widget::resizeLayerItemView(const IntSize& _oldView, const IntSize& _newView)
 	{
 		_setAlign(_oldView, _newView);
+	}
+
+	void Widget::_riseExit()
+	{
+		if (!mIsRunning && !mFrameRised)
+			return;
+
+		mIsRunning = false;
+		MyGUI::ControllerManager::getInstance().removeItem(this);
+		
+		if (mFrameRised)
+		{
+			mFrameRised = false;
+		}
+
+		for (VectorWidgetPtr::iterator iter = mWidgetChild.begin(); iter != mWidgetChild.end(); ++iter)
+			(*iter)->_riseExit();
+		for (VectorWidgetPtr::iterator iter = mWidgetChildSkin.begin(); iter != mWidgetChildSkin.end(); ++iter)
+			(*iter)->_riseExit();
+
+		eventExit(this);
+	}
+
+	void Widget::_riseShut()
+	{
+		for (VectorWidgetPtr::iterator iter = mWidgetChild.begin(); iter != mWidgetChild.end(); ++iter)
+			(*iter)->_riseShut();
+		for (VectorWidgetPtr::iterator iter = mWidgetChildSkin.begin(); iter != mWidgetChildSkin.end(); ++iter)
+			(*iter)->_riseShut();
+
+		eventShut(this);
+	}
+
+	void Widget::_riseEnter()
+	{
+		if (mIsRunning || mFrameRised)
+			return;
+
+		_dispatchEnter();
+	}
+
+	void Widget::_dispatchEnter()
+	{
+		std::vector<ControllerInfo>* controllers = getUserDataset< std::vector<ControllerInfo> >("controllers", false);
+		if (controllers)
+		{
+			for (std::vector<ControllerInfo>::const_iterator iter = controllers->begin(); iter != controllers->end(); ++iter)
+			{
+				MyGUI::ControllerItem* item = MyGUI::ControllerManager::getInstance().createItem(iter->type);
+				if (item)
+				{
+					for (MapString::const_iterator iterProp = iter->properties.begin(); iterProp != iter->properties.end(); ++iterProp)
+					{
+						item->setProperty(iterProp->first, iterProp->second);
+					}
+					MyGUI::ControllerManager::getInstance().addItem(this, item);
+				}
+				else
+				{
+					MYGUI_LOG(Warning, "Controller '" << iter->type << "' not found");
+				}
+			}
+		}
+
+		eventEnter(this);
+		mIsRunning = true;
+
+		if (mParent && mWidgetStyle == WidgetStyle::Overlapped && !mLayerNode)
+		{
+			mParent->addChildNode(this);
+		}
+
+		for (VectorWidgetPtr::iterator iter = mWidgetChild.begin(); iter != mWidgetChild.end(); ++iter)
+			(*iter)->_dispatchEnter();
+		for (VectorWidgetPtr::iterator iter = mWidgetChildSkin.begin(); iter != mWidgetChildSkin.end(); ++iter)
+			(*iter)->_dispatchEnter();
+	}
+
+	void Widget::attachItemToNode( ILayer* _layer, ILayerNode* _node )
+	{
+		SkinItem::attachItemToNode(_layer, _node);
+	}
+
+	void Widget::detachFromLayer()
+	{
+		SkinItem::detachFromLayer();
 	}
 
 } // namespace MyGUI

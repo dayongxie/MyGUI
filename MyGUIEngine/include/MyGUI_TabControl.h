@@ -110,6 +110,9 @@ namespace MyGUI
 		//! Get item from specified position
 		TabItem* getItemAt(size_t _index);
 
+		//! Get button from specified position
+		Button* getButtonAt(size_t _index);
+
 		//! Get item index
 		size_t getItemIndex(TabItem* _item);
 

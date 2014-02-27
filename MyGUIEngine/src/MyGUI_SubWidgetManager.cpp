@@ -26,6 +26,7 @@
 
 #include "MyGUI_SubSkin.h"
 #include "MyGUI_MainSkin.h"
+#include "MyGUI_ImageSkin.h"
 #include "MyGUI_PolygonalSkin.h"
 #include "MyGUI_RotatingSkin.h"
 #include "MyGUI_SimpleText.h"
@@ -54,6 +55,7 @@ namespace MyGUI
 
 		factory.registerFactory<SubSkinStateInfo>(mStateCategoryName, "SubSkin");
 		factory.registerFactory<SubSkinStateInfo>(mStateCategoryName, "MainSkin");
+		factory.registerFactory<SubSkinStateInfo>(mStateCategoryName, "ImageSkin");
 		factory.registerFactory<SubSkinStateInfo>(mStateCategoryName, "PolygonalSkin");
 		factory.registerFactory<SubSkinStateInfo>(mStateCategoryName, "RotatingSkin");
 		factory.registerFactory<TileRectStateInfo>(mStateCategoryName, "TileRect");
@@ -62,6 +64,7 @@ namespace MyGUI
 
 		factory.registerFactory<SubSkin>(mCategoryName);
 		factory.registerFactory<MainSkin>(mCategoryName);
+		factory.registerFactory<ImageSkin>(mCategoryName);
 		factory.registerFactory<PolygonalSkin>(mCategoryName);
 		factory.registerFactory<RotatingSkin>(mCategoryName);
 		factory.registerFactory<TileRect>(mCategoryName);
@@ -81,6 +84,7 @@ namespace MyGUI
 
 		factory.unregisterFactory(mStateCategoryName, "SubSkin");
 		factory.unregisterFactory(mStateCategoryName, "MainSkin");
+		factory.unregisterFactory(mStateCategoryName, "ImageSkin");
 		factory.unregisterFactory(mStateCategoryName, "PolygonalSkin");
 		factory.unregisterFactory(mStateCategoryName, "RotatingSkin");
 		factory.unregisterFactory(mStateCategoryName, "TileRect");
@@ -89,6 +93,7 @@ namespace MyGUI
 
 		factory.unregisterFactory<SubSkin>(mCategoryName);
 		factory.unregisterFactory<MainSkin>(mCategoryName);
+		factory.unregisterFactory<ImageSkin>(mCategoryName);
 		factory.unregisterFactory<PolygonalSkin>(mCategoryName);
 		factory.unregisterFactory<RotatingSkin>(mCategoryName);
 		factory.unregisterFactory<TileRect>(mCategoryName);

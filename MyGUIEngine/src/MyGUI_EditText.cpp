@@ -58,6 +58,7 @@ namespace MyGUI
 		mVisibleCursor(false),
 		mInvertSelect(true),
 		mShadow(false),
+		mShadowOffset(1.0f, 1.0f),
 		mNode(nullptr),
 		mRenderItem(nullptr),
 		mCountVertex(SIMPLETEXT_COUNT_VERTEX),
@@ -95,6 +96,12 @@ namespace MyGUI
 	{
 		if (nullptr != mNode)
 			mNode->outOfDate(mRenderItem);
+	}
+	
+	void EditText::_correctTextView()
+	{
+		_correctView();
+		mTextOutDate = true;
 	}
 
 	void EditText::_setAlign(const IntSize& _oldsize)
@@ -444,8 +451,8 @@ namespace MyGUI
 		if (mShadow)
 		{
 			if (!mIsAddCursorWidth)
-				size.width ++;
-			size.height ++;
+				size.width += int(fabs(mShadowOffset.left)+0.5);
+			size.height += int(fabs(mShadowOffset.top)+0.5);
 		}
 
 		return size;
@@ -580,7 +587,11 @@ namespace MyGUI
 			{
 				if (sim->isColour())
 				{
-					colour = sim->getColour() | (colour & 0xFF000000);
+					if (sim->getColour() == CharInfo::ColourReset)
+						colour = mCurrentColourNative;
+					else
+						colour = sim->getColour() | (colour & 0xFF000000);
+
 					inverseColour = colour ^ 0x00FFFFFF;
 					selectedColour = mInvertSelect ? inverseColour : colour | 0x00FFFFFF;
 					continue;
@@ -602,8 +613,8 @@ namespace MyGUI
 				// Render the glyph shadow, if any.
 				if (mShadow)
 				{
-					vertexRect.left = left + sim->getBearingX() + 1.0f;
-					vertexRect.top = top + sim->getBearingY() + 1.0f;
+					vertexRect.left = left + sim->getBearingX() + mShadowOffset.left;
+					vertexRect.top = top + sim->getBearingY() + mShadowOffset.top;
 					vertexRect.right = vertexRect.left + sim->getWidth();
 					vertexRect.bottom = vertexRect.top + sim->getHeight();
 
@@ -633,7 +644,7 @@ namespace MyGUI
 			GlyphInfo* cursorGlyph = mFont->getGlyphInfo(static_cast<Char>(FontCodeType::Cursor));
 			vertexRect.set((float)point.left, (float)point.top, (float)point.left + cursorGlyph->width, (float)(point.top + mFontHeight));
 
-			drawGlyph(renderTargetInfo, vertex, vertexCount, vertexRect, cursorGlyph->uvRect, mCurrentColourNative | 0x00FFFFFF);
+			drawGlyph(renderTargetInfo, vertex, vertexCount, vertexRect, cursorGlyph->uvRect, mCurrentColourNative);
 		}
 
 		// колличество реально отрисованных вершин
@@ -666,6 +677,20 @@ namespace MyGUI
 		mTextOutDate = true;
 
 		checkVertexSize();
+
+		if (nullptr != mNode)
+			mNode->outOfDate(mRenderItem);
+	}
+
+	FloatPoint EditText::getShadowOffset() const
+	{
+		return mShadowOffset;
+	}
+
+	void EditText::setShadowOffset(const FloatPoint& _value)
+	{
+		mShadowOffset = _value;
+		mTextOutDate = true;
 
 		if (nullptr != mNode)
 			mNode->outOfDate(mRenderItem);
@@ -815,10 +840,10 @@ namespace MyGUI
 		float pix_top = mCroppedParent->getAbsoluteTop() - _renderTargetInfo.topOffset + (mShiftText ? 1.0f : 0.0f) + _vertexRect.top;
 
 		FloatRect vertexRect(
-			((_renderTargetInfo.pixScaleX * pix_left + _renderTargetInfo.hOffset) * 2.0f) - 1.0f,
-			-(((_renderTargetInfo.pixScaleY * pix_top + _renderTargetInfo.vOffset) * 2.0f) - 1.0f),
-			((_renderTargetInfo.pixScaleX * (pix_left + _vertexRect.width()) + _renderTargetInfo.hOffset) * 2.0f) - 1.0f,
-			-(((_renderTargetInfo.pixScaleY * (pix_top + _vertexRect.height()) + _renderTargetInfo.vOffset) * 2.0f) - 1.0f));
+			pix_left + _renderTargetInfo.hOffset,
+			_renderTargetInfo.pixHeight - ( pix_top + _renderTargetInfo.vOffset),
+			pix_left + _vertexRect.width() + _renderTargetInfo.hOffset,
+			_renderTargetInfo.pixHeight - (pix_top + _vertexRect.height() + _renderTargetInfo.vOffset));
 
 		drawQuad(_vertex, _vertexCount, vertexRect, mNode->getNodeDepth(), _textureRect, _colour);
 	}

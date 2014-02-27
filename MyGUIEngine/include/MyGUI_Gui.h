@@ -78,6 +78,7 @@ namespace MyGUI
 		/** Create widget using coordinates relative to parent. see Gui::createWidgetT */
 		Widget* createWidgetRealT(const std::string& _type, const std::string& _skin, float _left, float _top, float _width, float _height, Align _align, const std::string& _layer, const std::string& _name = "");
 
+		Widget* createWidgetT(WidgetStyle style, const std::string& _type, const std::string& _skin, const IntCoord& _coord, Align _align, const std::string& _layer, const std::string& _name = "");
 		// templates for creating widgets by type
 		/** Same as Gui::createWidgetT but return T* instead of Widget* */
 		template <typename T>
@@ -152,10 +153,14 @@ namespace MyGUI
 		/** Get root widgets Enumerator */
 		EnumeratorWidgetPtr getEnumerator() const;
 
+		void printAllWidget(int depth);
+
 		/** Inject frame entered event (called be renderer, do not call it manually).
 			This function is called every frame by renderer.
 		*/
 		void frameEvent(float _time);
+
+		void correctTextView();
 
 		/*events:*/
 		/** Event : Multidelegate. GUI per frame call.\n
@@ -186,6 +191,7 @@ namespace MyGUI
 		VectorWidgetPtr mWidgetChild;
 
 		// синглтоны гуя
+		PathsManager* mPathsManager;
 		InputManager* mInputManager;
 		SubWidgetManager* mSubWidgetManager;
 		LayerManager* mLayerManager;

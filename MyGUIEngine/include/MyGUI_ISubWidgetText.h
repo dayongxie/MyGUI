@@ -77,6 +77,13 @@ namespace MyGUI
 
 		virtual void setShadow(bool _value) { }
 
+		virtual FloatPoint getShadowOffset() const
+		{
+			return FloatPoint();
+		}
+
+		virtual void setShadowOffset(const FloatPoint&) {}
+
 		// управление видимостью курсора
 		virtual bool isVisibleCursor() const
 		{

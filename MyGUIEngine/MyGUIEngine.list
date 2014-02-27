@@ -76,6 +76,7 @@ set (HEADER_FILES
   include/MyGUI_IVertexBuffer.h
   include/MyGUI_ImageBox.h
   include/MyGUI_ImageInfo.h
+  include/MyGUI_ImageSkin.h
   include/MyGUI_InputManager.h
   include/MyGUI_ItemBox.h
   include/MyGUI_KeyCode.h
@@ -126,7 +127,9 @@ set (HEADER_FILES
   include/MyGUI_ResourceManualPointer.h
   include/MyGUI_ResourceSkin.h
   include/MyGUI_ResourceTrueTypeFont.h
+  include/MyGUI_ResourceNativeFont.h
   include/MyGUI_RotatingSkin.h
+  include/MyGUI_ScriptBridge.h
   include/MyGUI_ScrollBar.h
   include/MyGUI_ScrollView.h
   include/MyGUI_ScrollViewBase.h
@@ -169,7 +172,9 @@ set (HEADER_FILES
   include/MyGUI_WidgetTranslate.h
   include/MyGUI_WidgetUserData.h
   include/MyGUI_Window.h
+  include/MyGUI_IMEManager.h
   include/MyGUI_XmlDocument.h
+  include/MyGUI_PathsManager.h
 )
 set (SOURCE_FILES
   src/MyGUI_ActionController.cpp
@@ -178,6 +183,7 @@ set (SOURCE_FILES
   src/MyGUI_BiIndexBase.cpp
   src/MyGUI_Button.cpp
   src/MyGUI_Canvas.cpp
+
   src/MyGUI_ChildSkinInfo.cpp
   src/MyGUI_ClipboardManager.cpp
   src/MyGUI_Colour.cpp
@@ -204,6 +210,7 @@ set (SOURCE_FILES
   src/MyGUI_GeometryUtility.cpp
   src/MyGUI_Gui.cpp
   src/MyGUI_ImageBox.cpp
+  src/MyGUI_ImageSkin.cpp
   src/MyGUI_InputManager.cpp
   src/MyGUI_ItemBox.cpp
   src/MyGUI_LanguageManager.cpp
@@ -239,7 +246,9 @@ set (SOURCE_FILES
   src/MyGUI_ResourceManualPointer.cpp
   src/MyGUI_ResourceSkin.cpp
   src/MyGUI_ResourceTrueTypeFont.cpp
+  src/MyGUI_ResourceNativeFont.cpp
   src/MyGUI_RotatingSkin.cpp
+  src/MyGUI_ScriptBridge.cpp
   src/MyGUI_ScrollBar.cpp
   src/MyGUI_ScrollView.cpp
   src/MyGUI_ScrollViewBase.cpp
@@ -247,6 +256,7 @@ set (SOURCE_FILES
   src/MyGUI_SharedLayerNode.cpp
   src/MyGUI_SimpleText.cpp
   src/MyGUI_SkinItem.cpp
+  src/MyGUI_IMEManager.cpp
   src/MyGUI_SkinManager.cpp
   src/MyGUI_SubSkin.cpp
   src/MyGUI_SubWidgetBinding.cpp
@@ -267,6 +277,7 @@ set (SOURCE_FILES
   src/MyGUI_WidgetUserData.cpp
   src/MyGUI_Window.cpp
   src/MyGUI_XmlDocument.cpp
+  src/MyGUI_PathsManager.cpp
 )
 SOURCE_GROUP("Header Files" FILES
   include/MyGUI_Allocator.h
@@ -339,6 +350,7 @@ SOURCE_GROUP("Header Files\\Core\\Manager" FILES
   include/MyGUI_FontManager.h
   include/MyGUI_Gui.h
   include/MyGUI_InputManager.h
+  include/MyGUI_IMEManager.h
   include/MyGUI_LanguageManager.h
   include/MyGUI_LayerManager.h
   include/MyGUI_LayoutManager.h
@@ -350,6 +362,7 @@ SOURCE_GROUP("Header Files\\Core\\Manager" FILES
   include/MyGUI_SubWidgetManager.h
   include/MyGUI_ToolTipManager.h
   include/MyGUI_WidgetManager.h
+  include/MyGUI_PathsManager.h
 )
 SOURCE_GROUP("Header Files\\Core\\Resource" FILES
   include/MyGUI_ResourceImageSet.h
@@ -359,6 +372,7 @@ SOURCE_GROUP("Header Files\\Core\\Resource" FILES
   include/MyGUI_ResourceManualPointer.h
   include/MyGUI_ResourceSkin.h
   include/MyGUI_ResourceTrueTypeFont.h
+  include/MyGUI_ResourceNativeFont.h
 )
 SOURCE_GROUP("Header Files\\Core\\Resource\\Data" FILES
   include/MyGUI_ChildSkinInfo.h
@@ -376,6 +390,7 @@ SOURCE_GROUP("Header Files\\Core\\Resource\\Interface" FILES
 )
 SOURCE_GROUP("Header Files\\Core\\SubWidget" FILES
   include/MyGUI_EditText.h
+  include/MyGUI_ImageSkin.h
   include/MyGUI_MainSkin.h
   include/MyGUI_PolygonalSkin.h
   include/MyGUI_RotatingSkin.h
@@ -422,6 +437,7 @@ SOURCE_GROUP("Header Files\\Utility" FILES
   include/MyGUI_Enumerator.h
   include/MyGUI_EventPair.h
   include/MyGUI_GeometryUtility.h
+  include/MyGUI_ScriptBridge.h
   include/MyGUI_StringUtility.h
   include/MyGUI_TextChangeHistory.h
   include/MyGUI_TextIterator.h
@@ -510,6 +526,7 @@ SOURCE_GROUP("Source Files\\Core\\Manager" FILES
   src/MyGUI_FontManager.cpp
   src/MyGUI_Gui.cpp
   src/MyGUI_InputManager.cpp
+  src/MyGUI_IMEManager.cpp
   src/MyGUI_LanguageManager.cpp
   src/MyGUI_LayerManager.cpp
   src/MyGUI_LayoutManager.cpp
@@ -521,6 +538,7 @@ SOURCE_GROUP("Source Files\\Core\\Manager" FILES
   src/MyGUI_SubWidgetManager.cpp
   src/MyGUI_ToolTipManager.cpp
   src/MyGUI_WidgetManager.cpp
+  src/MyGUI_PathsManager.cpp
 )
 SOURCE_GROUP("Source Files\\Core\\Resource" FILES
   src/MyGUI_ResourceImageSet.cpp
@@ -530,6 +548,7 @@ SOURCE_GROUP("Source Files\\Core\\Resource" FILES
   src/MyGUI_ResourceManualPointer.cpp
   src/MyGUI_ResourceSkin.cpp
   src/MyGUI_ResourceTrueTypeFont.cpp
+  src/MyGUI_ResourceNativeFont.cpp
 )
 SOURCE_GROUP("Source Files\\Core\\Resource\\Data" FILES
   src/MyGUI_ChildSkinInfo.cpp
@@ -538,6 +557,7 @@ SOURCE_GROUP("Source Files\\Core\\Resource\\Data" FILES
 )
 SOURCE_GROUP("Source Files\\Core\\SubWidget" FILES
   src/MyGUI_EditText.cpp
+  src/MyGUI_ImageSkin.cpp
   src/MyGUI_MainSkin.cpp
   src/MyGUI_PolygonalSkin.cpp
   src/MyGUI_RotatingSkin.cpp
@@ -556,6 +576,7 @@ SOURCE_GROUP("Source Files\\Utility" FILES
   src/MyGUI_DataStream.cpp
   src/MyGUI_DynLib.cpp
   src/MyGUI_GeometryUtility.cpp
+  src/MyGUI_ScriptBridge.cpp
   src/MyGUI_TextIterator.cpp
   src/MyGUI_TextView.cpp
   src/MyGUI_TextureUtility.cpp

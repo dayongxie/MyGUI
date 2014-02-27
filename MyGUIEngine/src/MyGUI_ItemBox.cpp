@@ -584,7 +584,7 @@ namespace MyGUI
 
 		const IntPoint& point = InputManager::getInstance().getMousePosition();
 
-		mItemDrag->setPosition(point.left - mClickInWidget.left + mPointDragOffset.left, point.top - mClickInWidget.top + mPointDragOffset.top);
+		mItemDrag->setPosition(point.left + mPointDragOffset.left, point.top + mPointDragOffset.top);
 		mItemDrag->setVisible(true);
 	}
 
@@ -620,7 +620,7 @@ namespace MyGUI
 			if (_sender == _getClientWidget())
 			{
 				// сбрасываем выделение
-				setIndexSelected(ITEM_NONE);
+				//setIndexSelected(ITEM_NONE);
 			}
 			else
 			{

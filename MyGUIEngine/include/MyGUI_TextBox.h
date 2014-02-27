@@ -87,8 +87,16 @@ namespace MyGUI
 		/** Get widget text shadow */
 		bool getTextShadow();
 
+		virtual void setTextShadowOffset(const FloatPoint& _value);
+		FloatPoint getTextShadowOffset();
+
+		virtual void adaptCoord();
+
+		virtual void changeWidgetSkin(const std::string& _skinName);
 	protected:
 		virtual void setPropertyOverride(const std::string& _key, const std::string& _value);
+
+		bool m_autoAdapt;
 	};
 
 } // namespace MyGUI

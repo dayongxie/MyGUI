@@ -44,7 +44,7 @@ namespace MyGUI
 
 		void _setTextureName(const std::string& _texture);
 		const std::string& _getTextureName() const;
-
+		
 	protected:
 		void _createSkinItem(ResourceSkin* _info);
 		void _deleteSkinItem();
@@ -55,6 +55,7 @@ namespace MyGUI
 		void _setSkinItemAlpha(float _value);
 		void _correctSkinItemView();
 		void _updateSkinItemView();
+		void _correctTextView();
 
 		bool _setSkinItemState(const std::string& _state);
 		void _setSubSkinVisible(bool _visible);

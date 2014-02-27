@@ -373,7 +373,7 @@ namespace MyGUI
 	void ComboBox::setComboModeDrop(bool _drop)
 	{
 		mModeDrop = _drop;
-		setEditStatic(mModeDrop);
+		//setEditStatic(mModeDrop);
 	}
 
 	ControllerFadeAlpha* ComboBox::createControllerFadeAlpha(float _alpha, float _coef, bool _enable)

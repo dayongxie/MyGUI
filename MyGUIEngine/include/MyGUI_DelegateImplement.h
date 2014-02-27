@@ -34,7 +34,6 @@ namespace delegates
 	#define MYGUI_C_DELEGATE									MYGUI_COMBINE(CDelegate, MYGUI_SUFFIX)
 	#define MYGUI_C_MULTI_DELEGATE						MYGUI_COMBINE(CMultiDelegate, MYGUI_SUFFIX)
 
-
 	// базовый класс всех делегатов
 	MYGUI_TEMPLATE   MYGUI_TEMPLATE_PARAMS
 	class MYGUI_I_DELEGATE
@@ -50,6 +49,7 @@ namespace delegates
 		}
 	};
 
+	#define LUA_NIL_HANDER 0
 
 	// делегат для статической функции
 	MYGUI_TEMPLATE   MYGUI_TEMPLATE_PARAMS
@@ -219,7 +219,7 @@ namespace delegates
 
 	// шаблон класса мульти делегата
 	MYGUI_TEMPLATE   MYGUI_TEMPLATE_PARAMS
-	class MYGUI_C_MULTI_DELEGATE
+	class MYGUI_C_MULTI_DELEGATE : public LuaDelegate
 	{
 	public:
 		typedef  MYGUI_I_DELEGATE MYGUI_TEMPLATE_ARGS  IDelegate;
@@ -227,7 +227,7 @@ namespace delegates
 		typedef MYGUI_TYPENAME ListDelegate::iterator ListDelegateIterator;
 		typedef MYGUI_TYPENAME ListDelegate::const_iterator ConstListDelegateIterator;
 
-		MYGUI_C_MULTI_DELEGATE () { }
+		MYGUI_C_MULTI_DELEGATE () : mLocked(false) { }
 		~MYGUI_C_MULTI_DELEGATE ()
 		{
 			clear();
@@ -239,11 +239,43 @@ namespace delegates
 			{
 				if (*iter) return false;
 			}
+
+			for (ConstListDelegateIterator iter = mListDelegatesAppend.begin(); iter != mListDelegatesAppend.end(); ++iter)
+			{
+				if (*iter) return false;
+			}
+
 			return true;
+		}
+
+		bool exist(IDelegate* _delegate) const
+		{
+			for (ConstListDelegateIterator iter = mListDelegates.begin(); iter != mListDelegates.end(); ++iter)
+			{
+				if ((*iter) && (*iter)->compare(_delegate))
+				{
+					delete _delegate;
+					return true;
+				}
+			}
+
+			for (ConstListDelegateIterator iter = mListDelegatesAppend.begin(); iter != mListDelegatesAppend.end(); ++iter)
+			{
+				if ((*iter) && (*iter)->compare(_delegate))
+				{
+					delete _delegate;
+					return true;
+				}
+			}
+
+			delete _delegate;
+			return false;
 		}
 
 		void clear()
 		{
+			merge_delegatelist(mListDelegates, mListDelegatesAppend);
+
 			for (ListDelegateIterator iter = mListDelegates.begin(); iter != mListDelegates.end(); ++iter)
 			{
 				if (*iter)
@@ -264,6 +296,15 @@ namespace delegates
 					(*iter) = nullptr;
 				}
 			}
+
+			for (ListDelegateIterator iter = mListDelegatesAppend.begin(); iter != mListDelegatesAppend.end(); ++iter)
+			{
+				if ((*iter) && (*iter)->compare(_unlink))
+				{
+					delete (*iter);
+					(*iter) = nullptr;
+				}
+			}
 		}
 
 		MYGUI_C_MULTI_DELEGATE  MYGUI_TEMPLATE_ARGS& operator+=(IDelegate* _delegate)
@@ -275,12 +316,29 @@ namespace delegates
 					MYGUI_EXCEPT("Trying to add same delegate twice.");
 				}
 			}
-			mListDelegates.push_back(_delegate);
+
+			for (ListDelegateIterator iter = mListDelegatesAppend.begin(); iter != mListDelegatesAppend.end(); ++iter)
+			{
+				if ((*iter) && (*iter)->compare(_delegate))
+				{
+					MYGUI_EXCEPT("Trying to add same delegate twice.");
+				}
+			}
+
+			if (mLocked)
+				mListDelegatesAppend.push_back(_delegate);
+			else
+			{
+				mListDelegates.push_back(_delegate);
+				merge_delegatelist(mListDelegates, mListDelegatesAppend);
+			}
+
 			return *this;
 		}
 
 		MYGUI_C_MULTI_DELEGATE  MYGUI_TEMPLATE_ARGS& operator-=(IDelegate* _delegate)
 		{
+			bool finded = false;
 			for (ListDelegateIterator iter = mListDelegates.begin(); iter != mListDelegates.end(); ++iter)
 			{
 				if ((*iter) && (*iter)->compare(_delegate))
@@ -288,9 +346,26 @@ namespace delegates
 					// проверяем на идентичность делегатов
 					if ((*iter) != _delegate) delete (*iter);
 					(*iter) = nullptr;
+					finded = true;
 					break;
 				}
 			}
+			
+			if (!finded)
+			{
+				for (ListDelegateIterator iter = mListDelegatesAppend.begin(); iter != mListDelegatesAppend.end(); ++iter)
+				{
+					if ((*iter) && (*iter)->compare(_delegate))
+					{
+						// проверяем на идентичность делегатов
+						if ((*iter) != _delegate) delete (*iter);
+						(*iter) = nullptr;
+						finded = true;
+						break;
+					}
+				}
+			}
+
 			delete _delegate;
 			return *this;
 		}
@@ -302,17 +377,41 @@ namespace delegates
 			{
 				if (nullptr == (*iter))
 				{
-					iter = mListDelegates.erase(iter);
+					if (!mLocked)
+					{
+						iter = mListDelegates.erase(iter);
+					}
+					else
+					{
+						++iter;
+					}
 				}
 				else
 				{
+					mLocked = true;
 					(*iter)->invoke( MYGUI_ARGS );
 					++iter;
+					mLocked = false;
 				}
 			}
+			
+			for (unsigned i = 0; i < mHandlers.size(); ++i)
+			{
+				if (LUA_NIL_HANDER != mHandlers[i])
+#if MYGUI_SUFFIX
+					ScriptBridge::getInstance().invoke MYGUI_TEMPLATE_ARGS(mHandlers[i], MYGUI_ARGS);
+#else
+					ScriptBridge::getInstance().invoke(mHandlers[i]);
+#endif
+			}
+
+			merge_handlers();
+
+			merge_delegatelist(mListDelegates, mListDelegatesAppend);
 		}
 
-		MYGUI_C_MULTI_DELEGATE (const MYGUI_C_MULTI_DELEGATE  MYGUI_TEMPLATE_ARGS& _event)
+		MYGUI_C_MULTI_DELEGATE (const MYGUI_C_MULTI_DELEGATE  MYGUI_TEMPLATE_ARGS& _event) 
+			: mLocked(false)
 		{
 			// забираем себе владение
 			ListDelegate del = _event.mListDelegates;
@@ -371,10 +470,38 @@ namespace delegates
 			delete _del;
 		}
 
+		void merge_delegatelist(ListDelegate& _out, ListDelegate& _append)
+		{
+			ListDelegateIterator iter = mListDelegates.begin();
+			while (iter != mListDelegates.end())
+			{
+				if (nullptr == (*iter))
+				{
+					iter = mListDelegates.erase(iter);
+				}
+				else
+				{
+					++iter;
+				}
+			}
+
+			iter = _append.begin();
+			while (iter != _append.end())
+			{
+				if (nullptr != (*iter))
+					_out.push_back(*iter);
+
+				++iter;
+			}
+
+			_append.clear();
+		}
+
 	private:
 		ListDelegate mListDelegates;
+		bool mLocked;
+		ListDelegate mListDelegatesAppend;
 	};
-
 
 	#undef MYGUI_COMBINE
 	#undef MYGUI_COMBINE1

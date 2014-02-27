@@ -23,12 +23,12 @@ namespace demo
 
 		virtual void createScene();
 		virtual void destroyScene();
+		virtual void setupResources();
 
 	private:
 		void notifyEventAction(MainPanel::TypeEvents _action, size_t _index);
 		void destroyWindows();
 		void createWindows();
-		virtual void setupResources();
 		void removeRenderBoxes();
 		void createRenderBox(MyGUI::Canvas* _canvas);
 

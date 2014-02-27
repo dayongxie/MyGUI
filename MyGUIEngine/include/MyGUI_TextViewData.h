@@ -14,6 +14,7 @@ namespace MyGUI
 	class CharInfo
 	{
 	public:
+		static const uint32 ColourReset = 0xFFFFFFFF;
 		CharInfo() :
 			mIsColour(false)
 		{
@@ -105,7 +106,6 @@ namespace MyGUI
 			Metrics mMetrics;
 			uint32 mColour;
 		};
-
 	};
 
 	typedef std::vector<CharInfo> VectorCharInfo;
@@ -115,7 +115,8 @@ namespace MyGUI
 		LineInfo() :
 			width(0),
 			offset(0),
-			count(0)
+			count(0),
+			autonewline(false)
 		{
 		}
 
@@ -130,6 +131,7 @@ namespace MyGUI
 		int width;
 		int offset;
 		size_t count;
+		bool autonewline;
 		VectorCharInfo simbols;
 	};
 

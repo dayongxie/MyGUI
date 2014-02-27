@@ -5,6 +5,13 @@
 #  FREETYPE_INCLUDE_DIRS - the FreeType include directories 
 #  FREETYPE_LIBRARIES - link these to use FreeType
 
+if (NOT FREETYPE_HOME)
+   set (FREETYPE_HOME "../freetype/prebuild" CACHE PATH "location of freetype source")
+#   set (FREETYPE_INCLUDE_DIRS "../freetype/prebuild/include ../" CACHE)
+#   set (FREETYPE_FT2BUILD_INCLUDE_DIR  "../freetype/prebuild/include/freetype2")
+#   set (FREETYPE_LIBRARY_REL "../freetype/prebuild/lib/freetype.lib")
+endif()
+
 include(FindPkgMacros)
 findpkg_begin(FREETYPE)
 

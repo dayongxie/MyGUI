@@ -6,7 +6,7 @@
             <Property key="FontName" value="DejaVuSansFont_13"/>
         </Widget>
         <Widget type="ComboBox" skin="ComboBox_Dark" position="126 1 72 20" align="Stretch" name="Field">
-            <Property key="ModeDrop" value="true"/>
+            <Property key="ModeDrop" value="false"/>
             <Property key="NeedToolTip" value="true"/>
         </Widget>
     </Widget>

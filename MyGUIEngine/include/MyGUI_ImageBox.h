@@ -52,10 +52,13 @@ namespace MyGUI
 		*/
 		void setImageInfo(const std::string& _texture, const IntCoord& _coord, const IntSize& _tile);
 
+		void setImageAlign(Align align);
 		/* Set texture
 			@param _texture file name or texture name
 		*/
 		void setImageTexture(const std::string& _value);
+
+		void setDisplaySize(const IntSize& _size);
 
 		/** Set _rect - part of texture where we take tiles */
 		void setImageRect(const IntRect& _value);
@@ -181,6 +184,10 @@ namespace MyGUI
 		void setItemGroup(const std::string& _value);
 		/** Select current item mane */
 		void setItemName(const std::string& _value);
+		/** Select current item group */
+		const char* getItemGroup() const;
+		/** Select current item mane */
+		const char* getItemName() const;
 
 		/** Select current items resource used in ImageBox
 			@param _resource Resource pointer
@@ -198,7 +205,6 @@ namespace MyGUI
 		virtual void shutdownOverride();
 
 		virtual void setPropertyOverride(const std::string& _key, const std::string& _value);
-
 	private:
 		void frameEntered(float _frame);
 
@@ -208,14 +214,16 @@ namespace MyGUI
 		void frameAdvise(bool _advise);
 
 		void _setUVSet(const FloatRect& _rect);
-
+		void _setSkinSize(const IntSize& s);
 	private:
+		IntSize mSizeDisplay;
 		// кусок в текстуре наших картинок
 		IntRect mRectImage;
 		// размер одной картинки
 		IntSize mSizeTile;
 		// размер текстуры
 		IntSize mSizeTexture;
+		IntSize mSizeTextureContent;
 		// текущая картинка
 		size_t mIndexSelect;
 

@@ -240,6 +240,9 @@ namespace MyGUI
 			if (old_key_focus != mWidgetKeyFocus)
 				eventChangeKeyFocus(mWidgetKeyFocus);
 
+			if (!mVectorModalRootWidget.empty())
+				return true;
+
 			return false;
 		}
 
@@ -326,6 +329,7 @@ namespace MyGUI
 				{
 					if (mTimer.getMilliseconds() < INPUT_TIME_DOUBLE_CLICK)
 					{
+						eventWidgetClick(mWidgetMouseFocus);
 						mWidgetMouseFocus->_riseMouseButtonClick();
 						// после вызова, виджет может быть сброшен
 						if (nullptr != mWidgetMouseFocus)
@@ -337,6 +341,7 @@ namespace MyGUI
 						Widget* item = LayerManager::getInstance().getWidgetFromPoint(_absx, _absy);
 						if ( item == mWidgetMouseFocus)
 						{
+							eventWidgetClick(mWidgetMouseFocus);
 							mWidgetMouseFocus->_riseMouseButtonClick();
 						}
 						mTimer.reset();

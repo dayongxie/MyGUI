@@ -7,16 +7,18 @@
 #include "DemoKeeper.h"
 #include "Base/Main.h"
 
-#ifdef MYGUI_OGRE_PLATFORM
+#ifdef MYGUI_COCOS2D_PLATFORM
 
-#include "Ogre/RenderBox/RenderBox.h"
+#include "Cocos2d/RenderBox/RenderBox.h"
 
 namespace demo
 {
 	std::vector<wraps::RenderBox*> mRenderBoxes;
 }
 
-#endif // MYGUI_OGRE_PLATFORM
+#endif // MYGUI_COCOS2D_PLATFORM
+
+USING_NS_CC;
 
 namespace demo
 {
@@ -42,8 +44,8 @@ namespace demo
 
 	void DemoKeeper::createScene()
 	{
-		base::BaseDemoManager::createScene();
-		createDefaultScene();
+		MyGUI::LayoutManager::getInstance().loadLayout("Wallpaper.layout");
+
 		const MyGUI::VectorWidgetPtr& root = MyGUI::LayoutManager::getInstance().loadLayout("HelpPanel.layout");
 		if (root.size() == 1)
 			root.at(0)->findWidget("Text")->castType<MyGUI::TextBox>()->setCaption("Demonstration of using different widgets and styles (something like Ogre Demo_Gui).");
@@ -165,8 +167,8 @@ namespace demo
 			}
 			else if (_index == 5)
 			{
-				const MyGUI::IntSize size(150, 150);
-				MyGUI::Window* window = view->createWidget<MyGUI::Window>(MyGUI::WidgetStyle::Overlapped, "WindowC", MyGUI::IntCoord(getRand(0, coord.width - size.width), getRand(0, coord.height - size.height), size.width, size.height), MyGUI::Align::Default);
+				const MyGUI::IntSize size(480, 320);
+				MyGUI::Window* window = view->createWidget<MyGUI::Window>(MyGUI::WidgetStyle::Overlapped, "WindowCSX", MyGUI::IntCoord(getRand(0, coord.width - size.width), getRand(0, coord.height - size.height), size.width, size.height), MyGUI::Align::Default);
 				window->setCaption("Render");
 				MyGUI::Canvas* canvas = window->createWidget<MyGUI::Canvas>("Canvas", MyGUI::IntCoord(0, 0, window->getClientCoord().width, window->getClientCoord().height), MyGUI::Align::Stretch);
 
@@ -177,22 +179,21 @@ namespace demo
 
 	void DemoKeeper::removeRenderBoxes()
 	{
-#ifdef MYGUI_OGRE_PLATFORM
+#ifdef MYGUI_COCOS2D_PLATFORM
 		for (std::vector<wraps::RenderBox*>::iterator item = mRenderBoxes.begin(); item != mRenderBoxes.end(); ++item)
 			delete *item;
 		mRenderBoxes.clear();
-#endif // MYGUI_OGRE_PLATFORM
+#endif // MYGUI_COCOS2D_PLATFORM
 	}
 
 	void DemoKeeper::createRenderBox(MyGUI::Canvas* _canvas)
 	{
-#ifdef MYGUI_OGRE_PLATFORM
+#ifdef MYGUI_COCOS2D_PLATFORM
 		wraps::RenderBox* box = new wraps::RenderBox();
 		box->setCanvas(_canvas);
-		box->setViewport(getCamera());
 		box->setBackgroundColour(MyGUI::Colour::Black);
 		mRenderBoxes.push_back(box);
-#endif // MYGUI_OGRE_PLATFORM
+#endif // MYGUI_COCOS2D_PLATFORM
 	}
 
 	void DemoKeeper::createDefaultScene()

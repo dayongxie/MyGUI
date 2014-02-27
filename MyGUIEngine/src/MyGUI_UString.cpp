@@ -928,14 +928,14 @@ namespace MyGUI
 	UString& UString::assign( const wchar_t* w_str )
 	{
 		std::wstring tmp;
-		tmp.assign( w_str );
+		if (w_str) tmp.assign( w_str );
 		return assign( tmp );
 	}
 
 	UString& UString::assign( const wchar_t* w_str, size_type num )
 	{
 		std::wstring tmp;
-		tmp.assign( w_str, num );
+		if (w_str) tmp.assign( w_str, num );
 		return assign( tmp );
 	}
 #endif
@@ -975,14 +975,19 @@ namespace MyGUI
 
 	UString& UString::assign( const char* c_str )
 	{
-		std::string tmp( c_str );
+		std::string tmp;
+
+		if (c_str)
+			tmp = c_str;
+
 		return assign( tmp );
 	}
 
 	UString& UString::assign( const char* c_str, size_type num )
 	{
 		std::string tmp;
-		tmp.assign( c_str, num );
+		if (c_str)
+			tmp.assign( c_str, num );
 		return assign( tmp );
 	}
 

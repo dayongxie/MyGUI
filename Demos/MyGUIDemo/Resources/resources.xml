@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Paths>
+  <Path root="true">MyGUI</Path>
+  <Path>MyGUI/image</Path>
+  <Path>MyGUI/image/createrole</Path>
+  <Path>MyGUI/layout</Path>
+  <Path>MyGUI/font</Path>
+</Paths>

@@ -310,17 +310,47 @@ namespace MyGUI
 		{
 			// пытаемся поднять пустой буфер выше полных
 			VectorRenderItem::iterator iter1 = mFirstRenderItems.begin();
+
+			while (iter1 != mFirstRenderItems.end() && (*iter1) != NULL && ((*iter1)->getNeedVertexCount() != 0 || (*iter1)->getManualRender()))
+				iter1++;
+
+			if (iter1 == mFirstRenderItems.end()) return;
+
 			VectorRenderItem::iterator iter2 = iter1 + 1;
+
 			while (iter2 != mFirstRenderItems.end())
 			{
-				if ((*iter1)->getNeedVertexCount() == 0 && !(*iter1)->getManualRender() && !(*iter2)->getManualRender())
+				if ((*iter2)->getNeedVertexCount() == 0 && !(*iter2)->getManualRender())
 				{
-					RenderItem* tmp = (*iter1);
-					(*iter1) = (*iter2);
-					(*iter2) = tmp;
+					iter2++;
+					continue;
 				}
-				iter1 = iter2;
-				++iter2;
+
+				RenderItem* tmp = (*iter1);
+				if (tmp->getNeedVertexCount() == 0 && !tmp->getManualRender())
+				{
+					if (iter2 <= iter1)
+						iter2 = iter1+1;
+
+					if (iter2 != mFirstRenderItems.end())
+					{
+						(*iter1) = (*iter2);
+						(*iter2) = tmp;
+					}
+				}
+
+				++iter1;
+			}
+
+			if (mFirstRenderItems.end() - iter1 > mFirstRenderItems.size() / 4)
+			{
+				for (iter2 = iter1; iter2 != mFirstRenderItems.end(); ++iter2)
+				{
+					delete (*iter2);
+					*iter2 = NULL;
+				}
+
+				mFirstRenderItems.resize(iter1 - mFirstRenderItems.begin(), NULL);
 			}
 		}
 
@@ -358,6 +388,24 @@ namespace MyGUI
 		}
 
 		return mOutOfDate;
+	}
+
+	void LayerNode::releaseVertexBuffer()
+	{
+		for (VectorRenderItem::const_iterator item = mFirstRenderItems.begin(); item != mFirstRenderItems.end(); ++item)
+		{
+			(*item)->releaseVertexBuffer();
+		}
+
+		for (VectorRenderItem::const_iterator item = mSecondRenderItems.begin(); item != mSecondRenderItems.end(); ++item)
+		{
+			(*item)->releaseVertexBuffer();
+		}
+
+		for (VectorILayerNode::const_iterator item = mChildItems.begin(); item != mChildItems.end(); ++item)
+		{
+			(*item)->releaseVertexBuffer();
+		}
 	}
 
 	float LayerNode::getNodeDepth()

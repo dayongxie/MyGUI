@@ -26,6 +26,7 @@
 #include <list>
 
 #include <typeinfo>
+#include "MyGUI_ScriptBridge.h"
 
 // source
 // http://rsdn.ru/article/cpp/delegates.xml
@@ -63,6 +64,7 @@ namespace MyGUI
 		{
 			return _base;
 		}
+
 	}
 
 	// без параметров

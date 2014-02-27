@@ -1,0 +1,284 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D71E4648165E404300ABB57E /* RenderBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D71E4646165E404300ABB57E /* RenderBox.cpp */; };
+		D71E4649165E404300ABB57E /* RenderBox.h in Headers */ = {isa = PBXBuildFile; fileRef = D71E4647165E404300ABB57E /* RenderBox.h */; };
+		D7217C4015AD381C009D03FF /* FileSystemInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = D7217C3F15AD381C009D03FF /* FileSystemInfo.h */; };
+		D7F5FDEE15AAD0A600D197A4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7F5FDED15AAD0A600D197A4 /* Foundation.framework */; };
+		D7F5FE0115AAD0D700D197A4 /* BaseManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FE0015AAD0D700D197A4 /* BaseManager.cpp */; };
+		D7F5FE0315AAD0F100D197A4 /* FileSystemInfo_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FE0215AAD0F100D197A4 /* FileSystemInfo_ios.mm */; };
+		D7F5FE0515AAD0FC00D197A4 /* InputManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D7F5FE0415AAD0FC00D197A4 /* InputManager.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		D71E4646165E404300ABB57E /* RenderBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RenderBox.cpp; path = ../../Cocos2d/RenderBox/RenderBox.cpp; sourceTree = "<group>"; };
+		D71E4647165E404300ABB57E /* RenderBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RenderBox.h; path = ../../Cocos2d/RenderBox/RenderBox.h; sourceTree = "<group>"; };
+		D7217C3F15AD381C009D03FF /* FileSystemInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FileSystemInfo.h; path = ../../FileSystemInfo/Cocos2d/FileSystemInfo.h; sourceTree = "<group>"; };
+		D7F5FDEA15AAD0A600D197A4 /* libMyGUICommon.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMyGUICommon.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		D7F5FDED15AAD0A600D197A4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		D7F5FDF115AAD0A600D197A4 /* MyGUICommon-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MyGUICommon-Prefix.pch"; sourceTree = "<group>"; };
+		D7F5FE0015AAD0D700D197A4 /* BaseManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BaseManager.cpp; path = ../../Base/Cocos2d/BaseManager.cpp; sourceTree = "<group>"; };
+		D7F5FE0215AAD0F100D197A4 /* FileSystemInfo_ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = FileSystemInfo_ios.mm; path = ../../FileSystemInfo/Cocos2d/FileSystemInfo_ios.mm; sourceTree = "<group>"; };
+		D7F5FE0415AAD0FC00D197A4 /* InputManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = InputManager.cpp; path = ../../Input/Cocos2d/InputManager.cpp; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D7F5FDE715AAD0A600D197A4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D7F5FDEE15AAD0A600D197A4 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D7F5FDDF15AAD0A600D197A4 = {
+			isa = PBXGroup;
+			children = (
+				D7F5FDF015AAD0A600D197A4 /* Supporting Files */,
+				D7F5FDEF15AAD0A600D197A4 /* MyGUICommon */,
+				D7F5FDEC15AAD0A600D197A4 /* Frameworks */,
+				D7F5FDEB15AAD0A600D197A4 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D7F5FDEB15AAD0A600D197A4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D7F5FDEA15AAD0A600D197A4 /* libMyGUICommon.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D7F5FDEC15AAD0A600D197A4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D7F5FDED15AAD0A600D197A4 /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D7F5FDEF15AAD0A600D197A4 /* MyGUICommon */ = {
+			isa = PBXGroup;
+			children = (
+				D71E4646165E404300ABB57E /* RenderBox.cpp */,
+				D71E4647165E404300ABB57E /* RenderBox.h */,
+				D7217C3F15AD381C009D03FF /* FileSystemInfo.h */,
+				D7F5FE0415AAD0FC00D197A4 /* InputManager.cpp */,
+				D7F5FE0215AAD0F100D197A4 /* FileSystemInfo_ios.mm */,
+				D7F5FE0015AAD0D700D197A4 /* BaseManager.cpp */,
+			);
+			path = MyGUICommon;
+			sourceTree = "<group>";
+		};
+		D7F5FDF015AAD0A600D197A4 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D7F5FDF115AAD0A600D197A4 /* MyGUICommon-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			path = MyGUICommon;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		D7F5FDE815AAD0A600D197A4 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D7217C4015AD381C009D03FF /* FileSystemInfo.h in Headers */,
+				D71E4649165E404300ABB57E /* RenderBox.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		D7F5FDE915AAD0A600D197A4 /* MyGUICommon */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D7F5FDF715AAD0A600D197A4 /* Build configuration list for PBXNativeTarget "MyGUICommon" */;
+			buildPhases = (
+				D7F5FDE615AAD0A600D197A4 /* Sources */,
+				D7F5FDE715AAD0A600D197A4 /* Frameworks */,
+				D7F5FDE815AAD0A600D197A4 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MyGUICommon;
+			productName = MyGUICommon;
+			productReference = D7F5FDEA15AAD0A600D197A4 /* libMyGUICommon.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D7F5FDE115AAD0A600D197A4 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0430;
+			};
+			buildConfigurationList = D7F5FDE415AAD0A600D197A4 /* Build configuration list for PBXProject "MyGUICommon" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = D7F5FDDF15AAD0A600D197A4;
+			productRefGroup = D7F5FDEB15AAD0A600D197A4 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D7F5FDE915AAD0A600D197A4 /* MyGUICommon */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D7F5FDE615AAD0A600D197A4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D7F5FE0115AAD0D700D197A4 /* BaseManager.cpp in Sources */,
+				D7F5FE0315AAD0F100D197A4 /* FileSystemInfo_ios.mm in Sources */,
+				D7F5FE0515AAD0FC00D197A4 /* InputManager.cpp in Sources */,
+				D71E4648165E404300ABB57E /* RenderBox.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		D7F5FDF515AAD0A600D197A4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		D7F5FDF615AAD0A600D197A4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D7F5FDF815AAD0A600D197A4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/MyGUICommon.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MyGUICommon/MyGUICommon-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					USE_FILE32API,
+					CC_TARGET_OS_IPHONE,
+					IOS,
+				);
+				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = "";
+				HEADER_SEARCH_PATHS = (
+					"\"../Input/Cocos2d\"",
+					"\"../\"",
+					"\"../../MyGUIEngine/include\"",
+					"\"../../../cocos2d-x/cocos2dx/include\"",
+					"\"../../../cocos2d-x/cocos2dx/platform/ios\"",
+					"\"../../../cocos2d-x/cocos2dx\"",
+					"\"../../../cocos2d-x/cocos2dx/kazmath/include\"",
+					"\"../../Platforms/Cocos2d/Cocos2dPlatform/include\"",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		D7F5FDF915AAD0A600D197A4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/MyGUICommon.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MyGUICommon/MyGUICommon-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					USE_FILE32API,
+					CC_TARGET_OS_IPHONE,
+					IOS,
+				);
+				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = "";
+				HEADER_SEARCH_PATHS = (
+					"\"../Input/Cocos2d\"",
+					"\"../\"",
+					"\"../../MyGUIEngine/include\"",
+					"\"../../../cocos2d-x/cocos2dx/include\"",
+					"\"../../../cocos2d-x/cocos2dx/platform/ios\"",
+					"\"../../../cocos2d-x/cocos2dx\"",
+					"\"../../../cocos2d-x/cocos2dx/kazmath/include\"",
+					"\"../../Platforms/Cocos2d/Cocos2dPlatform/include\"",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D7F5FDE415AAD0A600D197A4 /* Build configuration list for PBXProject "MyGUICommon" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D7F5FDF515AAD0A600D197A4 /* Debug */,
+				D7F5FDF615AAD0A600D197A4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D7F5FDF715AAD0A600D197A4 /* Build configuration list for PBXNativeTarget "MyGUICommon" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D7F5FDF815AAD0A600D197A4 /* Debug */,
+				D7F5FDF915AAD0A600D197A4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D7F5FDE115AAD0A600D197A4 /* Project object */;
+}

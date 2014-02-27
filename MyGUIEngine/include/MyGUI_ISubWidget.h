@@ -66,6 +66,7 @@ namespace MyGUI
 
 		virtual void _updateView() { }
 		virtual void _correctView() { }
+		virtual void _correctTextView() { }
 
 		virtual void _setAlign(const IntSize& _oldsize)  { }
 

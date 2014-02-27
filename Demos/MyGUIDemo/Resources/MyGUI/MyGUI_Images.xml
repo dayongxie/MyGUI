@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Resource" version="1.1">
+	<Resource type="ResourceImageSet" name="MaleStand">
+		<Group name="Pointer" texture="male_stand.png" size="62 132">
+			<Index name="Pointer" rate="0.03">
+				<Frame point="0 0"/>
+				<Frame point="62 0"/>
+				<Frame point="124 0"/>
+				<Frame point="186 0"/>
+				<Frame point="248 0"/>
+				<Frame point="310 0"/>
+				<Frame point="372 0"/>
+				<Frame point="434 0"/>
+				<Frame point="496 0"/>
+				<Frame point="558 0"/>
+			</Index>
+		</Group>
+	</Resource>
+	<Resource type="ResourceImageSet" name="FemaleStand">
+		<Group name="Pointer" texture="female_1_stand.png" size="47 113">
+			<Index name="Pointer" rate="0.03">
+				<Frame point="0 0"/>
+				<Frame point="47 0"/>
+				<Frame point="94 0"/>
+				<Frame point="141 0"/>
+				<Frame point="188 0"/>
+				<Frame point="235 0"/>
+				<Frame point="282 0"/>
+				<Frame point="329 0"/>
+				<Frame point="376 0"/>
+				<Frame point="423 0"/>
+			</Index>
+		</Group>
+	</Resource>
+</MyGUI>

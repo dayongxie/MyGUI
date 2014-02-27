@@ -3,4 +3,5 @@
 	<List file="StrangeButtonPlugin.xml"/>
 	<List file="HikariWidgetPlugin.xml"/>
 	<List file="BerkeliumWidgetPlugin.xml"/>
+	<List file="MyGUIExtPlugin.xml"/>
 </MyGUI>

@@ -26,6 +26,7 @@
 
 #include "MyGUI_ResourceManualFont.h"
 #include "MyGUI_ResourceTrueTypeFont.h"
+#include "MyGUI_ResourceNativeFont.h"
 
 namespace MyGUI
 {
@@ -51,6 +52,7 @@ namespace MyGUI
 		std::string resourceCategory = ResourceManager::getInstance().getCategoryName();
 		FactoryManager::getInstance().registerFactory<ResourceManualFont>(resourceCategory);
 		FactoryManager::getInstance().registerFactory<ResourceTrueTypeFont>(resourceCategory);
+		FactoryManager::getInstance().registerFactory<ResourceNativeFont>(resourceCategory);
 
 		mDefaultName = "Default";
 
@@ -86,11 +88,7 @@ namespace MyGUI
 			{
 				const std::string& key = node->findAttribute("key");
 				const std::string& value = node->findAttribute("value");
-#ifdef MYGUI_USE_FREETYPE
 				if (key == "Default")
-#else
-				if (key == "DefaultGenerated")
-#endif
 					mDefaultName = value;
 			}
 		}

@@ -24,6 +24,7 @@
 #include "MyGUI_ResourceManager.h"
 #include "MyGUI_FactoryManager.h"
 #include "MyGUI_WidgetManager.h"
+#include "MyGUI_Timer.h"
 
 namespace MyGUI
 {

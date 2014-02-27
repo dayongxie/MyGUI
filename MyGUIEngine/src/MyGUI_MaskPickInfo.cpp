@@ -36,11 +36,16 @@ namespace MyGUI
 
 	bool MaskPickInfo::load(const std::string& _file)
 	{
-		if (!DataManager::getInstance().isDataExist(_file))
-			return false;
-
 		RenderManager& render = RenderManager::getInstance();
-		ITexture* texture = render.createTexture(_file);
+		ITexture* texture = render.getTexture(_file);
+		if (texture == nullptr)
+		{
+			if (!DataManager::getInstance().isDataExist(_file))
+				return false;
+
+			texture = render.createTexture(_file);
+		}
+
 		texture->loadFromFile(_file);
 
 		uint8* buffer = (uint8*)texture->lock(TextureUsage::Read);

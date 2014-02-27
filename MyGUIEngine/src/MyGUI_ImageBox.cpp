@@ -27,6 +27,7 @@
 #include "MyGUI_RotatingSkin.h"
 #include "MyGUI_Gui.h"
 #include "MyGUI_TextureUtility.h"
+#include "MyGUI_ImageSkin.h"
 
 namespace MyGUI
 {
@@ -110,12 +111,17 @@ namespace MyGUI
 	{
 		mCurrentTextureName = _texture;
 		mSizeTexture = texture_utility::getTextureSize(mCurrentTextureName);
+		mSizeTextureContent = texture_utility::getTextureContentSize(mCurrentTextureName);
 
 		// если первый раз, то ставим во всю текстуру
 		if (mItems.empty())
 		{
-			_setUVSet(FloatRect(0, 0, 1, 1));
+			FloatRect uvRc(0, 0, 1, 1);
+			uvRc.right = float(mSizeTextureContent.width) / float(mSizeTexture.width);
+			uvRc.bottom = float(mSizeTextureContent.height) / float(mSizeTexture.height);
 			_setTextureName(mCurrentTextureName);
+			_setSkinSize(mSizeTextureContent);
+			_setUVSet(uvRc);
 		}
 		else
 		{
@@ -189,7 +195,9 @@ namespace MyGUI
 
 		if ( ! iter->images.empty())
 		{
-			_setUVSet(iter->images.front());
+			const FloatRect& _rect = iter->images.front();
+			_setSkinSize(IntSize(mSizeTexture.width * _rect.width(), mSizeTexture.height * _rect.height()));
+			_setUVSet(_rect);
 		}
 	}
 
@@ -433,6 +441,16 @@ namespace MyGUI
 		else setItemResourceInfo(mResource->getIndexInfo(mItemGroup, mItemName));
 	}
 
+	const char* ImageBox::getItemGroup() const
+	{
+		return mItemGroup.c_str();
+	}
+
+	const char* ImageBox::getItemName() const
+	{
+		return mItemName.c_str();
+	}
+
 	void ImageBox::setItemResourceInfo(ResourceImageSetPtr _resource, const std::string& _group, const std::string& _name)
 	{
 		mResource = _resource;
@@ -484,8 +502,39 @@ namespace MyGUI
 
 	void ImageBox::_setUVSet(const FloatRect& _rect)
 	{
-		if (nullptr != getSubWidgetMain())
-			getSubWidgetMain()->_setUVSet(_rect);
+		ISubWidgetRect* subWidget = getSubWidgetMain();
+		if (subWidget)
+		{
+			subWidget->_setUVSet(_rect);
+		}
+	}
+
+	void ImageBox::_setSkinSize( const IntSize& __s )
+	{
+		ISubWidgetRect* subWidget = getSubWidgetMain();
+		if (subWidget)
+		{
+			ImageSkin* imgSkin = subWidget->castType<ImageSkin>(false);
+			if (imgSkin)
+			{
+				IntSize s = __s;
+				if (mSizeDisplay.width)
+					s.width = mSizeDisplay.width;
+				if (mSizeDisplay.height)
+					s.height = mSizeDisplay.height;
+
+				imgSkin->setImageSize(s);
+			}
+		}
+	}
+
+	void ImageBox::setImageAlign(Align align)
+	{
+		ISubWidgetRect* subWidget = getSubWidgetMain();
+		if (subWidget)
+		{
+			subWidget->setAlign(align);
+		}
 	}
 
 	void ImageBox::setPropertyOverride(const std::string& _key, const std::string& _value)
@@ -493,6 +542,9 @@ namespace MyGUI
 		/// @wproperty{ImageBox, ImageTexture, string} Текстура для виджета.
 		if (_key == "ImageTexture")
 			setImageTexture(_value);
+
+		else if (_key == "DisplaySize")
+			setDisplaySize(utility::parseValue<IntSize>(_value));
 
 		/// @wproperty{ImageBox, ImageCoord, int int int int} Координаты в текстуре.
 		else if (_key == "ImageCoord")
@@ -517,7 +569,8 @@ namespace MyGUI
 		/// @wproperty{ImageBox, ImageName, string} Имя картинки в группе ресурса.
 		else if (_key == "ImageName")
 			setItemName(_value);
-
+		else if (_key == "ImageAlign")
+			setImageAlign(Align::parse(_value));
 		else
 		{
 			Base::setPropertyOverride(_key, _value);
@@ -550,6 +603,12 @@ namespace MyGUI
 	ResourceImageSetPtr ImageBox::getItemResource() const
 	{
 		return mResource;
+	}
+
+	void ImageBox::setDisplaySize( const IntSize& _size )
+	{
+		mSizeDisplay = _size;
+		updateSelectIndex(mIndexSelect);
 	}
 
 } // namespace MyGUI

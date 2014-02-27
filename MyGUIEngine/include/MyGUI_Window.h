@@ -110,13 +110,15 @@ namespace MyGUI
 		/** Get possibility to move window. */
 		bool getMovable() const;
 
+		MyGUI::Widget* getButtonByEvent(const char* event);
+
 		/*events:*/
 		/** Event : Window button pressed.\n
 			signature : void method(MyGUI::Window* _sender, const std::string& _name)
 			@param _sender widget that called this event
 			@param _name of pressed button
 		*/
-		EventPair<EventHandle_WidgetString, EventHandle_WindowPtrCStringRef>
+		EventHandle_WindowPtrCStringRef
 			eventWindowButtonPressed;
 
 		/** Event : Window coordinate changed (window was resized or moved).\n

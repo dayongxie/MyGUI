@@ -8,7 +8,10 @@
 		<BasisSkin type="SimpleText" offset="0 0 16 16" align="Stretch"/>
 	</Resource>
 	<Resource type="ResourceSkin" name="ImageBox" size="16 16">
-		<BasisSkin type="MainSkin" offset="0 0 16 16"/>
+		<BasisSkin type="ImageSkin" offset="0 0 16 16" align="Stretch"/>
+	</Resource>
+	<Resource type="ResourceSkin" name="ImageView" size="16 16">
+		<BasisSkin type="ImageSkin" offset="0 0 16 16" align="Center"/>
 	</Resource>
 	<Resource type="ResourceSkin" name="Canvas" size="16 16">
 		<BasisSkin type="MainSkin" offset="0 0 16 16"/>

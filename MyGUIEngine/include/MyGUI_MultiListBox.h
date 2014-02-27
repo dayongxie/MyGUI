@@ -171,6 +171,13 @@ namespace MyGUI
 			return mVectorColumnInfo[_index].data.castType<ValueType>(_throw);
 		}
 
+		// Change list skin
+		void setColumnListSkin(size_t index, const char* skinName);
+		// Change Item skin
+		void setColumnItemSkin(size_t index, const char* skinName);
+		// get listbox
+		ListBox* getColumnListBox(size_t index);
+
 		//------------------------------------------------------------------------------//
 		// Methods for work with lines (RU:методы для работы со строками)
 		/** @note
@@ -294,6 +301,14 @@ namespace MyGUI
 		EventPair<EventHandle_WidgetSizeT, EventHandle_MultiListPtrSizeT>
 			eventListChangePosition;
 
+		/** Event : Item was selected by mouse.\n
+			signature : void method(MyGUI::ListBox* _sender, size_t _index)\n
+			@param _sender widget that called this event
+			@param _index index of selected item
+		*/
+		EventPair<EventHandle_WidgetSizeT, EventHandle_MultiListPtrSizeT>
+			eventListMouseItemActivate;
+
 		/** Event : Less than operator for sort multilist by columns.\n
 			signature : void method(MyGUI::MultiListBox* _sender, size_t _column, const UString& _firstItem, const UString& _secondItem, bool& _less)\n
 			@param _sender widget that called this event
@@ -323,6 +338,7 @@ namespace MyGUI
 
 	private:
 		void notifyListChangePosition(ListBox* _sender, size_t _position);
+		void notifyListMouseItemActivate(ListBox* _sender, size_t _position);
 		void notifyListChangeFocus(ListBox* _sender, size_t _position);
 		void notifyListChangeScrollPosition(ListBox* _sender, size_t _position);
 		void notifyButtonClick(Widget* _sender);

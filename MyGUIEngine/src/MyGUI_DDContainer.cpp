@@ -252,7 +252,7 @@ namespace MyGUI
 
 		if (mDropItem)
 		{
-			mDropItem->setCoord(point.left - mClickInWidget.left + mDropDimension.left, point.top - mClickInWidget.top + mDropDimension.top, mDropDimension.width, mDropDimension.height);
+			mDropItem->setCoord(point.left + mDropDimension.left, point.top + mDropDimension.top, mDropDimension.width, mDropDimension.height);
 			mDropItem->setVisible(true);
 		}
 	}

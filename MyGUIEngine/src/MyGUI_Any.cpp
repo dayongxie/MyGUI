@@ -27,6 +27,7 @@ namespace MyGUI
 {
 
 	Any::AnyEmpty Any::Null;
+	Any Any::EmptyValue;
 
 	Any::Any() :
 		mContent(nullptr)

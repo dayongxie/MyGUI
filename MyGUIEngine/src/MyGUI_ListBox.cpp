@@ -958,6 +958,11 @@ namespace MyGUI
 		return (int)((mCoord.height - _getClientWidget()->getHeight()) + (mItemsInfo.size() * mHeightLine));
 	}
 
+	int ListBox::getLineHeight() const
+	{
+		return mHeightLine;
+	}
+
 	Widget* ListBox::_getClientWidget()
 	{
 		return mClient == nullptr ? this : mClient;

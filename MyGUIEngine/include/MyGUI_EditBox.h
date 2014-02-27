@@ -28,6 +28,7 @@
 #include "MyGUI_TextIterator.h"
 #include "MyGUI_EventPair.h"
 #include "MyGUI_ScrollViewBase.h"
+#include "MyGUI_IMEManager.h"
 
 namespace MyGUI
 {
@@ -40,6 +41,7 @@ namespace MyGUI
 	class MYGUI_EXPORT EditBox :
 		public TextBox,
 		public ScrollViewBase,
+		public IMEHandler,
 		public MemberObsolete<EditBox>
 	{
 		MYGUI_RTTI_DERIVED( EditBox )
@@ -253,19 +255,37 @@ namespace MyGUI
 		//! @copydoc TextBox::setTextShadow
 		virtual void setTextShadow(bool _value);
 
+		virtual void setTextShadowOffset(const FloatPoint& _value);
+
+		/* implementation of IMEHandler */
+
+		virtual bool canAttachWithIME();
+		virtual void didAttachWithIME();
+		virtual bool canDetachWithIME();
+		virtual void didDetachWithIME();
+		virtual void insertText(const char * text, int len);
+		virtual void deleteBackward();
+		virtual void deleteForward();
+		virtual const char * getContentText();
+		virtual int getContentTextCursor();
+
+		virtual void adaptCoord();
+
 		/*events:*/
 		/** Event : Enter pressed (Ctrl+enter in multiline mode).\n
 			signature : void method(MyGUI::EditBox* _sender)
 			@param _sender widget that called this event
 		*/
-		EventPair<EventHandle_WidgetVoid, EventHandle_EditPtr>
+	//	EventPair<EventHandle_WidgetVoid, EventHandle_EditPtr>
+		EventHandle_EditPtr
 			eventEditSelectAccept;
 
 		/** Event : Text changed.\n
 			signature : void method(MyGUI::EditBox* _sender)
 			@param _sender widget that called this event
 		*/
-		EventPair<EventHandle_WidgetVoid, EventHandle_EditPtr>
+	//	EventPair<EventHandle_WidgetVoid, EventHandle_EditPtr>
+		EventHandle_EditPtr
 			eventEditTextChange;
 
 	protected:
@@ -283,6 +303,7 @@ namespace MyGUI
 		void notifyMouseLostFocus(Widget* _sender, Widget* _new);
 		void notifyMousePressed(Widget* _sender, int _left, int _top, MouseButton _id);
 		void notifyMouseReleased(Widget* _sender, int _left, int _top, MouseButton _id);
+		void notifyMouseClick(Widget* _sender);
 		void notifyMouseDrag(Widget* _sender, int _left, int _top, MouseButton _id);
 		void notifyMouseButtonDoubleClick(Widget* _sender);
 

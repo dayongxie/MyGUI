@@ -64,7 +64,7 @@ namespace MyGUI
 		void attachToLayerItemNode(ILayerNode* _node, bool _deep);
 		void detachFromLayerItemNode(bool _deep);
 
-	private:
+	protected:
 		// актуально для рутового виджета
 		ILayer* mLayer;
 		// конкретный айтем находящийся в слое

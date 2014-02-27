@@ -74,9 +74,23 @@ namespace MyGUI
 		mMapUserString.clear();
 	}
 
+	Any& UserData::getUserDataset(const std::string& _key)
+	{
+		std::map<std::string, Any>::iterator iter = mMapUserData.find(_key);
+		if (iter != mMapUserData.end())
+			return iter->second;
+
+		return Any::EmptyValue;
+	}
+
 	void UserData::setUserData(Any _data)
 	{
 		mUserData = _data;
+	}
+
+	void UserData::setUserDataset( const std::string _key, Any _data )
+	{
+		mMapUserData[_key] = _data;
 	}
 
 	void UserData::_setInternalData(Any _data)

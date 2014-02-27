@@ -67,6 +67,10 @@ elseif(MYGUI_RENDERSYSTEM EQUAL 6)
 		find_package(DirectX11)
 		macro_log_feature(DirectX_FOUND "DirectX11" "Support for the DirectX11 render system" "http://msdn.microsoft.com/en-us/directx/" TRUE "" "")
 	endif()
+elseif(MYGUI_RENDERSYSTEM EQUAL 7)
+	find_package(OpenGL)
+	find_package(Cocos2d)
+	macro_log_feature(COCOS2D_FOUND "cocos2d" "Support for the Cocos2d render system" "" TRUE "" "")
 endif()
 
 #######################################################################

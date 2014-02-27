@@ -548,6 +548,12 @@ namespace MyGUI
 		return mItemsInfo[_index].item;
 	}
 
+	Button* TabControl::getButtonAt(size_t _index)
+	{
+		MYGUI_ASSERT_RANGE(_index, mItemButton.size(), "TabControl::getButtonAt");
+		return mItemButton[_index];
+	}
+
 	void TabControl::removeItemAt(size_t _index)
 	{
 		MYGUI_ASSERT_RANGE(_index, mItemsInfo.size(), "TabControl::removeItemAt");

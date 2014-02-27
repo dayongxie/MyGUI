@@ -22,7 +22,9 @@
 #include "MyGUI_Precompiled.h"
 #include "MyGUI_Gui.h"
 #include "MyGUI_Widget.h"
+#include "MyGUI_TextBox.h"
 
+#include "MyGUI_PathsManager.h"
 #include "MyGUI_InputManager.h"
 #include "MyGUI_SubWidgetManager.h"
 #include "MyGUI_LogManager.h"
@@ -50,6 +52,7 @@ namespace MyGUI
 	template <> const char* Singleton<Gui>::mClassTypeName = "Gui";
 
 	Gui::Gui() :
+		mPathsManager(nullptr),
 		mInputManager(nullptr),
 		mSubWidgetManager(nullptr),
 		mLayerManager(nullptr),
@@ -89,6 +92,7 @@ namespace MyGUI
 #endif
 
 		// создаем и инициализируем синглтоны
+		mPathsManager = new PathsManager();
 		mResourceManager = new ResourceManager();
 		mLayerManager = new LayerManager();
 		mWidgetManager = new WidgetManager();
@@ -106,6 +110,7 @@ namespace MyGUI
 		mFactoryManager = new FactoryManager();
 		mToolTipManager = new ToolTipManager();
 
+		mPathsManager->initialise();
 		mResourceManager->initialise();
 		mLayerManager->initialise();
 		mWidgetManager->initialise();
@@ -170,6 +175,7 @@ namespace MyGUI
 
 		WidgetManager::getInstance().unregisterUnlinker(this);
 		mWidgetManager->shutdown();
+		mPathsManager->shutdown();
 
 		delete mPointerManager;
 		delete mWidgetManager;
@@ -187,6 +193,7 @@ namespace MyGUI
 		delete mResourceManager;
 		delete mFactoryManager;
 		delete mToolTipManager;
+		delete mPathsManager;
 
 		// сбрасываем кеш
 		texture_utility::getTextureSize("", false);
@@ -204,7 +211,9 @@ namespace MyGUI
 
 		// присоединяем виджет с уровню
 		if (!_layer.empty())
+		{
 			LayerManager::getInstance().attachToLayerNode(_layer, widget);
+		}
 		return widget;
 	}
 
@@ -313,6 +322,12 @@ namespace MyGUI
 	{
 		return createWidgetT(_type, _skin, IntCoord(_left, _top, _width, _height), _align, _layer, _name);
 	}
+
+	Widget* Gui::createWidgetT(WidgetStyle style, const std::string& _type, const std::string& _skin, const IntCoord& _coord, Align _align, const std::string& _layer, const std::string& _name /*= ""*/ )
+	{
+		return baseCreateWidget(style, _type, _skin, _coord, _align, _layer, _name);
+	}
+
 	/** Create widget using coordinates relative to parent widget. see Gui::createWidgetT */
 	Widget* Gui::createWidgetRealT(const std::string& _type, const std::string& _skin, const FloatCoord& _coord, Align _align, const std::string& _layer, const std::string& _name)
 	{
@@ -349,6 +364,38 @@ namespace MyGUI
 	void Gui::frameEvent(float _time)
 	{
 		eventFrameStart(_time);
+	}
+	
+	void Gui::correctTextView()
+	{
+		EnumeratorWidgetPtr widget = getEnumerator();
+		while (widget.next())
+		{
+			widget->_correctTextView();
+		}
+	}
+
+	static void printWidgetIter(Widget* widget, int depth, const std::string& space)
+	{
+		if (depth < 0) return;
+		TextBox* textbox = widget->castType<TextBox>(false);
+		if (textbox)
+			MYGUI_LOG(Info, space << widget->getClassTypeName() << ":" << widget->getName() << " caption:" << textbox->getCaption());
+		else
+			MYGUI_LOG(Info, space << widget->getClassTypeName() << ":" << widget->getName());
+
+		for (unsigned i = 0; i < widget->getChildCount(); ++i)
+		{
+			printWidgetIter(widget->getChildAt(i), depth - 1, space + " ");
+		}
+	}
+
+	void Gui::printAllWidget(int depth)
+	{
+		for (unsigned i = 0; i < mWidgetChild.size(); ++i)
+		{
+			printWidgetIter(mWidgetChild[i], depth, "");
+		}
 	}
 
 } // namespace MyGUI

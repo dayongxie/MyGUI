@@ -36,6 +36,17 @@
 #include <string>
 #include <stdexcept>
 
+// gnu libstdc++ have not implement wstring and wostream
+#if defined(_GLIBCXX_OSTREAM) && !defined(STD_WSTRING_DEFINED)
+#define STD_WSTRING_DEFINED
+
+namespace std
+{
+	typedef basic_string<wchar_t> wstring;
+	typedef basic_ostream<wchar_t> wostream;
+}
+#endif
+
 #if MYGUI_COMPILER == MYGUI_COMPILER_MSVC
 // disable: warning C4275: non dll-interface class '***' used as base for dll-interface clas '***'
 #	pragma warning (disable : 4275)

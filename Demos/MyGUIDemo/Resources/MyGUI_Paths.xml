@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<MyGUI>
+  <Tag name="MyGUI_BlackBlueImages.xml">MyGUI/MyGUI_BlackBlueImages.xml</Tag>
+  <Tag name="MyGUI_BlackBlueSkins.png">MyGUI/MyGUI_BlackBlueSkins.png</Tag>
+  <Tag name="MyGUI_BlackBlueSkins.xml">MyGUI/MyGUI_BlackBlueSkins.xml</Tag>
+  <Tag name="MyGUI_BlackBlueTemplates.xml">MyGUI/MyGUI_BlackBlueTemplates.xml</Tag>
+  <Tag name="MyGUI_BlackBlueTheme.xml">MyGUI/MyGUI_BlackBlueTheme.xml</Tag>
+  <Tag name="MyGUI_CommonSkins.xml">MyGUI/MyGUI_CommonSkins.xml</Tag>
+  <Tag name="MyGUI_Core.xml">MyGUI/MyGUI_Core.xml</Tag>
+  <Tag name="MyGUI_Fonts.xml">MyGUI/MyGUI_Fonts.xml</Tag>
+  <Tag name="MyGUI_Images.xml">MyGUI/MyGUI_Images.xml</Tag>
+  <Tag name="MyGUI_Layers.xml">MyGUI/MyGUI_Layers.xml</Tag>
+  <Tag name="MyGUI_Settings.xml">MyGUI/MyGUI_Settings.xml</Tag>
+  <Tag name="ColourWindow.layout">MyGUI/layout/ColourWindow.layout</Tag>
+  <Tag name="ColourWindowCellView.layout">MyGUI/layout/ColourWindowCellView.layout</Tag>
+  <Tag name="EditorWindow.layout">MyGUI/layout/EditorWindow.layout</Tag>
+  <Tag name="InformationWindow.layout">MyGUI/layout/InformationWindow.layout</Tag>
+  <Tag name="MainPanel.layout">MyGUI/layout/MainPanel.layout</Tag>
+  <Tag name="DejaVuSans.ttf">MyGUI/font/DejaVuSans.ttf</Tag>
+</MyGUI>

@@ -273,6 +273,11 @@ namespace MyGUI
 		eventListChangePosition(this, mItemSelected);
 	}
 
+	void MultiListBox::notifyListMouseItemActivate(ListBox* _sender, size_t _position)
+	{
+		eventListMouseItemActivate(this, BiIndexBase::convertToFace(_position));
+	}
+
 	void MultiListBox::notifyListSelectAccept(ListBox* _sender, size_t _position)
 	{
 		// наш евент
@@ -542,6 +547,24 @@ namespace MyGUI
 		setColumnDataAt(_index, Any::Null);
 	}
 
+	void MultiListBox::setColumnListSkin(size_t index, const char* skinName)
+	{
+		MYGUI_ASSERT_RANGE(index, mVectorColumnInfo.size(), "MultiListBox::setColumnListSkin");
+		mVectorColumnInfo[index].list->changeWidgetSkin(skinName);
+	}
+
+	void MultiListBox::setColumnItemSkin(size_t index, const char* skinName)
+	{
+		MYGUI_ASSERT_RANGE(index, mVectorColumnInfo.size(), "MultiListBox::setColumnItemSkin");
+		mVectorColumnInfo[index].item->changeWidgetSkin(skinName);
+	}
+
+	ListBox* MultiListBox::getColumnListBox(size_t index)
+	{
+		MYGUI_ASSERT_RANGE(index, mVectorColumnInfo.size(), "MultiListBox::getColumnListbox");
+		return mVectorColumnInfo[index].list;
+	}
+
 	void MultiListBox::addItem(const UString& _name, Any _data)
 	{
 		insertItemAt(ITEM_NONE, _name, _data);
@@ -717,6 +740,7 @@ namespace MyGUI
 		column.item = _item;
 		column.list = _item->createWidget<ListBox>(mSkinList, IntCoord(0, 0, _item->getWidth(), _item->getHeight()), Align::Stretch);
 		column.list->eventListChangePosition += newDelegate(this, &MultiListBox::notifyListChangePosition);
+		column.list->eventListMouseItemActivate += newDelegate(this, &MultiListBox::notifyListMouseItemActivate);
 		column.list->eventListMouseItemFocus += newDelegate(this, &MultiListBox::notifyListChangeFocus);
 		column.list->eventListChangeScroll += newDelegate(this, &MultiListBox::notifyListChangeScrollPosition);
 		column.list->eventListSelectAccept += newDelegate(this, &MultiListBox::notifyListSelectAccept);
@@ -726,7 +750,7 @@ namespace MyGUI
 		else
 			column.button = mClient->createWidget<Button>(mSkinButton, IntCoord(), Align::Default);
 
-		column.button->eventMouseButtonClick += newDelegate(this, &MultiListBox::notifyButtonClick);
+		//column.button->eventMouseButtonClick += newDelegate(this, &MultiListBox::notifyButtonClick);
 
 		// если уже были столбики, то делаем то же колличество полей
 		if (!mVectorColumnInfo.empty())

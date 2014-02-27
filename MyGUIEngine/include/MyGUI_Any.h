@@ -81,6 +81,7 @@ namespace MyGUI
 	public:
 		struct AnyEmpty { };
 		static AnyEmpty Null;
+		static Any EmptyValue;
 
 		Any();
 		Any(const Any::AnyEmpty& value);

@@ -32,8 +32,8 @@ namespace MyGUI
 	public:
 		RenderTargetInfo() :
 			maximumDepth(0),
-			pixScaleX(1),
-			pixScaleY(1),
+			pixWidth(1),
+			pixHeight(1),
 			hOffset(0),
 			vOffset(0),
 			aspectCoef(1),
@@ -50,8 +50,14 @@ namespace MyGUI
 
 	public:
 		float maximumDepth;
-		float pixScaleX;
-		float pixScaleY;
+		union {
+			//float pixScaleX;
+			float pixWidth;
+		};
+		union {
+			//float pixScaleY;
+			float pixHeight;
+		};
 		float hOffset;
 		float vOffset;
 		float aspectCoef;

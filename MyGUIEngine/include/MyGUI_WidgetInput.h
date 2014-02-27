@@ -59,6 +59,14 @@ namespace MyGUI
 	@endcode
 	*/
 
+	template<>
+	inline void ScriptBridge::push<MouseButton>(MouseButton arg)
+	{ mProtocol->pushInt(arg.getValue()); }
+
+	template<>
+	inline void ScriptBridge::push<KeyCode>(KeyCode arg)
+	{ mProtocol->pushInt(arg.getValue()); }
+
 	// делегаты для событий виджета
 	typedef delegates::CMultiDelegate1<Widget*> EventHandle_WidgetVoid;
 	typedef delegates::CMultiDelegate2<Widget*, Widget*> EventHandle_WidgetWidget;

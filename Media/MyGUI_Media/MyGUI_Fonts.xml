@@ -1,6 +1,11 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Resource" version="1.1">
-	<Resource type="ResourceTrueTypeFont" name="DejaVuSansFont_15">
+	<Resource type="ResourceNativeFont" name="DejaVuSansFont_15">
+		<Property key="Source" value="Microsoft Yahei"/>
+		<Property key="Size" value="12"/>
+	</Resource>
+	
+	<!--Resource type="ResourceTrueTypeFont" name="DejaVuSansFont_15">
 		<Property key="Source" value="DejaVuSans.ttf"/>
 		<Property key="Size" value="10"/>
 		<Property key="Hinting" value="use_native"/>
@@ -14,5 +19,5 @@
 			<Code range="1025 1105"/>
 			<Code range="8470 8470"/>
 		</Codes>
-	</Resource>
+	</Resource-->
 </MyGUI>

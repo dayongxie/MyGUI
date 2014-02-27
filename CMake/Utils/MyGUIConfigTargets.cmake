@@ -104,12 +104,14 @@ function(mygui_app PROJECTNAME SOLUTIONFOLDER)
 	# Set up dependencies
 	if(MYGUI_RENDERSYSTEM EQUAL 1)
 		include_directories(../../Common/Base/Dummy)
+		include_directories(../../Common/FileSystemInfo/Default)
 		add_definitions("-DMYGUI_DUMMY_PLATFORM")
 		include_directories(
 			${MYGUI_SOURCE_DIR}/Platforms/Dummy/DummyPlatform/include
 		)
 	elseif(MYGUI_RENDERSYSTEM EQUAL 3)
 		include_directories(../../Common/Base/Ogre)
+		include_directories(../../Common/FileSystemInfo/Default)
 		add_definitions("-DMYGUI_OGRE_PLATFORM")
 		include_directories(
 			${MYGUI_SOURCE_DIR}/Platforms/Ogre/OgrePlatform/include
@@ -118,6 +120,7 @@ function(mygui_app PROJECTNAME SOLUTIONFOLDER)
 		link_directories(${OGRE_LIB_DIR})
 	elseif(MYGUI_RENDERSYSTEM EQUAL 4)
 		include_directories(../../Common/Base/OpenGL)
+		include_directories(../../Common/FileSystemInfo/Default)
 		add_definitions("-DMYGUI_OPENGL_PLATFORM")
 		include_directories(
 			${MYGUI_SOURCE_DIR}/Platforms/OpenGL/OpenGLPlatform/include
@@ -134,12 +137,23 @@ function(mygui_app PROJECTNAME SOLUTIONFOLDER)
 		link_directories(${DIRECTX_LIB_DIR})
 	elseif(MYGUI_RENDERSYSTEM EQUAL 6)
 		include_directories(../../Common/Base/DirectX11)
+		include_directories(../../Common/FileSystemInfo/Default)
 		add_definitions("-DMYGUI_DIRECTX11_PLATFORM")
 		include_directories(
 			${MYGUI_SOURCE_DIR}/Platforms/DirectX11/DirectX11Platform/include
 			${DirectX_INCLUDE_DIR}
 		)
 		link_directories(${DIRECTX_LIB_DIR})
+	elseif(MYGUI_RENDERSYSTEM EQUAL 7)
+		include_directories(../../Common/Base/Cocos2d)
+		include_directories(../../Common/FileSystemInfo/Cocos2d)
+		add_definitions("-DMYGUI_COCOS2D_PLATFORM")
+		include_directories(
+			${MYGUI_SOURCE_DIR}/Platforms/Cocos2d/Cocos2dPlatform/include
+			${COCOS2D_INCLUDE_DIR}
+			${COCOS2D_SOURCE_DIR}/kazmath/include
+		)
+		link_directories(${COCOS2D_LIB_DIR})
 	endif()
 	
 	if(MYGUI_SAMPLES_INPUT EQUAL 1)
@@ -153,6 +167,9 @@ function(mygui_app PROJECTNAME SOLUTIONFOLDER)
 		add_definitions("-DMYGUI_SAMPLES_INPUT_WIN32_OIS")
 		include_directories(../../Common/Input/Win32_OIS)
 		include_directories(${OIS_INCLUDE_DIRS})
+	elseif(MYGUI_SAMPLES_INPUT EQUAL 4)
+		add_definitions("-DMYGUI_SAMPLES_INPUT_COCOS2D")
+		include_directories(../../Common/Input/Cocos2d)
 	endif()
 	
 	# setup demo target
@@ -188,6 +205,9 @@ function(mygui_app PROJECTNAME SOLUTIONFOLDER)
 		target_link_libraries(${PROJECTNAME} MyGUI.OpenGLPlatform)
 		
 		target_link_libraries(${PROJECTNAME} gdiplus)
+	elseif(MYGUI_RENDERSYSTEM EQUAL 7)
+		add_dependencies(${PROJECTNAME} MyGUI.Cocos2dPlatform)
+		target_link_libraries(${PROJECTNAME} MyGUI.Cocos2dPlatform)
 	endif()
 	target_link_libraries(${PROJECTNAME}
 		MyGUIEngine
@@ -221,12 +241,14 @@ function(mygui_dll PROJECTNAME SOLUTIONFOLDER)
 	# Set up dependencies
 	if(MYGUI_RENDERSYSTEM EQUAL 1)
 		include_directories(../../Common/Base/Dummy)
+		include_directories(../../Common/FileSystemInfo/Default)
 		add_definitions("-DMYGUI_DUMMY_PLATFORM")
 		include_directories(
 			${MYGUI_SOURCE_DIR}/Platforms/Dummy/DummyPlatform/include
 		)
 	elseif(MYGUI_RENDERSYSTEM EQUAL 3)
 		include_directories(../../Common/Base/Ogre)
+		include_directories(../../Common/FileSystemInfo/Default)
 		add_definitions("-DMYGUI_OGRE_PLATFORM")
 		include_directories(
 			${MYGUI_SOURCE_DIR}/Platforms/Ogre/OgrePlatform/include
@@ -235,6 +257,7 @@ function(mygui_dll PROJECTNAME SOLUTIONFOLDER)
 		link_directories(${OGRE_LIB_DIR})
 	elseif(MYGUI_RENDERSYSTEM EQUAL 4)
 		include_directories(../../Common/Base/OpenGL)
+		include_directories(../../Common/FileSystemInfo/Default)
 		add_definitions("-DMYGUI_OPENGL_PLATFORM")
 		include_directories(
 			${MYGUI_SOURCE_DIR}/Platforms/OpenGL/OpenGLPlatform/include
@@ -243,6 +266,7 @@ function(mygui_dll PROJECTNAME SOLUTIONFOLDER)
 		link_directories(${OPENGL_LIB_DIR})
 	elseif(MYGUI_RENDERSYSTEM EQUAL 5)
 		include_directories(../../Common/Base/DirectX)
+		include_directories(../../Common/FileSystemInfo/Default)
 		add_definitions("-DMYGUI_DIRECTX_PLATFORM")
 		include_directories(
 			${MYGUI_SOURCE_DIR}/Platforms/DirectX/DirectXPlatform/include
@@ -251,12 +275,23 @@ function(mygui_dll PROJECTNAME SOLUTIONFOLDER)
 		link_directories(${DIRECTX_LIB_DIR})
 	elseif(MYGUI_RENDERSYSTEM EQUAL 6)
 		include_directories(../../Common/Base/DirectX11)
+		include_directories(../../Common/FileSystemInfo/Default)
 		add_definitions("-DMYGUI_DIRECTX11_PLATFORM")
 		include_directories(
 			${MYGUI_SOURCE_DIR}/Platforms/DirectX11/DirectX11Platform/include
 			${DirectX_INCLUDE_DIR}
 		)
 		link_directories(${DIRECTX_LIB_DIR})
+	elseif(MYGUI_RENDERSYSTEM EQUAL 7)
+		include_directories(../../Common/Base/Cocos2d)
+		include_directories(../../Common/FileSystemInfo/Cocos2d)
+		add_definitions("-DMYGUI_COCOS2D_PLATFORM")
+		include_directories(
+			${MYGUI_SOURCE_DIR}/Platforms/Cocos2d/Cocos2dPlatform/include
+			${COCOS2D_INCLUDE_DIR}
+			${COCOS2D_SOURCE_DIR}/kazmath/include
+		)
+		link_directories(${COCOS2D_LIB_DIR})
 	endif()
 	
 		

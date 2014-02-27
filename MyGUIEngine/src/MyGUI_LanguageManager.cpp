@@ -331,6 +331,7 @@ namespace MyGUI
 									iter = line.insert(iter, '#') + size_t(len + 2);
 									end = line.end();
 									break;
+									//replacement = tag;
 								}
 							}
 

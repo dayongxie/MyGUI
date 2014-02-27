@@ -200,6 +200,9 @@ namespace MyGUI
 			next frame
 		*/
 		Widget* getWidgetByIndex(size_t _index);
+		
+		// get line height
+		int getLineHeight() const;
 
 		/*events:*/
 		/** Event : Enter pressed or double click.\n

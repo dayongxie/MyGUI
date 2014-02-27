@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI>
+	<MyGUI type="Widgets">
+		<Widget name="ScrollControl">
+			<Property key="DefaultSkin" value=""/>
+			<Property key="Skin" value="PanelEmpty" group="Plugin" name="ScrollControl"/>
+			<Property key="Parent" value="true"/>
+			<Property key="Child" value="true"/>
+			<Parameter key="ContentSize" value="2 int"/>
+			<Parameter key="ContentAlign" value="CanvasAlign"/>
+			<Parameter key="PageSize" value="2 int"/>
+			<Parameter key="ScrollOrientation" value="String"/>
+		</Widget>
+	</MyGUI>
+	<MyGUI type="Plugin">
+		<Plugin>
+			<Source>MyGUIExt.dll</Source>
+		</Plugin>
+	</MyGUI>
+</MyGUI>

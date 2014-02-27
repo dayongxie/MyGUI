@@ -1,0 +1,52 @@
+set (HEADER_FILES
+  include/MyGUI_Cocos2dIMEManager.h
+  include/MyGUI_Cocos2dDataManager.h
+  include/MyGUI_Cocos2dLogManager.h
+  include/MyGUI_Cocos2dDiagnostic.h
+  include/MyGUI_Cocos2dPlatform.h
+  include/MyGUI_Cocos2dRenderManager.h
+  include/MyGUI_Cocos2dTexture.h
+  include/MyGUI_Cocos2dRTTexture.h
+  include/MyGUI_Cocos2dVertexBuffer.h
+  include/MyGUI_Cocos2dFont.h
+)
+
+set (SOURCE_FILES
+  src/MyGUI_Cocos2dIMEManager.cpp
+  src/MyGUI_Cocos2dDataManager.cpp
+  src/MyGUI_Cocos2dLogManager.cpp
+  src/MyGUI_Cocos2dPlatform.cpp
+  src/MyGUI_Cocos2dRenderManager.cpp
+  src/MyGUI_Cocos2dTexture.cpp
+  src/MyGUI_Cocos2dRTTexture.cpp
+  src/MyGUI_Cocos2dVertexBuffer.cpp
+  src/MyGUI_Cocos2dFont.cpp
+)
+SOURCE_GROUP("Source Files" FILES
+  src/MyGUI_Cocos2dIMEManager.cpp
+  src/MyGUI_Cocos2dDataManager.cpp
+  src/MyGUI_Cocos2dLogManager.cpp
+  src/MyGUI_Cocos2dPlatform.cpp
+  src/MyGUI_Cocos2dRenderManager.cpp
+  src/MyGUI_Cocos2dTexture.cpp
+  src/MyGUI_Cocos2dRTTexture.cpp
+  src/MyGUI_Cocos2dVertexBuffer.cpp
+  src/MyGUI_Cocos2dFont.cpp
+  src/MyGUI_Cocos2dFont_win.cpp
+)
+SOURCE_GROUP("Header Files" FILES
+  include/MyGUI_Cocos2dIMEManager.h
+  include/MyGUI_Cocos2dDataManager.h
+  include/MyGUI_Cocos2dLogManager.h
+  include/MyGUI_Cocos2dDiagnostic.h
+  include/MyGUI_Cocos2dPlatform.h
+  include/MyGUI_Cocos2dRenderManager.h
+  include/MyGUI_Cocos2dTexture.h
+  include/MyGUI_Cocos2dRTTexture.h
+  include/MyGUI_Cocos2dVertexBuffer.h
+  include/MyGUI_Cocos2dFont.h
+  include/MyGUI_Cocos2dFont_win.h
+)
+SOURCE_GROUP("" FILES
+  CMakeLists.txt
+)

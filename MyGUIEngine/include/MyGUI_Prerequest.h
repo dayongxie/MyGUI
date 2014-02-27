@@ -70,6 +70,7 @@ namespace MyGUI
 	class FactoryManager;
 	class TextureManager;
 	class ToolTipManager;
+	class PathsManager;
 
 	class Widget;
 	class Button;

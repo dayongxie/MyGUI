@@ -23,6 +23,7 @@
 #define __MYGUI_LOG_LEVEL_H__
 
 #include "MyGUI_Prerequest.h"
+#include <iostream>
 
 namespace MyGUI
 {

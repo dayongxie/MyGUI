@@ -59,6 +59,8 @@ namespace MyGUI
 
 		virtual int getWidth() = 0;
 		virtual int getHeight() = 0;
+		virtual int getContentWidth() { return getWidth(); }
+		virtual int getContentHeight() { return getHeight(); }
 
 		virtual PixelFormat getFormat() = 0;
 		virtual TextureUsage getUsage() = 0;

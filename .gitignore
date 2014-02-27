@@ -1,2 +1,34 @@
+*.class
+.rules
+*.obl
+*.exe
+*.pdb
+*.ilk
+*.dll
+*.o
+*.o.d
+build.vs2010
 
-/build.vs2010
+# Ignore files build by ndk and eclipse
+libs/
+bin/
+obj/
+gen/
+assets/
+#.classpath
+#.project
+#.cproject
+local.properties
+
+# Ignore files build by xcode
+*.mode*v*
+*.pbxuser
+*.xcbkptlist
+*.xcscheme
+*.xcworkspacedata
+*.xcuserstate
+xcschememanagement.plist
+.DS_Store
+xcuserdata/
+
+build.ogre

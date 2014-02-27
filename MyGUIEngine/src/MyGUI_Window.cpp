@@ -626,4 +626,18 @@ namespace MyGUI
 		eventMouseWheel(_sender, _rel);
 	}
 
+	MyGUI::Widget* Window::getButtonByEvent(const char* event)
+	{
+		VectorWidgetPtr buttons = getSkinWidgetsByName("Button");
+		for (VectorWidgetPtr::iterator iter = buttons.begin(); iter != buttons.end(); ++iter)
+		{
+			if ((*iter)->getUserString("Event") == event)
+			{
+				return *iter;
+			}
+		}
+
+		return NULL;
+	}
+
 } // namespace MyGUI
